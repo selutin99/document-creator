@@ -71,7 +71,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ExcelFileAPI.cs" />
+    <Compile Include="FilesAPI\ExcelAPI.cs" />
+    <Compile Include="FilesAPI\WordAPI.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
