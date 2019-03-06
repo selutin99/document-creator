@@ -10,11 +10,12 @@ namespace DocumentCreator.FilesAPI
 {
     public class WordAPI
     {
+        private static Word.Application app = new Word.Application();
+
         public static Word.Document GetDocument(string fileName)
         {
-            Word.Application app = new Word.Application();
-            app.Visible = true;
- 
+            //app.Visible = true;
+
             Word.Document doc = null;
 
             try
@@ -28,7 +29,12 @@ namespace DocumentCreator.FilesAPI
             return doc;
         }
 
-        public static void saveFile(Word.Document doc, string fileName = "")
+        public static Word.Application GetWordApp()
+        {
+            return app;
+        }
+
+        public static void SaveFile(Word.Document doc, string fileName = "")
         {
             if (string.IsNullOrEmpty(fileName))
             {
@@ -54,12 +60,12 @@ namespace DocumentCreator.FilesAPI
             }
         }
 
-        public static void close(Word.Document doc)
+        public static void Close(Word.Document doc)
         {
             if (doc != null)
             {
                 doc.Close();
-                killWord();
+                KillWord();
             }
             else
             {
@@ -67,13 +73,20 @@ namespace DocumentCreator.FilesAPI
             }
         }
 
-        public static void killWord()
+        public static void KillWord()
         {
-            System.Diagnostics.Process[] procs = System.Diagnostics.Process.GetProcessesByName("WORD");
+            System.Diagnostics.Process[] procs = System.Diagnostics.Process.GetProcessesByName("winword");
             foreach (System.Diagnostics.Process p in procs)
             {
                 p.Kill();
             }
+        }
+
+        public static void FindAndReplace(Word.Document doc, object findText, object replaceWithText)
+        {
+            doc.Content.Find.Execute(findText, false, true, false, false, false,
+                                     true, 1, false, replaceWithText, 2,
+                                     false, false, false, false);
         }
     }
 }

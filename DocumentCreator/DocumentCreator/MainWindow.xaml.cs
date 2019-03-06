@@ -24,5 +24,10 @@ namespace DocumentCreator
         {
             InitializeComponent();
         }
+
+        private void label_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ParseThematicPlan.GetThemes();
+        }
     }
 }
