@@ -27,7 +27,7 @@ namespace DocumentCreator
 
         private void label_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            ParseThematicPlan.GetThemesOfTable();
+            ParseThematicPlan.GetDisciplines();
         }
     }
 }

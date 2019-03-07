@@ -38,12 +38,41 @@ namespace DocumentCreator
 
         //Получить названия тем
         public static List<string> GetThemesOfTable()
+        {             
+            List<string> themes = FindByRegex(new Regex(@"Тема*"));
+            themes.RemoveAt(0);
+            
+            return themes;
+        }
+
+        //Получить учебные вопросы
+        public static Dictionary<string, int> GetDisciplines()
         {
-            List<string> resulter = FindByRegex(new Regex(@"Тема*"));
-            resulter.RemoveAt(0);
-            foreach(string theme in resulter)
-                Console.WriteLine(theme);
-            return resulter;
+            Dictionary<string, int> dictResulter = new Dictionary<string, int>();
+
+            List<string> disciplines = FindByRegex(new Regex(@"ОВП*"));
+            List<string> themes = FindByRegex(new Regex(@"Тема*"));
+
+            Regex reg = new Regex(@"Тема №1*");
+            int counter = 0;
+
+            foreach (string theme in themes)
+            {
+                if (reg.IsMatch(theme))
+                {
+                    dictResulter.Add(theme, counter);
+                    counter = 0;
+                }
+                else
+                {
+                    counter++;
+                }
+            }
+            foreach(KeyValuePair<string, int> entry in dictResulter)
+            {
+                Console.WriteLine(entry.Key + "  ::  " + entry.Value);
+            }
+            return dictResulter;
         }
     }
 }
