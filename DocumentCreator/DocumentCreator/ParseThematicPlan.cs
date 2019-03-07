@@ -15,37 +15,35 @@ namespace DocumentCreator
         private static string path = Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/"));
         private static string fullPath = path + "plane.doc";
         private static Word.Document doc = FilesAPI.WordAPI.GetDocument(fullPath);
+        private static Word.Table table = doc.Tables[2];
 
-        //Получить названия тем
-        public static List<String> GetThemesOfTable()
+        private static List<string> FindByRegex(Regex re)
         {
-            List<String> resultList = new List<String>();
-
-            Word.Table table = doc.Tables[2];
-            table.Columns.AutoFit();
-
-            var regex = new Regex(@"Тема *");
-            var regException = new Regex(@"Тема и учебные вопросы занятия");
+            List<string> resultList = new List<string>();
 
             Word.Range range = table.Range;
             Word.Cells cells = range.Cells;
+
             for (int i = 1; i <= cells.Count; i++)
             {
                 Word.Cell cell = cells[i];
-                Word.Range r2 = cell.Range;
-                string txt = r2.Text;
-                if (regex.IsMatch(txt))
+                Word.Range updateRange = cell.Range;
+                if (re.IsMatch(updateRange.Text))
                 {
-                    if (regException.IsMatch(txt))
-                    {
-                        continue;
-                    }
-                    Console.WriteLine(txt);
-                    resultList.Add(txt);
+                    resultList.Add(updateRange.Text);
                 }
             }
-            Console.WriteLine("Successfully finished");
             return resultList;
+        }
+
+        //Получить названия тем
+        public static List<string> GetThemesOfTable()
+        {
+            List<string> resulter = FindByRegex(new Regex(@"Тема*"));
+            resulter.RemoveAt(0);
+            foreach(string theme in resulter)
+                Console.WriteLine(theme);
+            return resulter;
         }
     }
 }
