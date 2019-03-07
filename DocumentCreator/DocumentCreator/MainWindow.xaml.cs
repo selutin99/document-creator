@@ -31,7 +31,8 @@ namespace DocumentCreator
             dlg.DefaultExt = ".doc";
             dlg.Filter = "Word documents (.doc)|*.*";
 
-            Nullable<bool> result = dlg.ShowDialog();
+            dynamic result = dlg.ShowDialog();
+            //Nullable<bool> result = dlg.ShowDialog();
             //if (result == true)
             //{
             //    if (dlg.FileName.Length > 0)
@@ -44,6 +45,18 @@ namespace DocumentCreator
             //            ConvertWordDocToXPSDoc(dlg.FileName, newXPSDocumentName).GetFixedDocumentSequence();
             //    }
             //}
+            if (result == true)
+            {
+                DialogWindow dialogWindow = new DialogWindow();
+                dialogWindow.unswerLabel.Content = dlg.FileName + "\nуспешно загружен!";
+                dialogWindow.Show();
+            }
         }
+
+            private void ListOfDisciplines_SelectionChanged(object sender, SelectionChangedEventArgs e)
+            {
+                DownloadButton.IsEnabled = true;
+                string documentName = ((Button)ListOfDisciplines.SelectedItem).Content.ToString();
+            }
     }
 }
