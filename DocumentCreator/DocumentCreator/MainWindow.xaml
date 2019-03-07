@@ -7,7 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <Label x:Name="label" Content="Я люблю военку" HorizontalAlignment="Left" Margin="207,25,0,0" VerticalAlignment="Top"/>
-
+        <ComboBox x:Name="ListOfDisciplines" HorizontalAlignment="Left" Margin="23,90,0,0" VerticalAlignment="Top" Width="204" SelectionChanged="ListOfDisciplines_SelectionChanged" MaxDropDownHeight="1000">
+            <Button ClickMode="Hover" Content="Темплан"/>
+            <MenuItem Header="qwe"/>
+        </ComboBox>
+        <Label x:Name="ChooseDiscipline" Content="Выберите тип загружаемого файла" HorizontalAlignment="Left" Margin="23,59,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="DownloadButton" Content="Обзор" HorizontalAlignment="Left" Margin="265,90,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.501,0.533" Height="22" Click="DownloadButton_Click"/>
+        <Label x:Name="WelcomeLable" Content="Welcome to the CUMK, body" HorizontalAlignment="Left" Height="35" Margin="148,19,0,0" VerticalAlignment="Top" Width="254" FontSize="18"/>
     </Grid>
 </Window>

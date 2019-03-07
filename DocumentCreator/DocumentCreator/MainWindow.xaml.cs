@@ -24,5 +24,26 @@ namespace DocumentCreator
         {
             InitializeComponent();
         }
+
+        private void DownloadButton_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".doc";
+            dlg.Filter = "Word documents (.doc)|*.*";
+
+            Nullable<bool> result = dlg.ShowDialog();
+            //if (result == true)
+            //{
+            //    if (dlg.FileName.Length > 0)
+            //    {
+            //        SelectedFileTextBox.Text = dlg.FileName;
+            //        string newXPSDocumentName = String.Concat(System.IO.Path.GetDirectoryName(dlg.FileName), "\\",
+            //                       System.IO.Path.GetFileNameWithoutExtension(dlg.FileName), ".xps");
+
+            //        documentViewer1.Document =
+            //            ConvertWordDocToXPSDoc(dlg.FileName, newXPSDocumentName).GetFixedDocumentSequence();
+            //    }
+            //}
+        }
     }
 }
