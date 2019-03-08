@@ -12,12 +12,38 @@ namespace DocumentCreator
 {
     class ParseThematicPlan
     {
-        private static string path = Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/"));
-        private static string fullPath = path + "plane.doc";
-        private static Word.Document doc = FilesAPI.WordAPI.GetDocument(fullPath);
-        private static Word.Table table = doc.Tables[2];
+        private Word.Document doc = null;
+        private Word.Table table = null;
 
-        private static List<string> FindByRegex(Regex re)
+        public ParseThematicPlan(string filePath)
+        {
+            this.doc = FilesAPI.WordAPI.GetDocument(filePath);
+            this.table = doc.Tables[2];
+        }
+
+        private Dictionary<int, string> FindByRegexInTableDict(Regex re)
+        {
+            Dictionary<int, string> resultDict = new Dictionary<int, string>();
+
+            Word.Range range = table.Range;
+            Word.Cells cells = range.Cells;
+
+            int id = 1; 
+
+            for (int i = 1; i <= cells.Count; i++)
+            {
+                Word.Cell cell = cells[i];
+                Word.Range updateRange = cell.Range;
+                if (re.IsMatch(updateRange.Text))
+                {
+                    resultDict.Add(id, updateRange.Text);
+                    id++;
+                }
+            }
+            return resultDict;
+        }
+
+        private List<string> FindByRegexInTable(Regex re)
         {
             List<string> resultList = new List<string>();
 
@@ -36,43 +62,59 @@ namespace DocumentCreator
             return resultList;
         }
 
+        //Получить список дисциплин
+        public List<string> GetDisciplines()
+        {
+            return FindByRegexInTable(new Regex(@"ОВП.*")).
+                   Concat(FindByRegexInTable(new Regex(@"ОГП Дисциплина*"))).
+                   ToList();
+        }
+
         //Получить названия тем
-        public static List<string> GetThemesOfTable()
+        public List<string> GetThemesOfTable()
         {             
-            List<string> themes = FindByRegex(new Regex(@"Тема*"));
+            List<string> themes = FindByRegexInTable(new Regex(@"Тема*"));
             themes.RemoveAt(0);
             
             return themes;
         }
 
-        //Получить учебные вопросы
-        public static Dictionary<string, int> GetDisciplines()
+        //Получить список домашних заданий
+        // ключ - № п/п
+        // значение - домашнее задание
+        public Dictionary<int, string> GetHomeWorks()
         {
-            Dictionary<string, int> dictResulter = new Dictionary<string, int>();
+            Dictionary<int, string> resulter = FindByRegexInTableDict(new Regex(@"А(\s|)\d{1,}"));
+            return resulter;
+        }
 
-            List<string> disciplines = FindByRegex(new Regex(@"ОВП*"));
-            List<string> themes = FindByRegex(new Regex(@"Тема*"));
+        //Получить виды учебных занятий
+        // ключ - № п/п
+        // значение - вид учебного занятия
+        public Dictionary<int, string> GetTypeStudies()
+        {
+            Regex reg = new Regex(@"(Лекция|Самостоятельная|Групповое|Практическое|Практическая|Семинар|Тренировка(\s| )№)");
+            Dictionary<int, string> resulter = FindByRegexInTableDict(reg);
+            return resulter;
+        }
 
-            Regex reg = new Regex(@"Тема №1*");
-            int counter = 0;
+        //Получить виды учебных занятий
+        // ключ - № п/п
+        // значение - материальное обеспечение
+        public Dictionary<int, string> GetMaterialSecurity()
+        {
+            Regex reg = new Regex(@"(Презентация по|Компьютер|Строевой плац)");
+            Dictionary<int, string> resulter = FindByRegexInTableDict(reg);
+            return resulter;
+        }
 
-            foreach (string theme in themes)
-            {
-                if (reg.IsMatch(theme))
-                {
-                    dictResulter.Add(theme, counter);
-                    counter = 0;
-                }
-                else
-                {
-                    counter++;
-                }
-            }
-            foreach(KeyValuePair<string, int> entry in dictResulter)
-            {
-                Console.WriteLine(entry.Key + "  ::  " + entry.Value);
-            }
-            return dictResulter;
+        //Получить темы и учебные занятия
+        // ключ - № п/п
+        // значение - материальное обеспечение
+        public Dictionary<int, string> GetSessions()
+        {
+            Dictionary<int, string> resulter = FindByRegexInTableDict(new Regex(@"Занятие"));
+            return resulter;
         }
     }
 }
