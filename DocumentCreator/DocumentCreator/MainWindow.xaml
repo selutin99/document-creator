@@ -9,7 +9,7 @@
     <Grid>
         <ComboBox x:Name="ListOfDisciplines" HorizontalAlignment="Left" Margin="23,90,0,0" VerticalAlignment="Top" Width="204" SelectionChanged="ListOfDisciplines_SelectionChanged" MaxDropDownHeight="1000">
             <Button ClickMode="Hover" Content="Темплан" BorderBrush="{x:Null}" Background="{x:Null}"/>
-            <Button ClickMode="Hover" Content="Учебный план" BorderBrush="{x:Null}" Background="{x:Null}"/>
+            <Button ClickMode="Hover" Content="Учебный программа" BorderBrush="{x:Null}" Background="{x:Null}"/>
         </ComboBox>
         <Label x:Name="ChooseDiscipline" Content="Выберите тип загружаемого файла" HorizontalAlignment="Left" Margin="23,59,0,0" VerticalAlignment="Top"/>
         <Button x:Name="DownloadButton" Content="Обзор" HorizontalAlignment="Left" Margin="265,90,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.501,0.533" Height="22" Click="DownloadButton_Click" IsEnabled="False"/>

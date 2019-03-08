@@ -29,7 +29,7 @@ namespace DocumentCreator
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.DefaultExt = ".doc";
-            dlg.Filter = "Word documents (.doc)|*.*";
+            dlg.Filter = "Word documents (.doc)|*.doc|(.docx)|*.docx|(.txt)|*.txt";/*.*/
 
             dynamic result = dlg.ShowDialog();
             //Nullable<bool> result = dlg.ShowDialog();
