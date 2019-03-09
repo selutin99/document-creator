@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace DocumentCreator.FilesAPI
@@ -24,7 +19,6 @@ namespace DocumentCreator.FilesAPI
             }
             return wb;
         }
-
         public static Excel.Worksheet GetWorksheet(Excel.Workbook wb)
         {
             try
@@ -43,7 +37,7 @@ namespace DocumentCreator.FilesAPI
             {
                 return wb.Sheets[worksheet];
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw new Exception("Not correct number sheet", e);
             }
@@ -82,7 +76,7 @@ namespace DocumentCreator.FilesAPI
                 }
                 catch (Exception e)
                 {
-                    throw new Exception("Can't save file in "+fileName, e);
+                    throw new Exception("Can't save file in " + fileName, e);
                 }
             }
         }

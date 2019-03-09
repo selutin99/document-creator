@@ -1,28 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-
 using Word = Microsoft.Office.Interop.Word;
 
 namespace DocumentCreator
 {
-    class ParseThematicPlan
+    internal class ParseThematicPlan
     {
-        private static string path = Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/"));
-        //private static string fullPath = path + "plane.doc";
-        //test path to file
-        private static string fullPath = "C://plane.doc";  
-        private Word.Document doc = null;
-        private Word.Table table = null;
+        private string outputPath;
+        private Word.Document doc;
+        private Word.Table table;
 
-        public ParseThematicPlan(string filePath)
+
+        public ParseThematicPlan(string inputFilePath, string outputPath)
         {
-            this.doc = FilesAPI.WordAPI.GetDocument(fullPath);
+            this.doc = FilesAPI.WordAPI.GetDocument(inputFilePath);
             this.table = doc.Tables[2];
+
+            this.outputPath = outputPath;
         }
 
         private Dictionary<string, string> FindByRegex(Regex regex, int beginIndex, int endIndex)
@@ -39,8 +35,6 @@ namespace DocumentCreator
                 Word.Range updateRange = cell.Range;
                 try
                 {
-
-
                     if (regex.IsMatch(updateRange.Text))
                     {
                         nextDiscipline = updateRange.Text;
@@ -125,9 +119,7 @@ namespace DocumentCreator
                 }
                 catch (Exception e)
                 {
-
                 }
-
             }
             string lastValue = null;
             resultMap.TryGetValue(lastDiscipline, out lastValue);
@@ -148,7 +140,7 @@ namespace DocumentCreator
             Dictionary<string, string> resulterMap = FindByRegexDisciplin(new Regex(@"^ОВП*"), new Regex(@"^ОГП*"));
             foreach (KeyValuePair<string, string> keyValue in resulterMap)
             {
-                Directory.CreateDirectory("C://output//" + keyValue.Key);
+                Directory.CreateDirectory(this.outputPath + keyValue.Key);
                 Dictionary<string, string> resulterMapTopic = FindByRegex(new Regex(@"Тема*"), Int32.Parse(keyValue.Value.Substring(0, keyValue.Value.IndexOf(','))), Int32.Parse(keyValue.Value.Substring(keyValue.Value.IndexOf(',') + 1)));
                 foreach (KeyValuePair<string, string> keyValueTopic in resulterMapTopic)
                 {
@@ -160,26 +152,21 @@ namespace DocumentCreator
                         {
                             topicName = topicName.Substring(0, topicName.IndexOfAny(unacceptableChars));
                         }
-                        Directory.CreateDirectory("C://output//" + keyValue.Key + "//" + topicName);
+                        Directory.CreateDirectory(this.outputPath + keyValue.Key + "//" + topicName);
                     }
                     else
                     {
-                        Directory.CreateDirectory("C://output//" + keyValue.Key + "//" + keyValueTopic.Key.Substring(0, 96));
+                        Directory.CreateDirectory(this.outputPath + keyValue.Key + "//" + keyValueTopic.Key.Substring(0, 96));
                     }
-                    CreateDocFileWithContenAndSave("C://output//" + keyValue.Key + "//" + keyValueTopic.Key, keyValueTopic);
+                    CreateDocFileWithContenAndSave(this.outputPath + keyValue.Key + "//" + keyValueTopic.Key, keyValueTopic);
                 }
             }
-
-            //           foreach (string theme in resulter)
-            //               Directory.CreateDirectory("C://output//" + theme.Substring(0,));
-            //               Console.WriteLine(theme);
             return new List<string>();
         }
 
-        private static void CreateDocFileWithContenAndSave(string pathToDirectory, KeyValuePair<string, string> topic)
+        ///TODO
+        private void CreateDocFileWithContenAndSave(string pathToDirectory, KeyValuePair<string, string> topic)
         {
-
         }
-
     }
 }
