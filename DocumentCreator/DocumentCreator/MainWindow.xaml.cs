@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Forms;
-
+using System.IO;
 
 namespace DocumentCreator
 {
@@ -22,6 +22,7 @@ namespace DocumentCreator
     /// </summary>
     public partial class MainWindow : Window
     {
+        private string documentName;
         private string fileName { get; set; }
         private string folderName { get; set; }
         private FolderBrowserDialog folderBrowserDialog1;
@@ -36,7 +37,7 @@ namespace DocumentCreator
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.DefaultExt = ".doc";
-            dlg.Filter = "Word documents (.doc)|*.doc|(.docx)|*.docx|(.txt)|*.txt";/*.*/
+            dlg.Filter = "Word documents (.doc)|*.doc|(.docx)|*.docx";
 
             dynamic result = dlg.ShowDialog();
             
@@ -63,11 +64,12 @@ namespace DocumentCreator
             }
         }
 
-            private void ListOfDisciplines_SelectionChanged(object sender, SelectionChangedEventArgs e)
-            {
-                DownloadButton.IsEnabled = true;
-                string documentName = ((System.Windows.Controls.Button)ListOfDisciplines.SelectedItem).Content.ToString();
-            }
+        private void ListOfDisciplines_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DownloadButton.IsEnabled = true;
+            PathToSaveButton.IsEnabled = true;
+            documentName = ((System.Windows.Controls.Button)ListOfDisciplines.SelectedItem).Content.ToString();
+        }
 
         private void PathToSaveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -75,6 +77,19 @@ namespace DocumentCreator
             DialogResult result = folderBrowserDialog1.ShowDialog();           
             folderName = folderBrowserDialog1.SelectedPath;
             SavePath.Content = folderName;
+        }
+
+        //Загружает файл в указанную директорию
+        private void GenerateButton_Click(object sender, RoutedEventArgs e)
+        {
+            string sourceDir = System.IO.Path.GetDirectoryName(fileName);
+            string backupDir = folderName;
+            string fName = System.IO.Path.GetFileName(fileName);
+            File.Copy(System.IO.Path.Combine(sourceDir, fName), System.IO.Path.Combine(backupDir, fName), true);
+            DialogWindow dialogWindow = new DialogWindow();
+            dialogWindow.unswerLabel.Content = "Файл успешно сохранен";
+            dialogWindow.Show();
+
         }
     }
 }

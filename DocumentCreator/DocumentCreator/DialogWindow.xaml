@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DocumentCreator"
         mc:Ignorable="d"
-        Title="Window1" Height="350" Width="525">
+        Title="Window1" Height="237.259" Width="525">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="259*"/>
             <ColumnDefinition Width="258*"/>
         </Grid.ColumnDefinitions>
-        <Label x:Name="unswerLabel" Content="" HorizontalAlignment="Center" Margin="14,10,5,0" VerticalAlignment="Top" Height="254" Width="498" FontFamily="Times New Roman" FontSize="22" Grid.ColumnSpan="2"/>
-        <Button x:Name="closeButton" Content="Закрыть" HorizontalAlignment="Center" Margin="208,269,208,0" VerticalAlignment="Top" Width="93" Grid.ColumnSpan="2" Height="20" FontFamily="Times New Roman" FontSize="14" Click="CloseButton_Click"/>
+        <Label x:Name="unswerLabel" Content="" HorizontalAlignment="Center" Margin="14,10,5,38" Width="498" FontFamily="Times New Roman" FontSize="22" Grid.ColumnSpan="2"/>
+        <Button x:Name="closeButton" Content="Закрыть" HorizontalAlignment="Left" Margin="-46,173,0,0" VerticalAlignment="Top" Width="93" Height="20" FontFamily="Times New Roman" FontSize="14" Click="CloseButton_Click" Grid.Column="1"/>
 
     </Grid>
 </Window>
