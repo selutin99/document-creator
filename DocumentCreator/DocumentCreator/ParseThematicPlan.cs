@@ -65,7 +65,7 @@ namespace DocumentCreator
             }
             string lastValue;
             resultMap.TryGetValue(lastDiscipline, out lastValue);
-            resultMap[lastDiscipline] = lastValue + "," + (cells.Count - 1);
+            resultMap[lastDiscipline] = lastValue + "," + endIndex;
             return resultMap;
         }
 
@@ -167,6 +167,47 @@ namespace DocumentCreator
         ///TODO
         private void CreateDocFileWithContenAndSave(string pathToDirectory, KeyValuePair<string, string> topic)
         {
+            string kindOfLesson = "";
+            string hours = "";
+            string questionsOfLesson = "";
+            string materialSupport = "";
+            string literature = "";
+            Word.Range range = table.Range;
+            Word.Cells cells = range.Cells;
+            Regex regex = new Regex(@"^Лекция|^Самостоя|^Группов|^Практичес|^Трениров");
+            char[] charsToTrim = { '\a', '\r' };
+            for (int i=Int32.Parse(topic.Value.Substring(0,topic.Value.IndexOf(',')))+1;i< Int32.Parse(topic.Value.Substring(topic.Value.IndexOf(',') + 1)); i++)
+            {
+                Word.Cell cell = cells[i];
+                Word.Range updateRange = cell.Range;
+                string text = updateRange.Text;
+                if (regex.IsMatch(text))
+                {
+                    kindOfLesson = text.Trim(charsToTrim); ;
+                    //get count of hours
+                    cell = cells[i + 1];
+                    if(cell.Range.Text.Length>0)
+                    {
+                        hours = cell.Range.Text.Trim(charsToTrim);
+                    }
+                    //get questions of the lesson
+                    cell = cells[i + 2];
+                    questionsOfLesson = cell.Range.Text.Trim(charsToTrim);
+                    //get material support
+                    cell = cells[i + 3];
+                    materialSupport= cell.Range.Text.Trim(charsToTrim);
+                    //get literature
+                    cell = cells[i + 4];
+                    literature = cell.Range.Text.Trim(charsToTrim);
+                    //get hours if first cell was empty
+                    if (hours == "")
+                    {
+                        cell = cells[i + 5];
+                        hours= cell.Range.Text.Trim(charsToTrim);
+                    }
+                    i += 5;
+                }
+            }
         }
     }
 }
