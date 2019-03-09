@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Forms;
+
 
 namespace DocumentCreator
 {
@@ -20,6 +22,11 @@ namespace DocumentCreator
     /// </summary>
     public partial class MainWindow : Window
     {
+        private string fileName { get; set; }
+        private string folderName { get; set; }
+        private FolderBrowserDialog folderBrowserDialog1;
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -32,6 +39,7 @@ namespace DocumentCreator
             dlg.Filter = "Word documents (.doc)|*.doc|(.docx)|*.docx|(.txt)|*.txt";/*.*/
 
             dynamic result = dlg.ShowDialog();
+            
             //Nullable<bool> result = dlg.ShowDialog();
             //if (result == true)
             //{
@@ -48,6 +56,8 @@ namespace DocumentCreator
             if (result == true)
             {
                 DialogWindow dialogWindow = new DialogWindow();
+                fileName = dlg.FileName;
+                PathToFile.Content = fileName; //вывод в окно имени файла
                 dialogWindow.unswerLabel.Content = dlg.FileName + "\nуспешно загружен!";
                 dialogWindow.Show();
             }
@@ -56,7 +66,15 @@ namespace DocumentCreator
             private void ListOfDisciplines_SelectionChanged(object sender, SelectionChangedEventArgs e)
             {
                 DownloadButton.IsEnabled = true;
-                string documentName = ((Button)ListOfDisciplines.SelectedItem).Content.ToString();
+                string documentName = ((System.Windows.Controls.Button)ListOfDisciplines.SelectedItem).Content.ToString();
             }
+
+        private void PathToSaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            DialogResult result = folderBrowserDialog1.ShowDialog();           
+            folderName = folderBrowserDialog1.SelectedPath;
+            SavePath.Content = folderName;
+        }
     }
 }
