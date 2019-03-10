@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Word = Microsoft.Office.Interop.Word;
 
@@ -161,10 +162,11 @@ namespace DocumentCreator
                     CreateDocFileWithContenAndSave(this.outputPath + keyValue.Key + "//" + keyValueTopic.Key, keyValueTopic);
                 }
             }
+            //CLOSE FILE
+            FilesAPI.WordAPI.Close(this.doc);
             return new List<string>();
         }
 
-        ///TODO
         private void CreateDocFileWithContenAndSave(string pathToDirectory, KeyValuePair<string, string> topic)
         {
             string kindOfLesson = "";
@@ -183,7 +185,7 @@ namespace DocumentCreator
                 string text = updateRange.Text;
                 if (regex.IsMatch(text))
                 {
-                    kindOfLesson = text.Trim(charsToTrim); ;
+                    kindOfLesson = text.Trim(charsToTrim);
                     //get count of hours
                     cell = cells[i + 1];
                     if(cell.Range.Text.Length>0)
@@ -205,9 +207,37 @@ namespace DocumentCreator
                         cell = cells[i + 5];
                         hours= cell.Range.Text.Trim(charsToTrim);
                     }
+                    CreateFile(pathToDirectory, kindOfLesson, materialSupport, literature);
                     i += 5;
                 }
             }
+        }
+
+        //Создаёт Word файл
+        private void CreateFile(string pathToDirectory, string kind, string materialSupport, string literature)
+        {
+            string path = Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/"));
+            string fileName = path+"theme.doc";
+            string outputFileName = pathToDirectory+kind+".doc";
+
+            fileName = CleanFileName(fileName);
+            outputFileName = CleanOutput(outputFileName);
+
+            outputFileName = outputFileName.Replace("//", "\\");
+            outputFileName = outputFileName.Replace("\"", "");
+            outputFileName = outputFileName.Replace("\\\\", "\\");
+
+            File.Copy(@fileName, @outputFileName);
+        }
+
+        private static string CleanFileName(string fileName)
+        {
+            return string.Join("", fileName.Split(Path.GetInvalidPathChars()));
+        }
+
+        private static string CleanOutput(string fileName)
+        {
+            return string.Join("\\", fileName.Split(Path.GetInvalidPathChars()));
         }
     }
 }

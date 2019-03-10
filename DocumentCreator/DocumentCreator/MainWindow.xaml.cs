@@ -51,7 +51,10 @@ namespace DocumentCreator
             string sourceDir = System.IO.Path.GetDirectoryName(fileName);
             string backupDir = folderName;
             string fName = System.IO.Path.GetFileName(fileName);
-            //Сюда пихать логику
+
+            //Логика
+            ParseThematicPlan parser = new ParseThematicPlan(fileName, folderName+"//");
+            parser.LogicForParseWordAndSave();
 
             File.Copy(System.IO.Path.Combine(sourceDir, fName), System.IO.Path.Combine(backupDir, fName), true);
             DialogWindow dialogWindow = new DialogWindow();
