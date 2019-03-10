@@ -1,0 +1,18 @@
+﻿<Window x:Class="DocumentCreator.DialogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DocumentCreator"
+        mc:Ignorable="d"
+        Title="Window1" Height="237.259" Width="525">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="259*"/>
+            <ColumnDefinition Width="258*"/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="unswerLabel" Content="" HorizontalAlignment="Center" Margin="14,10,5,38" Width="498" FontFamily="Times New Roman" FontSize="22" Grid.ColumnSpan="2"/>
+        <Button x:Name="closeButton" Content="Закрыть" HorizontalAlignment="Left" Margin="-46,173,0,0" VerticalAlignment="Top" Width="93" Height="20" FontFamily="Times New Roman" FontSize="14" Click="CloseButton_Click" Grid.Column="1"/>
+
+    </Grid>
+</Window>
