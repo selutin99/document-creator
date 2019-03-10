@@ -7,6 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <Label x:Name="label" Content="Я люблю военку" HorizontalAlignment="Left" Margin="207,25,0,0" VerticalAlignment="Top" MouseDown="label_MouseDown"/>
+        <Button x:Name="DownloadButton" Content="Обзор" HorizontalAlignment="Left" Margin="315,111,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.501,0.533" Height="28" Click="DownloadButton_Click"/>
+        <Label x:Name="WelcomeLable" Content="Генератор УМР" HorizontalAlignment="Left" Height="35" Margin="201,18,0,0" VerticalAlignment="Top" Width="137" FontSize="18"/>
+        <Label x:Name="PathToFile" Content="" HorizontalAlignment="Left" Margin="25,111,0,0" VerticalAlignment="Top" Width="270" BorderBrush="Black" BorderThickness="1"/>
+        <Label x:Name="ChooseFile" Content="Выберите темплан" HorizontalAlignment="Left" Margin="25,80,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="ChooseSavePath" Content="Выберите папку для сохранения" HorizontalAlignment="Left" Margin="25,157,0,0" VerticalAlignment="Top" BorderThickness="1"/>
+        <Label x:Name="SavePath" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,188,0,0" Width="270" BorderThickness="1" BorderBrush="Black"/>
+        <Button x:Name="PathToSaveButton" Content="Обзор" HorizontalAlignment="Left" Margin="315,188,0,0" VerticalAlignment="Top" Width="75" Height="28" Click="PathToSaveButton_Click"/>
+        <Button x:Name="GenerateButton" Content="Сгенерировать документы" HorizontalAlignment="Left" Margin="184,241,0,0" VerticalAlignment="Top" Width="165" Click="GenerateButton_Click" Height="39" IsEnabled="False"/>
     </Grid>
 </Window>
