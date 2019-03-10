@@ -10,32 +10,35 @@
 
 namespace DocumentCreator.Properties
 {
-
-
     /// <summary>
-    ///   Класс ресурсов со строгим типом для поиска локализованных строк и пр.
+    /// Класс ресурсов со строгим типом для поиска локализованных строк и пр.
     /// </summary>
-    // Этот класс был автоматически создан при помощи StronglyTypedResourceBuilder
-    // класс с помощью таких средств, как ResGen или Visual Studio.
-    // Для добавления или удаления члена измените файл .ResX, а затем перезапустите ResGen
-    // с параметром /str или заново постройте свой VS-проект.
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources
     {
-
+        /// <summary>
+        /// Defines the resourceMan
+        /// </summary>
         private static global::System.Resources.ResourceManager resourceMan;
 
+        /// <summary>
+        /// Defines the resourceCulture
+        /// </summary>
         private static global::System.Globalization.CultureInfo resourceCulture;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Resources"/> class.
+        /// </summary>
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources()
         {
         }
 
         /// <summary>
-        ///   Возврат кэшированного экземпляра ResourceManager, используемого этим классом.
+        /// Gets the ResourceManager
+        /// Возврат кэшированного экземпляра ResourceManager, используемого этим классом.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Resources.ResourceManager ResourceManager
@@ -52,7 +55,8 @@ namespace DocumentCreator.Properties
         }
 
         /// <summary>
-        ///   Переопределяет свойство CurrentUICulture текущего потока для всех
+        /// Gets or sets the Culture
+        /// Переопределяет свойство CurrentUICulture текущего потока для всех
         ///   подстановки ресурсов с помощью этого класса ресурсов со строгим типом.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]

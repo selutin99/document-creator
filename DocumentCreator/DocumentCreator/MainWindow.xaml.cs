@@ -1,12 +1,10 @@
-﻿using System.Windows;
+using System.Windows;
+using System.Windows.Input;
 using System.Windows.Forms;
 using System.IO;
 
 namespace DocumentCreator
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private string fileName { get; set; }
@@ -17,7 +15,7 @@ namespace DocumentCreator
         {
             InitializeComponent();
         }
-
+        
         private void DownloadButton_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
