@@ -7,18 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <ComboBox x:Name="ListOfDisciplines" HorizontalAlignment="Left" Margin="23,90,0,0" VerticalAlignment="Top" Width="204" SelectionChanged="ListOfDisciplines_SelectionChanged" MaxDropDownHeight="1000">
-            <Button ClickMode="Hover" Content="Темплан" BorderBrush="{x:Null}" Background="{x:Null}"/>
-            <Button ClickMode="Hover" Content="Учебный программа" BorderBrush="{x:Null}" Background="{x:Null}"/>
-        </ComboBox>
-        <Label x:Name="ChooseDiscipline" Content="Выберите тип загружаемого файла" HorizontalAlignment="Left" Margin="23,59,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="DownloadButton" Content="Обзор" HorizontalAlignment="Left" Margin="313,149,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.501,0.533" Height="28" Click="DownloadButton_Click" IsEnabled="False"/>
-        <Label x:Name="WelcomeLable" Content="Welcome to the CUMK, body" HorizontalAlignment="Left" Height="35" Margin="148,19,0,0" VerticalAlignment="Top" Width="254" FontSize="18"/>
-        <Label x:Name="PathToFile" Content="" HorizontalAlignment="Left" Margin="23,149,0,0" VerticalAlignment="Top" Width="270" BorderBrush="Black" BorderThickness="1"/>
-        <Label x:Name="ChooseFile" Content="Выберите темплан" HorizontalAlignment="Left" Margin="23,118,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="ChooseSavePath" Content="Выберите место сохранения файла" HorizontalAlignment="Left" Margin="23,195,0,0" VerticalAlignment="Top" BorderThickness="1"/>
-        <Label x:Name="SavePath" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="23,226,0,0" Width="270" BorderThickness="1" BorderBrush="Black"/>
-        <Button x:Name="PathToSaveButton" Content="Обзор" HorizontalAlignment="Left" Margin="313,226,0,0" VerticalAlignment="Top" Width="75" Height="28" Click="PathToSaveButton_Click" IsEnabled="False"/>
-        <Button x:Name="GenerateButton" Content="Сгенерировать документ" HorizontalAlignment="Left" Margin="188,270,0,0" VerticalAlignment="Top" Width="150" Click="GenerateButton_Click" Height="39"/>
+        <Button x:Name="DownloadButton" Content="Обзор" HorizontalAlignment="Left" Margin="315,111,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.501,0.533" Height="28" Click="DownloadButton_Click"/>
+        <Label x:Name="WelcomeLable" Content="Генератор УМР" HorizontalAlignment="Left" Height="35" Margin="201,18,0,0" VerticalAlignment="Top" Width="137" FontSize="18"/>
+        <Label x:Name="PathToFile" Content="" HorizontalAlignment="Left" Margin="25,111,0,0" VerticalAlignment="Top" Width="270" BorderBrush="Black" BorderThickness="1"/>
+        <Label x:Name="ChooseFile" Content="Выберите темплан" HorizontalAlignment="Left" Margin="25,80,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="ChooseSavePath" Content="Выберите папку для сохранения" HorizontalAlignment="Left" Margin="25,157,0,0" VerticalAlignment="Top" BorderThickness="1"/>
+        <Label x:Name="SavePath" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="25,188,0,0" Width="270" BorderThickness="1" BorderBrush="Black"/>
+        <Button x:Name="PathToSaveButton" Content="Обзор" HorizontalAlignment="Left" Margin="315,188,0,0" VerticalAlignment="Top" Width="75" Height="28" Click="PathToSaveButton_Click"/>
+        <Button x:Name="GenerateButton" Content="Сгенерировать документы" HorizontalAlignment="Left" Margin="184,241,0,0" VerticalAlignment="Top" Width="165" Click="GenerateButton_Click" Height="39" IsEnabled="False"/>
     </Grid>
 </Window>
