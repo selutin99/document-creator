@@ -145,21 +145,23 @@ namespace DocumentCreator
                 Dictionary<string, string> resulterMapTopic = FindByRegex(new Regex(@"Тема*"), Int32.Parse(keyValue.Value.Substring(0, keyValue.Value.IndexOf(','))), Int32.Parse(keyValue.Value.Substring(keyValue.Value.IndexOf(',') + 1)));
                 foreach (KeyValuePair<string, string> keyValueTopic in resulterMapTopic)
                 {
+                    string topicName;
                     if (keyValueTopic.Key.Length < 100)
                     {
-                        string topicName = keyValueTopic.Key.Substring(0, keyValueTopic.Key.Length - 4);
+                        topicName = keyValueTopic.Key.Substring(0, keyValueTopic.Key.Length - 4);
                         char[] unacceptableChars = { '\\', '/', ':', '*', '?', '\"', '<', '>', '|' };
                         if (topicName.IndexOfAny(unacceptableChars) > 0)
                         {
                             topicName = topicName.Substring(0, topicName.IndexOfAny(unacceptableChars));
                         }
-                        Directory.CreateDirectory(this.outputPath + keyValue.Key + "//" + topicName);
+                        Directory.CreateDirectory(this.outputPath + keyValue.Key + "\\" + topicName);
                     }
                     else
                     {
-                        Directory.CreateDirectory(this.outputPath + keyValue.Key + "//" + keyValueTopic.Key.Substring(0, 96));
+                        topicName = keyValueTopic.Key.Substring(0, 96);
+                        Directory.CreateDirectory(this.outputPath + keyValue.Key + "\\" + topicName);
                     }
-                    CreateDocFileWithContenAndSave(this.outputPath + keyValue.Key + "//" + keyValueTopic.Key, keyValueTopic);
+                    CreateDocFileWithContenAndSave(this.outputPath + keyValue.Key + "\\" + topicName, keyValueTopic);
                 }
             }
             //CLOSE FILE
@@ -186,6 +188,7 @@ namespace DocumentCreator
                 if (regex.IsMatch(text))
                 {
                     kindOfLesson = text.Trim(charsToTrim);
+                    kindOfLesson = kindOfLesson.Replace("\r","");
                     //get count of hours
                     cell = cells[i + 1];
                     if(cell.Range.Text.Length>0)
@@ -218,14 +221,14 @@ namespace DocumentCreator
         {
             string path = Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/"));
             string fileName = path+"theme.doc";
-            string outputFileName = pathToDirectory+kind+".doc";
+            string outputFileName = pathToDirectory+"\\"+kind+".doc";
 
-            fileName = CleanFileName(fileName);
-            outputFileName = CleanOutput(outputFileName);
+            //fileName = CleanFileName(fileName);
+            //outputFileName = CleanOutput(outputFileName);
 
             outputFileName = outputFileName.Replace("//", "\\");
-            outputFileName = outputFileName.Replace("\"", "");
-            outputFileName = outputFileName.Replace("\\\\", "\\");
+            //outputFileName = outputFileName.Replace("\"", "");
+            //outputFileName = outputFileName.Replace("\\\\", "\\");
 
             File.Copy(@fileName, @outputFileName);
         }
