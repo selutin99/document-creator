@@ -22,7 +22,7 @@ namespace DocumentCreator
             this.outputPath = outputPath;
         }
 
-        private Dictionary<string, string> FindByRegex(Regex regex, int beginIndex, int endIndex)
+        private Dictionary<string, string> FindByRegexTopics(Regex regex, int beginIndex, int endIndex)
         {
             Dictionary<string, string> resultMap = new Dictionary<string, string>();
 
@@ -136,13 +136,16 @@ namespace DocumentCreator
             return resultMap;
         }
 
-        public List<string> LogicForParseWordAndSave()
+        private List<Discipline> GetAllDisciplinesWithContent()
         {
             Dictionary<string, string> resulterMap = FindByRegexDisciplin(new Regex(@"^ОВП*"), new Regex(@"^ОГП*"));
+            List<Discipline> disciplines = new List<Discipline>();
+            
             foreach (KeyValuePair<string, string> keyValue in resulterMap)
             {
-                Directory.CreateDirectory(this.outputPath + keyValue.Key);
-                Dictionary<string, string> resulterMapTopic = FindByRegex(new Regex(@"Тема*"), Int32.Parse(keyValue.Value.Substring(0, keyValue.Value.IndexOf(','))), Int32.Parse(keyValue.Value.Substring(keyValue.Value.IndexOf(',') + 1)));
+                Discipline discipline = new Discipline(keyValue.Key, new List<Topic>());
+                
+                Dictionary<string, string> resulterMapTopic = FindByRegexTopics(new Regex(@"Тема*"), Int32.Parse(keyValue.Value.Substring(0, keyValue.Value.IndexOf(','))), Int32.Parse(keyValue.Value.Substring(keyValue.Value.IndexOf(',') + 1)));
                 foreach (KeyValuePair<string, string> keyValueTopic in resulterMapTopic)
                 {
                     string topicName;
@@ -154,23 +157,24 @@ namespace DocumentCreator
                         {
                             topicName = topicName.Substring(0, topicName.IndexOfAny(unacceptableChars));
                         }
-                        Directory.CreateDirectory(this.outputPath + keyValue.Key + "\\" + topicName);
                     }
                     else
                     {
                         topicName = keyValueTopic.Key.Substring(0, 96);
-                        Directory.CreateDirectory(this.outputPath + keyValue.Key + "\\" + topicName);
                     }
-                    CreateDocFileWithContenAndSave(this.outputPath + keyValue.Key + "\\" + topicName, keyValueTopic);
+
+                    discipline.Topics.Add(new Topic(topicName, GetLessonsByTopic(keyValueTopic)));
                 }
+                disciplines.Add(discipline);
             }
             //CLOSE FILE
             FilesAPI.WordAPI.Close(this.doc);
-            return new List<string>();
+            return disciplines;
         }
 
-        private void CreateDocFileWithContenAndSave(string pathToDirectory, KeyValuePair<string, string> topic)
+        private List<Lesson> GetLessonsByTopic(KeyValuePair<string, string> topic)
         {
+            List<Lesson> lessons = new List<Lesson>();
             string kindOfLesson = "";
             string hours = "";
             string questionsOfLesson = "";
@@ -210,37 +214,39 @@ namespace DocumentCreator
                         cell = cells[i + 5];
                         hours= cell.Range.Text.Trim(charsToTrim);
                     }
-                    CreateFile(pathToDirectory, kindOfLesson, materialSupport, literature);
+                    Lesson lesson = new Lesson();
+                    lesson.Type = kindOfLesson;
+                    lesson.Literature = literature;
+                    lesson.MaterialSupport = materialSupport;
+                    lesson.Content = questionsOfLesson;
+                    lesson.Hours = hours;
+                    lessons.Add(lesson);
                     i += 5;
                 }
             }
+            return lessons;
         }
 
-        //Создаёт Word файл
-        private void CreateFile(string pathToDirectory, string kind, string materialSupport, string literature)
+        public List<Discipline> ParseThematicPlanAndCreateDirectories()
         {
-            string path = Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/"));
-            string fileName = path+"theme.doc";
-            string outputFileName = pathToDirectory+"\\"+kind+".doc";
-
-            //fileName = CleanFileName(fileName);
-            //outputFileName = CleanOutput(outputFileName);
-
-            outputFileName = outputFileName.Replace("//", "\\");
-            //outputFileName = outputFileName.Replace("\"", "");
-            //outputFileName = outputFileName.Replace("\\\\", "\\");
-
-            File.Copy(@fileName, @outputFileName);
-        }
-
-        private static string CleanFileName(string fileName)
-        {
-            return string.Join("", fileName.Split(Path.GetInvalidPathChars()));
-        }
-
-        private static string CleanOutput(string fileName)
-        {
-            return string.Join("\\", fileName.Split(Path.GetInvalidPathChars()));
+            List<Discipline> disciplines = GetAllDisciplinesWithContent();
+            foreach(Discipline discipline in disciplines)
+            {
+                Directory.CreateDirectory(this.outputPath + discipline.Name);
+                foreach(Topic topic in discipline.Topics)
+                {
+                    Directory.CreateDirectory(this.outputPath + discipline.Name+"\\"+topic.Name);
+                    foreach(Lesson lesson in topic.Lessons)
+                    {
+                        string path = Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/"));
+                        string fileName = path + "theme.doc";
+                        string outputFileName = this.outputPath + discipline.Name + "\\" + topic.Name + "\\" + lesson.Type + ".doc";
+                        outputFileName = outputFileName.Replace("//", "\\");
+                        File.Copy(@fileName, @outputFileName);
+                    }
+                }
+            }
+            return disciplines;
         }
     }
 }

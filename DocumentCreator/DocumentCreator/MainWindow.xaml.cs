@@ -54,7 +54,7 @@ namespace DocumentCreator
 
             //Логика
             ParseThematicPlan parser = new ParseThematicPlan(fileName, folderName+"//");
-            parser.LogicForParseWordAndSave();
+            parser.ParseThematicPlanAndCreateDirectories();
 
             File.Copy(System.IO.Path.Combine(sourceDir, fName), System.IO.Path.Combine(backupDir, fName), true);
             DialogWindow dialogWindow = new DialogWindow();

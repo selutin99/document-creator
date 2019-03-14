@@ -82,6 +82,8 @@
     <Compile Include="DialogWindow.xaml.cs">
       <DependentUpon>DialogWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Lesson.cs" />
+    <Compile Include="Topic.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -90,6 +92,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Discipline.cs" />
     <Compile Include="FilesAPI\ExcelAPI.cs" />
     <Compile Include="FilesAPI\WordAPI.cs" />
     <Compile Include="MainWindow.xaml.cs">
