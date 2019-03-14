@@ -43,7 +43,16 @@ namespace DocumentCreator
                         {
                             lastDiscipline = nextDiscipline;
                         }
-                        if (resultMap.ContainsKey(lastDiscipline))
+                        if (resultMap.ContainsKey(lastDiscipline)&&resultMap[lastDiscipline].IndexOf(',')>0)
+                        {
+                            string value;
+                            resultMap.TryGetValue(lastDiscipline, out value);
+                            value = value.Substring(0, value.IndexOf(','));
+                            resultMap[lastDiscipline] = value + "," + i;
+                            resultMap.Add(nextDiscipline, i.ToString());
+
+                        }
+                        else if (resultMap.ContainsKey(lastDiscipline))
                         {
                             string value;
                             resultMap.TryGetValue(lastDiscipline, out value);
@@ -123,6 +132,35 @@ namespace DocumentCreator
                 }
             }
             string lastValue = null;
+            if (lastDiscipline == null)
+            {
+                foreach(Word.Paragraph paragraph in doc.Paragraphs)
+                {
+                    Regex regex1 = new Regex(@"^*ОВП*");
+                    Regex regex2 = new Regex(@"^*ОГП*");
+                    Regex regex3 = new Regex(@"^*ВТП*");
+                    string text = paragraph.Range.Text;
+                    if(regex1.IsMatch(text))
+                    {
+                        text = text.Substring(text.IndexOf("OВП")).Trim();
+                        resultMap.Add(text, "9," + (cells.Count - 1));
+                        return resultMap;
+                    }
+                    if (regex2.IsMatch(text))
+                    {
+                        text = text.Substring(text.IndexOf("OГП")).Trim();
+                        resultMap.Add(text, "9," + (cells.Count - 1));
+                        return resultMap;
+                    }
+                    if (regex3.IsMatch(text))
+                    {
+                        text = text.Substring(text.IndexOf("ВТП")).Trim();
+                        resultMap.Add(text, "9," + (cells.Count - 1));
+                        return resultMap;
+                    }
+
+                }
+            }
             resultMap.TryGetValue(lastDiscipline, out lastValue);
             if (lastValue.IndexOf(',') > 0)
             {
@@ -162,7 +200,6 @@ namespace DocumentCreator
                     {
                         topicName = keyValueTopic.Key.Substring(0, 96);
                     }
-
                     discipline.Topics.Add(new Topic(topicName, GetLessonsByTopic(keyValueTopic)));
                 }
                 disciplines.Add(discipline);
