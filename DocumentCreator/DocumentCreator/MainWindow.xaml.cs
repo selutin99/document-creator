@@ -8,7 +8,7 @@ namespace DocumentCreator
     public partial class MainWindow : Window
     {
         private string fileName { get; set; }
-        private string folderName { get; set; }
+        private string folderName = @"C:\out\";
         private FolderBrowserDialog folderBrowserDialog1;
 
         public MainWindow()
@@ -36,15 +36,6 @@ namespace DocumentCreator
             CheckEnabledForGenerate();
         }
 
-        private void PathToSaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            DialogResult result = folderBrowserDialog1.ShowDialog();           
-            folderName = folderBrowserDialog1.SelectedPath;
-            SavePath.Content = folderName;
-            CheckEnabledForGenerate();
-        }
-
         //Сгенерировать УМР
         private void GenerateButton_Click(object sender, RoutedEventArgs e)
         {
@@ -53,19 +44,19 @@ namespace DocumentCreator
             string fName = System.IO.Path.GetFileName(fileName);
 
             //Логика
-            ParseThematicPlan parser = new ParseThematicPlan(fileName, folderName+"//");
+            ParseThematicPlan parser = new ParseThematicPlan(fileName, folderName);
             parser.ParseThematicPlanAndCreateDirectories();
 
             File.Copy(System.IO.Path.Combine(sourceDir, fName), System.IO.Path.Combine(backupDir, fName), true);
             DialogWindow dialogWindow = new DialogWindow();
+            dialogWindow.makeOpenButtonEnabled();
             dialogWindow.unswerLabel.Content = "УМР успешно созданы";
             dialogWindow.Show();   
         }
 
         private void CheckEnabledForGenerate()
         {
-            if (string.IsNullOrEmpty(PathToFile.Content.ToString()) ||
-               string.IsNullOrEmpty(SavePath.Content.ToString()))
+            if (string.IsNullOrEmpty(PathToFile.Content.ToString()))
             {
                 GenerateButton.IsEnabled = false;
             }
