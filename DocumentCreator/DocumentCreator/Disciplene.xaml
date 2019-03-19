@@ -7,6 +7,10 @@
         mc:Ignorable="d"
         Title="Disciplene" Height="450" Width="800">
     <Grid>
-        
+        <Label x:Name="NameOfDiscipline" Content="" Margin="122,61,121,0" VerticalAlignment="Top" Height="58"/>
+        <Label x:Name="Theme" Content="" Margin="122,124,121,0" VerticalAlignment="Top" Height="45"/>
+        <Label x:Name="LessonType" Content="" Margin="122,174,121,194" RenderTransformOrigin="-2.899,-1.493"/>
+        <Button x:Name="CreateButton" Content="Создать документ" Margin="325,0,288,10" VerticalAlignment="Bottom" Height="51" Click="CreateButton_Click"/>
+
     </Grid>
 </Window>

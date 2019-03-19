@@ -3,6 +3,7 @@ using System.Windows.Input;
 using System.Windows.Forms;
 using System.IO;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DocumentCreator
 {
@@ -45,23 +46,30 @@ namespace DocumentCreator
             string fName = System.IO.Path.GetFileName(fileName);
 
             //Логика
-            ParseWorkPrograming parseWorkPrograming = new ParseWorkPrograming("C:\\programma.docx");
-            List<string> requirementsForStudent = parseWorkPrograming.ParsePlan();
+            //ParseWorkPrograming parseWorkPrograming = new ParseWorkPrograming("C:\\programma.docx");
+            //List<string> requirementsForStudent = parseWorkPrograming.ParsePlan();
             ParseThematicPlan parser = new ParseThematicPlan(fileName, folderName+"//");
             List<Discipline> disciplines = parser.ParseThematicPlanAndCreateDirectories();
             foreach (Discipline discipline in disciplines)
             {
-                Directory.CreateDirectory(this.outputPath + discipline.Name);
+                Directory.CreateDirectory(parser.GetOutputPath() + discipline.Name);
                 foreach (Topic topic in discipline.Topics)
                 {
-                    Directory.CreateDirectory(this.outputPath + discipline.Name + "\\" + topic.Name);
-                    foreach (Lesson lesson in topic.Lessons)
+                    Directory.CreateDirectory(parser.GetOutputPath() + discipline.Name + "\\" + topic.Name);
+                    for (int i = 0; i < topic.Lessons.Count;)
                     {
+                        Lesson lesson = topic.Lessons[i];
+                        Disciplene disciplineWindow = new Disciplene();
+                        disciplineWindow.NameOfDiscipline.Content = discipline.Name;
+                        disciplineWindow.Theme.Content = topic.Name;
+                        disciplineWindow.LessonType.Content = lesson.Type;
+                        disciplineWindow.Show();
                         string path = Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/"));
                         string fileName = path + "theme.doc";
-                        string outputFileName = this.outputPath + discipline.Name + "\\" + topic.Name + "\\" + lesson.Type + ".doc";
+                        string outputFileName = parser.GetOutputPath() + discipline.Name + "\\" + topic.Name + "\\" + lesson.Type + ".doc";
                         outputFileName = outputFileName.Replace("//", "\\");
                         File.Copy(@fileName, @outputFileName);
+                        while (disciplineWindow.CreateButton.IsPressed == true) { i++; }
                     }
                 }
             }

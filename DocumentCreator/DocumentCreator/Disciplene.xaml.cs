@@ -23,5 +23,10 @@ namespace DocumentCreator
         {
             InitializeComponent();
         }
+
+        private void CreateButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

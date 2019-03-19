@@ -9,14 +9,14 @@ namespace DocumentCreator
 {
     internal class ParseThematicPlan
     {
-        private string outputPath
-        {
-            get { return outputPath; }
-        }
+        private string outputPath;
         private Word.Document doc;
         private Word.Table table;
 
-
+        public string GetOutputPath()
+        {
+            return this.outputPath;
+        }
 
         public ParseThematicPlan(string inputFilePath, string outputPath)
         {
@@ -271,22 +271,6 @@ namespace DocumentCreator
         public List<Discipline> ParseThematicPlanAndCreateDirectories()
         {
             List<Discipline> disciplines = GetAllDisciplinesWithContent();
-            foreach(Discipline discipline in disciplines)
-            {
-                Directory.CreateDirectory(this.outputPath + discipline.Name);
-                foreach(Topic topic in discipline.Topics)
-                {
-                    Directory.CreateDirectory(this.outputPath + discipline.Name+"\\"+topic.Name);
-                    foreach(Lesson lesson in topic.Lessons)
-                    {
-                        string path = Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/"));
-                        string fileName = path + "theme.doc";
-                        string outputFileName = this.outputPath + discipline.Name + "\\" + topic.Name + "\\" + lesson.Type + ".doc";
-                        outputFileName = outputFileName.Replace("//", "\\");
-                        File.Copy(@fileName, @outputFileName);
-                    }
-                }
-            }
             return disciplines;
         }
     }
