@@ -21,7 +21,8 @@ namespace DocumentCreator
 
         public List<string> ParsePlan()
         {
-            for(int j = 1; j < table.Count; j++) { 
+            for (int j = 1; j < table.Count; j++)
+            {
                 Word.Range range = table[j].Range;
                 Word.Cells cells = range.Cells;
                 List<string> requirementsForStudent = new List<string>();
@@ -36,7 +37,7 @@ namespace DocumentCreator
                         {
                             text = text.Substring(text.IndexOf("знать:"));
                             string[] requirements = text.Split(';');
-                            foreach(string str in requirements)
+                            foreach (string str in requirements)
                             {
                                 requirementsForStudent.Add(str.Replace("\r", ""));
                             }
@@ -49,7 +50,5 @@ namespace DocumentCreator
             WordAPI.Close(doc);
             return null;
         }
-
-
     }
 }

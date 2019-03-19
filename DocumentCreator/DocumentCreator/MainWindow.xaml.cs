@@ -48,7 +48,23 @@ namespace DocumentCreator
             ParseWorkPrograming parseWorkPrograming = new ParseWorkPrograming("C:\\programma.docx");
             List<string> requirementsForStudent = parseWorkPrograming.ParsePlan();
             ParseThematicPlan parser = new ParseThematicPlan(fileName, folderName+"//");
-            List<Discipline> discipline=parser.ParseThematicPlanAndCreateDirectories();
+            List<Discipline> disciplines = parser.ParseThematicPlanAndCreateDirectories();
+            foreach (Discipline discipline in disciplines)
+            {
+                Directory.CreateDirectory(this.outputPath + discipline.Name);
+                foreach (Topic topic in discipline.Topics)
+                {
+                    Directory.CreateDirectory(this.outputPath + discipline.Name + "\\" + topic.Name);
+                    foreach (Lesson lesson in topic.Lessons)
+                    {
+                        string path = Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/"));
+                        string fileName = path + "theme.doc";
+                        string outputFileName = this.outputPath + discipline.Name + "\\" + topic.Name + "\\" + lesson.Type + ".doc";
+                        outputFileName = outputFileName.Replace("//", "\\");
+                        File.Copy(@fileName, @outputFileName);
+                    }
+                }
+            }
 
             /*ParseThematicPlan parser = new ParseThematicPlan(fileName, folderName);
             parser.ParseThematicPlanAndCreateDirectories();*/
