@@ -50,29 +50,28 @@ namespace DocumentCreator
             //List<string> requirementsForStudent = parseWorkPrograming.ParsePlan();
             ParseThematicPlan parser = new ParseThematicPlan(fileName, folderName+"//");
             List<Discipline> disciplines = parser.ParseThematicPlanAndCreateDirectories();
-            foreach (Discipline discipline in disciplines)
-            {
-                Directory.CreateDirectory(parser.GetOutputPath() + discipline.Name);
-                foreach (Topic topic in discipline.Topics)
+                foreach (Discipline discipline in disciplines)
                 {
-                    Directory.CreateDirectory(parser.GetOutputPath() + discipline.Name + "\\" + topic.Name);
-                    for (int i = 0; i < topic.Lessons.Count;)
+                    Directory.CreateDirectory(parser.GetOutputPath() + discipline.Name);
+                    foreach (Topic topic in discipline.Topics)
                     {
-                        Lesson lesson = topic.Lessons[i];
-                        Disciplene disciplineWindow = new Disciplene();
-                        disciplineWindow.NameOfDiscipline.Content = discipline.Name;
-                        disciplineWindow.Theme.Content = topic.Name;
-                        disciplineWindow.LessonType.Content = lesson.Type;
-                        disciplineWindow.Show();
-                        string path = Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/"));
-                        string fileName = path + "theme.doc";
-                        string outputFileName = parser.GetOutputPath() + discipline.Name + "\\" + topic.Name + "\\" + lesson.Type + ".doc";
-                        outputFileName = outputFileName.Replace("//", "\\");
-                        File.Copy(@fileName, @outputFileName);
-                        while (disciplineWindow.CreateButton.IsPressed == true) { i++; }
+                        Directory.CreateDirectory(parser.GetOutputPath() + discipline.Name + "\\" + topic.Name);
+                        for (int i = 0; i < topic.Lessons.Count;i++)
+                        {
+                            Lesson lesson = topic.Lessons[i];
+                            Disciplene disciplineWindow = new Disciplene();
+                            disciplineWindow.NameOfDiscipline.Content = discipline.Name;
+                            disciplineWindow.Theme.Content = topic.Name;
+                            disciplineWindow.LessonType.Content = lesson.Type;
+                            disciplineWindow.ShowDialog();
+                            string path = Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/"));
+                            string fileName = path + "theme.doc";
+                            string outputFileName = parser.GetOutputPath() + discipline.Name + "\\" + topic.Name + "\\" + lesson.Type + ".doc";
+                            outputFileName = outputFileName.Replace("//", "\\");
+                            File.Copy(@fileName, @outputFileName);
+                        }
                     }
                 }
-            }
 
             /*ParseThematicPlan parser = new ParseThematicPlan(fileName, folderName);
             parser.ParseThematicPlanAndCreateDirectories();*/
