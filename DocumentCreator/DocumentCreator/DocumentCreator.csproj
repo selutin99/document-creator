@@ -83,7 +83,6 @@
       <DependentUpon>DialogWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Lesson.cs" />
-    <Compile Include="ParseWorkPrograming.cs" />
     <Compile Include="Topic.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

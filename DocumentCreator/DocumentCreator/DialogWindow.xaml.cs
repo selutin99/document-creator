@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,11 +23,26 @@ namespace DocumentCreator
         public DialogWindow()
         {
             InitializeComponent();
+
+            openFolderButton.IsEnabled = false;
+            openFolderButton.Opacity = 0;
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void OpenFolderButton_Click(object sender, RoutedEventArgs e)
+        {
+            string folderName = @"C:\out\";
+            Process.Start(folderName);
+        }
+
+        public void makeOpenButtonEnabled()
+        {
+            openFolderButton.IsEnabled = true;
+            openFolderButton.Opacity = 100;
         }
     }
 }
