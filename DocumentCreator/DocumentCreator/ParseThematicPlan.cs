@@ -9,9 +9,13 @@ namespace DocumentCreator
 {
     internal class ParseThematicPlan
     {
-        private string outputPath;
+        private string outputPath
+        {
+            get { return outputPath; }
+        }
         private Word.Document doc;
         private Word.Table table;
+
 
 
         public ParseThematicPlan(string inputFilePath, string outputPath)
