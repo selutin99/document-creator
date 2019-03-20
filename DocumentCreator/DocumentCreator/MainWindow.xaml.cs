@@ -3,6 +3,7 @@ using System.Windows.Input;
 using System.Windows.Forms;
 using System.IO;
 using System.Collections.Generic;
+using System;
 
 namespace DocumentCreator
 {
@@ -15,8 +16,26 @@ namespace DocumentCreator
         public MainWindow()
         {
             InitializeComponent();
+            CreateFolder(folderName);
         }
-        
+
+        public static void CreateFolder(string folderPath)
+        {
+            try
+            {
+                if (Directory.Exists(folderPath))
+                {
+                    return;
+                }
+
+                DirectoryInfo di = Directory.CreateDirectory(folderPath);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Не могу создать папку!");
+            }
+        }
+
         private void DownloadButton_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
@@ -45,8 +64,8 @@ namespace DocumentCreator
             string fName = System.IO.Path.GetFileName(fileName);
 
             //Логика
-            ParseWorkPrograming parseWorkPrograming = new ParseWorkPrograming("C:\\programma.docx");
-            List<string> requirementsForStudent = parseWorkPrograming.ParsePlan();
+            /*ParseWorkPrograming parseWorkPrograming = new ParseWorkPrograming("C:\\programma.docx");
+            List<string> requirementsForStudent = parseWorkPrograming.ParsePlan();*/
             ParseThematicPlan parser = new ParseThematicPlan(fileName, folderName+"//");
             List<Discipline> discipline=parser.ParseThematicPlanAndCreateDirectories();
 

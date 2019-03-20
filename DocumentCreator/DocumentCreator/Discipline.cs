@@ -17,7 +17,7 @@ namespace DocumentCreator
             this.Topics = topics;
         }
 
-        public string Name { get => name; set => name = value; }
-        internal List<Topic> Topics { get => topics; set => topics = value; }
+        public string Name { get { return name; } set { name = value; } }
+        internal List<Topic> Topics { get { return topics; } set { topics = value; } }
     }
 }
