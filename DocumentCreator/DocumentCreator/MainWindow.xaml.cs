@@ -4,12 +4,17 @@ using System.Windows.Forms;
 using System.IO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using System;
+using System.ComponentModel;
+using System.Threading;
 
 namespace DocumentCreator
 {
     public partial class MainWindow : Window
     {
         private string fileName { get; set; }
+        public string FolderName { get => folderName; set => folderName = value; }
         private string folderName = @"C:\out\";
         private FolderBrowserDialog folderBrowserDialog1;
 
@@ -17,7 +22,7 @@ namespace DocumentCreator
         {
             InitializeComponent();
         }
-        
+
         private void DownloadButton_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
@@ -42,13 +47,13 @@ namespace DocumentCreator
         private void GenerateButton_Click(object sender, RoutedEventArgs e)
         {
             string sourceDir = System.IO.Path.GetDirectoryName(fileName);
-            string backupDir = folderName;
+            string backupDir = FolderName;
             string fName = System.IO.Path.GetFileName(fileName);
 
             //Логика
             //ParseWorkPrograming parseWorkPrograming = new ParseWorkPrograming("C:\\programma.docx");
             //List<string> requirementsForStudent = parseWorkPrograming.ParsePlan();
-            ParseThematicPlan parser = new ParseThematicPlan(fileName, folderName+"//");
+            ParseThematicPlan parser = new ParseThematicPlan(fileName, FolderName+"//");
             List<Discipline> disciplines = parser.ParseThematicPlanAndCreateDirectories();
                 foreach (Discipline discipline in disciplines)
                 {
@@ -59,11 +64,11 @@ namespace DocumentCreator
                         for (int i = 0; i < topic.Lessons.Count;i++)
                         {
                             Lesson lesson = topic.Lessons[i];
-                            Disciplene disciplineWindow = new Disciplene();
-                            disciplineWindow.NameOfDiscipline.Content = discipline.Name;
-                            disciplineWindow.Theme.Content = topic.Name;
-                            disciplineWindow.LessonType.Content = lesson.Type;
-                            disciplineWindow.ShowDialog();
+                            //Disciplene disciplineWindow = new Disciplene();
+                            //disciplineWindow.NameOfDiscipline.Content = discipline.Name;
+                            //disciplineWindow.Theme.Content = topic.Name;
+                            //disciplineWindow.LessonType.Content = lesson.Type;
+                            //disciplineWindow.ShowDialog();
                             string path = Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/"));
                             string fileName = path + "theme.doc";
                             string outputFileName = parser.GetOutputPath() + discipline.Name + "\\" + topic.Name + "\\" + lesson.Type + ".doc";
@@ -79,6 +84,8 @@ namespace DocumentCreator
             File.Copy(System.IO.Path.Combine(sourceDir, fName), System.IO.Path.Combine(backupDir, fName), true);
             DialogWindow dialogWindow = new DialogWindow();
             dialogWindow.makeOpenButtonEnabled();
+            string folderName = @"C:\out\";
+            Process.Start(folderName);
             dialogWindow.unswerLabel.Content = "УМР успешно созданы";
             dialogWindow.Show();   
         }

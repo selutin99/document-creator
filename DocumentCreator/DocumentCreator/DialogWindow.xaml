@@ -12,8 +12,8 @@
             <ColumnDefinition Width="258*"/>
         </Grid.ColumnDefinitions>
         <Label x:Name="unswerLabel" Content="" HorizontalAlignment="Center" Margin="14,10,5,38" Width="498" FontFamily="Times New Roman" FontSize="22" Grid.ColumnSpan="2"/>
-        <Button x:Name="closeButton" Content="Закрыть" HorizontalAlignment="Left" Margin="-46,173,0,0" VerticalAlignment="Top" Width="93" Height="20" FontFamily="Times New Roman" FontSize="14" Click="CloseButton_Click" Grid.Column="1"/>
-        <Button x:Name="openFolderButton" Content="Открыть папку с документами" HorizontalAlignment="Left" Margin="165,147,0,0" VerticalAlignment="Top" Width="185" Grid.ColumnSpan="2" Click="OpenFolderButton_Click"/>
+        <Button x:Name="closeButton" Content="Закрыть" HorizontalAlignment="Right" Margin="0,168,-54,0" VerticalAlignment="Top" Width="111" Height="28" FontFamily="Times New Roman" FontSize="14" Click="CloseButton_Click"/>
+        <Button x:Name="openFolderButton" Content="Открыть папку с документами" HorizontalAlignment="Left" Margin="165,118,-91,0" VerticalAlignment="Top" Width="185" Click="OpenFolderButton_Click" Height="32"/>
 
     </Grid>
 </Window>
