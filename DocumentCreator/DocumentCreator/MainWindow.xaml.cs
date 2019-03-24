@@ -55,8 +55,9 @@ namespace DocumentCreator
             //List<string> requirementsForStudent = parseWorkPrograming.ParsePlan();
             ParseThematicPlan parser = new ParseThematicPlan(fileName, FolderName+"//");
             List<Discipline> disciplines = parser.ParseThematicPlanAndCreateDirectories();
-                foreach (Discipline discipline in disciplines)
+            foreach (Discipline discipline in disciplines)
                 {
+                    ComboDisciplines.Items.Add(discipline.Name);
                     Directory.CreateDirectory(parser.GetOutputPath() + discipline.Name);
                     foreach (Topic topic in discipline.Topics)
                     {
