@@ -108,8 +108,8 @@ namespace DocumentCreator
 
         private void ComboDisciplines_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            ComboTheme.Items.Clear();
             ComboLesson.Items.Clear();
+            ComboTheme.Items.Clear();
             foreach (Discipline discipline in Disciplines)
             {
                 if (discipline.Name.Equals(ComboDisciplines.SelectedItem.ToString()))
@@ -124,24 +124,24 @@ namespace DocumentCreator
 
         private void ComboTheme_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            ComboLesson.Items.Clear();
-            foreach (Discipline discipline in Disciplines)
-            {
-                if (discipline.Name.Equals(ComboDisciplines.SelectedItem.ToString()))
+                ComboLesson.Items.Clear();
+                foreach (Discipline discipline in Disciplines)
                 {
-                    foreach (Topic topic in discipline.Topics)
+                    if (discipline.Name.Equals(ComboDisciplines.SelectedItem.ToString()))
                     {
-                        if (topic.Name.Equals(ComboTheme.SelectedItem.ToString()))
+                        foreach (Topic topic in discipline.Topics)
                         {
-                            for (int i = 0; i < topic.Lessons.Count; i++)
+                            if (topic.Name.Equals(ComboTheme.SelectedItem.ToString()))//Ошибка при повторном выборе дисциплины
                             {
+                                for (int i = 0; i < topic.Lessons.Count; i++)
+                                {
                                     Lesson lesson = topic.Lessons[i];
                                     ComboLesson.Items.Add(lesson.Type);
+                                }
                             }
                         }
                     }
                 }
-            }
         }
 
         private void ComboLesson_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
