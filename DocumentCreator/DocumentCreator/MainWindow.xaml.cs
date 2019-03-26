@@ -15,6 +15,9 @@ namespace DocumentCreator
     {
         private string fileName { get; set; }
         public string FolderName { get => folderName; set => folderName = value; }
+        internal List<Discipline> Disciplines { get => disciplines; set => disciplines = value; }
+        private List<Discipline> disciplines;
+
         private string folderName = @"C:\out\";
         private FolderBrowserDialog folderBrowserDialog1;
 
@@ -54,8 +57,9 @@ namespace DocumentCreator
             //ParseWorkPrograming parseWorkPrograming = new ParseWorkPrograming("C:\\programma.docx");
             //List<string> requirementsForStudent = parseWorkPrograming.ParsePlan();
             ParseThematicPlan parser = new ParseThematicPlan(fileName, FolderName+"//");
-            List<Discipline> disciplines = parser.ParseThematicPlanAndCreateDirectories();
-            foreach (Discipline discipline in disciplines)
+            Disciplines = parser.ParseThematicPlanAndCreateDirectories();
+            //List<Discipline> disciplines = parser.ParseThematicPlanAndCreateDirectories();
+            foreach (Discipline discipline in Disciplines)
                 {
                     ComboDisciplines.Items.Add(discipline.Name);
                     Directory.CreateDirectory(parser.GetOutputPath() + discipline.Name);
@@ -81,7 +85,6 @@ namespace DocumentCreator
 
             /*ParseThematicPlan parser = new ParseThematicPlan(fileName, folderName);
             parser.ParseThematicPlanAndCreateDirectories();*/
-
             File.Copy(System.IO.Path.Combine(sourceDir, fName), System.IO.Path.Combine(backupDir, fName), true);
             DialogWindow dialogWindow = new DialogWindow();
             dialogWindow.makeOpenButtonEnabled();
@@ -101,6 +104,49 @@ namespace DocumentCreator
             {
                 GenerateButton.IsEnabled = true;
             }
+        }
+
+        private void ComboDisciplines_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            ComboTheme.Items.Clear();
+            ComboLesson.Items.Clear();
+            foreach (Discipline discipline in Disciplines)
+            {
+                if (discipline.Name.Equals(ComboDisciplines.SelectedItem.ToString()))
+                {
+                    foreach (Topic topic in discipline.Topics)
+                    {
+                        ComboTheme.Items.Add(topic.Name);
+                    }
+                }
+            }
+        }
+
+        private void ComboTheme_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            ComboLesson.Items.Clear();
+            foreach (Discipline discipline in Disciplines)
+            {
+                if (discipline.Name.Equals(ComboDisciplines.SelectedItem.ToString()))
+                {
+                    foreach (Topic topic in discipline.Topics)
+                    {
+                        if (topic.Name.Equals(ComboTheme.SelectedItem.ToString()))
+                        {
+                            for (int i = 0; i < topic.Lessons.Count; i++)
+                            {
+                                    Lesson lesson = topic.Lessons[i];
+                                    ComboLesson.Items.Add(lesson.Type);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void ComboLesson_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            ChangeButton.IsEnabled = true;
         }
     }
 }
