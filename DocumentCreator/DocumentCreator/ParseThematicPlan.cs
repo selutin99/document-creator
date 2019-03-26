@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+
 using Word = Microsoft.Office.Interop.Word;
+using PowerPoint = Microsoft.Office.Interop.PowerPoint;
+using Microsoft.Office.Core;
 
 namespace DocumentCreator
 {
@@ -13,6 +16,7 @@ namespace DocumentCreator
         private Word.Document doc;
         private Word.Table table;
 
+        private string presentationTemplatePath = Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../Resources/template.pptx")); 
 
         public ParseThematicPlan(string inputFilePath, string outputPath)
         {
@@ -284,6 +288,11 @@ namespace DocumentCreator
                 }
             }
             return disciplines;
+        }
+
+        public static void CreatePresentation(string directoryPath)
+        {
+            
         }
     }
 }
