@@ -109,15 +109,22 @@ namespace DocumentCreator
         private void ComboDisciplines_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             ComboLesson.Items.Clear();
-            ComboTheme.Items.Clear();
             foreach (Discipline discipline in Disciplines)
             {
                 if (discipline.Name.Equals(ComboDisciplines.SelectedItem.ToString()))
                 {
-                    foreach (Topic topic in discipline.Topics)
-                    {
-                        ComboTheme.Items.Add(topic.Name);
-                    }
+                    ComboTheme.Items.Insert(0, "Выберите тему");
+                    ComboTheme.SelectedIndex = 0;
+                        for (int i = 1; i < ComboTheme.Items.Count; i++)
+                        {
+                            ComboTheme.Items.RemoveAt(i);
+                            ComboTheme.Items.Refresh();
+                        }
+                        //ComboTheme.SelectedIndex = 0;
+                        foreach (Topic topic in discipline.Topics)
+                        {
+                            ComboTheme.Items.Add(topic.Name);
+                        }
                 }
             }
         }
@@ -143,7 +150,7 @@ namespace DocumentCreator
                     }
                 }
         }
-
+        //ComboBox.Remove();
         private void ComboLesson_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             ChangeButton.IsEnabled = true;
