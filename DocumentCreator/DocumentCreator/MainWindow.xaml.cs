@@ -115,10 +115,10 @@ namespace DocumentCreator
                 {
                     ComboTheme.Items.Insert(0, "Выберите тему");
                     ComboTheme.SelectedIndex = 0;
-                        for (int i = 1; i < ComboTheme.Items.Count; i++)
+                    int count = ComboTheme.Items.Count;
+                        for (int i = 1; i < count; i++)
                         {
-                            ComboTheme.Items.RemoveAt(i);
-                            ComboTheme.Items.Refresh();
+                            ComboTheme.Items.RemoveAt(1);
                         }
                         //ComboTheme.SelectedIndex = 0;
                         foreach (Topic topic in discipline.Topics)
