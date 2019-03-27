@@ -55,7 +55,7 @@ namespace DocumentCreator
 
             //Логика
             ParseWorkPrograming parseWorkPrograming = new ParseWorkPrograming("C:\\programma.docx");
-            List<string> requirementsForStudent = parseWorkPrograming.ParsePlan();
+            Dictionary<string,List<string>> requirementsForStudent = parseWorkPrograming.ParsePlan();
             ParseThematicPlan parser = new ParseThematicPlan(fileName, folderName+"//");
             List<Discipline> discipline=parser.ParseThematicPlanAndCreateDirectories();
             File.Copy(System.IO.Path.Combine(sourceDir, fName), System.IO.Path.Combine(backupDir, fName), true);
