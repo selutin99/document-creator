@@ -25,7 +25,7 @@
         <Label Content="Выберите &#xD;&#xA;дисциплину:" Margin="45,0,94,134" VerticalAlignment="Bottom" Height="49"/>
         <Label Content="Выберите &#xA;тему:" Margin="-59,0,0,134" VerticalAlignment="Bottom" Height="49" Grid.Column="1" HorizontalAlignment="Left" Width="120"/>
         <Label Content="Выберите &#xA;занятие:" Margin="94,0,44,134" VerticalAlignment="Bottom" Height="49" Grid.Column="1"/>
-        <Button x:Name="ChangeButton" Content="Изменить документы" HorizontalAlignment="Right" Margin="0,0,-61,31" VerticalAlignment="Bottom" Width="133" Click="GenerateButton_Click" Height="39" IsEnabled="False"/>
         <ComboBox x:Name="ComboDisciplines" Margin="45,0,94,107" VerticalAlignment="Bottom" SelectionChanged="ComboDisciplines_SelectionChanged"/>
+        <Button x:Name="ChangeButton" Content="Изменить документ" HorizontalAlignment="Right" Margin="0,0,-61,24" VerticalAlignment="Bottom" Width="133" Height="46" IsEnabled="False"/>
     </Grid>
 </Window>
