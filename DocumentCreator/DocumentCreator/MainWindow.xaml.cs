@@ -155,5 +155,10 @@ namespace DocumentCreator
         {
             ChangeButton.IsEnabled = true;
         }
+
+        private void ChangeButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeWindow dialogWindow = new ChangeWindow();
+        }
     }
 }

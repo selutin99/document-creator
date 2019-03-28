@@ -79,6 +79,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ChangeWindow.xaml.cs">
+      <DependentUpon>ChangeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DialogWindow.xaml.cs">
       <DependentUpon>DialogWindow.xaml</DependentUpon>
     </Compile>
@@ -88,6 +91,10 @@
     <Compile Include="Lesson.cs" />
     <Compile Include="ParseWorkPrograming.cs" />
     <Compile Include="Topic.cs" />
+    <Page Include="ChangeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Disciplene.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
