@@ -11,6 +11,7 @@ namespace DocumentCreator.FilesAPI
         public static Word.Document GetDocument(string fileName)
         {
             //app.Visible = true;
+            app = new Word.Application();
 
             Word.Document doc = null;
 

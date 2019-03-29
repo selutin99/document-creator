@@ -42,15 +42,16 @@ namespace DocumentCreator
                             string[] requirements = text.Split(';');
                             foreach(string str in requirements)
                             {
-                                if (str.StartsWith("уметь:") || str.StartsWith("Уметь:"))
+                                string trimStr = str.Trim();
+                                if (trimStr.StartsWith("уметь:") || trimStr.StartsWith("Уметь:"))
                                 {
                                     key = "Уметь";
                                 }
-                                else if(str.StartsWith("владеть:") || str.StartsWith("Владеть:"))
+                                else if(trimStr.StartsWith("владеть:") || trimStr.StartsWith("Владеть:"))
                                 {
                                     key = "Владеть";
                                 }
-                                requirementsForStudent[key].Add(str);
+                                requirementsForStudent[key].Add(trimStr);
                             }
                         }
 
