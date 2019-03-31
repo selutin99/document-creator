@@ -5,6 +5,56 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DocumentCreator"
         mc:Ignorable="d"
-        Title="ChangeWindow" Height="450" Width="800">
-    <Grid/>
+        Title="ChangeWindow" Height="1350" Width="800">
+    <ScrollViewer VerticalScrollBarVisibility="Visible">
+        <Grid>
+            <Label Content="Название дисциплины:" HorizontalAlignment="Left" Margin="23,58,0,0" VerticalAlignment="Top" Height="31" Width="199"/>
+            <TextBox Height="31" Margin="249,58,22,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <Label Content="Вид занятия:" HorizontalAlignment="Left" Margin="23,117,0,0" VerticalAlignment="Top" Width="199" Height="30" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+            <Label Content="Метод проведения занятия:" HorizontalAlignment="Left" Margin="23,170,0,0" VerticalAlignment="Top" Width="199"/>
+            <Label Content="Время: " HorizontalAlignment="Left" Margin="23,224,0,0" VerticalAlignment="Top" Width="199"/>
+            <Label Content="Место: " HorizontalAlignment="Left" Margin="23,278,0,0" VerticalAlignment="Top" Width="199"/>
+            <Label Content="Технические средства обучения:" HorizontalAlignment="Left" Margin="23,332,0,0" Width="199" Height="28" VerticalAlignment="Top"/>
+            <Label Content="Расчет времени на введение:" HorizontalAlignment="Left" Margin="23,388,0,0" Width="199" VerticalAlignment="Top"/>
+            <Label Content="Что вводить" HorizontalAlignment="Left" Margin="41,4,0,0" VerticalAlignment="Top" Width="181" FontSize="16" FontWeight="Bold"/>
+            <Label Content="Место для ввода информации" Margin="249,4,53,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
+            <Label Content="Расчет времени на заключение:" HorizontalAlignment="Left" Margin="23,442,0,0" VerticalAlignment="Top" Width="199"/>
+            <Label Content="Общие &#xD;&#xA;организационно-методические &#xD;&#xA;рекомендации:" HorizontalAlignment="Left" Margin="23,496,0,0" VerticalAlignment="Top" Width="199" Height="61"/>
+            <Separator Height="18" Margin="0,309,0,0" VerticalAlignment="Top"/>
+            <Separator Height="18" Margin="0,94,0,0" VerticalAlignment="Top"/>
+            <Separator Height="18" Margin="0,35,0,0" VerticalAlignment="Top"/>
+            <Separator Height="18" Margin="0,147,0,0" VerticalAlignment="Top"/>
+            <Separator Height="18" Margin="0,201,0,0" VerticalAlignment="Top"/>
+            <Separator Height="18" Margin="0,255,0,0" VerticalAlignment="Top"/>
+            <Separator Height="18" Margin="0,365,0,0" VerticalAlignment="Top"/>
+            <Separator Height="18" Margin="0,419,0,0" VerticalAlignment="Top"/>
+            <Separator Height="18" Margin="-10,473,10,0" VerticalAlignment="Top"/>
+            <TextBox Height="194" Margin="249,496,22,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <Separator Height="18" Margin="0,0,0,327" VerticalAlignment="Bottom"/>
+            <Separator Height="18" Margin="0,695,0,0" VerticalAlignment="Top"/>
+            <Label Content="Содержание вступительной части" HorizontalAlignment="Left" Margin="23,718,0,525" Width="199"/>
+            <TextBox Margin="249,718,22,350" TextWrapping="Wrap"/>
+            <Label Content="Методические рекомендации &#xD;&#xA;по отработке учебных вопросов" HorizontalAlignment="Left" Margin="23,0,0,280" VerticalAlignment="Bottom" Width="199"/>
+            <TextBox Height="244" Margin="249,0,22,78" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
+            <TextBox Height="35" Margin="249,112,22,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <TextBox Height="31" Margin="249,165,22,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <TextBox Height="31" Margin="249,224,22,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <TextBox Height="31" Margin="249,278,22,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <TextBox Height="33" Margin="249,332,22,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <TextBox Height="31" Margin="249,388,22,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <TextBox Height="31" Margin="249,442,22,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <Separator Margin="-297,464,-181,0" RenderTransformOrigin="0.508,3.091" Height="68" VerticalAlignment="Top">
+                <Separator.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-90.004"/>
+                        <TranslateTransform X="56.199" Y="-58.01"/>
+                    </TransformGroup>
+                </Separator.RenderTransform>
+            </Separator>
+            <Separator Height="18" Margin="-10,0,10,55" VerticalAlignment="Bottom"/>
+            <Button Content="ГОТОВО" Margin="284,0,284,10" VerticalAlignment="Bottom" Height="45" FontSize="24" FontWeight="Bold"/>
+        </Grid>
+    </ScrollViewer>
 </Window>

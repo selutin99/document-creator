@@ -158,7 +158,30 @@ namespace DocumentCreator
 
         private void ChangeButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangeWindow dialogWindow = new ChangeWindow();
+            Console.WriteLine(ComboLesson.SelectedIndex);
+            String firstSymb = ComboLesson.SelectedItem.ToString();
+            firstSymb = firstSymb[0].ToString();
+            if (String.Compare(firstSymb, "Л") == 0)
+            {
+                ChangeWindow change = new ChangeWindow();
+                change.Show();
+            }
+            else if (String.Compare(firstSymb, "С") == 0)
+            {
+                //Открытие окна самостоятельных работ
+            }
+            else if (String.Compare(firstSymb, "Г") == 0)
+            {
+                //Открытие окна групповых занятий
+            }
+            else if (String.Compare(firstSymb, "Т") == 0)
+            {
+                //Открытие окна тренировок 
+            }
+            else if (String.Compare(firstSymb, "П") == 0)
+            {
+                //Открытие окна практических занятий
+            }
         }
     }
 }
