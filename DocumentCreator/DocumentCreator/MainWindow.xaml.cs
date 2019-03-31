@@ -159,6 +159,7 @@ namespace DocumentCreator
         private void ChangeButton_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine(ComboLesson.SelectedIndex);
+            ChangeWindow change = new ChangeWindow();           
             String firstSymb = ComboLesson.SelectedItem.ToString();
             firstSymb = firstSymb[0].ToString();
             if (String.Compare(firstSymb, "Л") == 0)
@@ -182,6 +183,7 @@ namespace DocumentCreator
             {
                 //Открытие окна практических занятий
             }
+            change.Show();
         }
     }
 }
