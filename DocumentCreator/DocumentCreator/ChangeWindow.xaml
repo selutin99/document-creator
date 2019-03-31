@@ -6,5 +6,7 @@
         xmlns:local="clr-namespace:DocumentCreator"
         mc:Ignorable="d"
         Title="ChangeWindow" Height="450" Width="800">
-    <Grid/>
+    <Grid>
+        <Label x:Name="ChangeWindowLabel" Content="Label" HorizontalAlignment="Left" Margin="214,131,0,0" VerticalAlignment="Top" Height="37" Width="337"/>
+    </Grid>
 </Window>
