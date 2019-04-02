@@ -88,6 +88,9 @@
     <Compile Include="Disciplene.xaml.cs">
       <DependentUpon>Disciplene.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IndependentWork.xaml.cs">
+      <DependentUpon>IndependentWork.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Lesson.cs" />
     <Compile Include="ParseWorkPrograming.cs" />
     <Compile Include="Topic.cs" />
@@ -96,6 +99,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Disciplene.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="IndependentWork.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
