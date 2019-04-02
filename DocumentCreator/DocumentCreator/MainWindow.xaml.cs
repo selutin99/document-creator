@@ -54,8 +54,8 @@ namespace DocumentCreator
             string fName = System.IO.Path.GetFileName(fileName);
 
             //Логика
-            //ParseWorkPrograming parseWorkPrograming = new ParseWorkPrograming("C:\\programma.docx");
-            //List<string> requirementsForStudent = parseWorkPrograming.ParsePlan();
+            ParseWorkPrograming parseWorkPrograming = new ParseWorkPrograming("C:\\programma.docx");
+            Dictionary<string,List<string>> requirementsForStudent = parseWorkPrograming.ParsePlan();
             ParseThematicPlan parser = new ParseThematicPlan(fileName, FolderName+"//");
             Disciplines = parser.ParseThematicPlanAndCreateDirectories();
             //List<Discipline> disciplines = parser.ParseThematicPlanAndCreateDirectories();

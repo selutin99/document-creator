@@ -19,13 +19,17 @@ namespace DocumentCreator
             this.table = doc.Tables;
         }
 
-        public List<string> ParsePlan()
+        public Dictionary<string, List<string>> ParsePlan()
         {
             for (int j = 1; j < table.Count; j++)
             {
                 Word.Range range = table[j].Range;
                 Word.Cells cells = range.Cells;
-                List<string> requirementsForStudent = new List<string>();
+                string key = "Знать";
+                Dictionary<string, List<string>> requirementsForStudent = new Dictionary<string, List<string>>();
+                requirementsForStudent.Add("Знать", new List<string>());
+                requirementsForStudent.Add("Уметь", new List<string>());
+                requirementsForStudent.Add("Владеть", new List<string>());
                 if (cells[2].Range.Text.StartsWith("Перечень планируемых"))
                 {
                     for (int i = 1; i < cells.Count; i++)
@@ -39,11 +43,28 @@ namespace DocumentCreator
                             string[] requirements = text.Split(';');
                             foreach (string str in requirements)
                             {
-                                requirementsForStudent.Add(str.Replace("\r", ""));
+                                string trimStr = str.Trim();
+                                if (trimStr.StartsWith("уметь:") || trimStr.StartsWith("Уметь:"))
+                                {
+                                    key = "Уметь";
+                                    trimStr = trimStr.Replace("уметь:", "");
+                                }
+                                else if (trimStr.StartsWith("владеть:") || trimStr.StartsWith("Владеть:"))
+                                {
+                                    key = "Владеть";
+                                    trimStr = trimStr.Replace("владеть:", "");
+                                }
+                                if (trimStr.StartsWith("знать:"))
+                                {
+                                    trimStr = trimStr.Replace("знать:", "");
+                                }
+                                trimStr = trimStr.Trim();
+                                requirementsForStudent[key].Add(trimStr);
                             }
                         }
 
                     }
+                    WordAPI.Close(doc);
                     return requirementsForStudent;
                 }
             }
