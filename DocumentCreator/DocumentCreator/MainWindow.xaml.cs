@@ -14,6 +14,7 @@ namespace DocumentCreator
     public partial class MainWindow : Window
     {
         private string fileName { get; set; }
+        ParseThematicPlan parser;
         public string FolderName { get => folderName; set => folderName = value; }
         internal List<Discipline> Disciplines { get => disciplines; set => disciplines = value; }
         private List<Discipline> disciplines;
@@ -56,7 +57,7 @@ namespace DocumentCreator
             //Логика
             ParseWorkPrograming parseWorkPrograming = new ParseWorkPrograming("C:\\programma.docx");
             Dictionary<string,List<string>> requirementsForStudent = parseWorkPrograming.ParsePlan();
-            ParseThematicPlan parser = new ParseThematicPlan(fileName, FolderName+"//");
+            parser = new ParseThematicPlan(fileName, FolderName+"//");
             Disciplines = parser.ParseThematicPlanAndCreateDirectories();
             //List<Discipline> disciplines = parser.ParseThematicPlanAndCreateDirectories();
             foreach (Discipline discipline in Disciplines)
@@ -159,11 +160,14 @@ namespace DocumentCreator
         private void ChangeButton_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine(ComboLesson.SelectedIndex);
+            string documentPath= parser.GetOutputPath() + ComboDisciplines.SelectedItem + "\\" + ComboTheme.SelectedItem + "\\" + ComboLesson.SelectedItem + ".doc";
             String firstSymb = ComboLesson.SelectedItem.ToString();
             firstSymb = firstSymb[0].ToString();
             if (String.Compare(firstSymb, "Л") == 0)
             {
                 ChangeWindow change = new ChangeWindow();
+                UpdateDoc update = new UpdateDoc(documentPath);
+                update.updateDoc();
                 change.Show();
             }
             else if (String.Compare(firstSymb, "С") == 0)

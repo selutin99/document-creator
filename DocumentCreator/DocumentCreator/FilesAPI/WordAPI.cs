@@ -17,7 +17,7 @@ namespace DocumentCreator.FilesAPI
 
             try
             {
-                doc = app.Documents.Open(fileName);
+                doc = app.Documents.Open(fileName,ReadOnly:false);
             }
             catch (Exception e)
             {

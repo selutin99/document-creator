@@ -220,6 +220,9 @@ namespace DocumentCreator
             string hours = "";
             string questionsOfLesson = "";
             string materialSupport = "";
+            string lessonInMaterialSupp = "";
+            string themeOfLesson = "";
+            List<string> questions = new List<string>();
             string literature = "";
             Word.Range range = table.Range;
             Word.Cells cells = range.Cells;
@@ -243,12 +246,36 @@ namespace DocumentCreator
                     //get questions of the lesson
                     cell = cells[i + 2];
                     questionsOfLesson = cell.Range.Text.Trim(charsToTrim);
+                    Console.WriteLine( questionsOfLesson.IndexOf("«"));
+                    int a = questionsOfLesson.IndexOf("«");
+                    if (questionsOfLesson.IndexOf("«") > 20)
+                    {
+                        lessonInMaterialSupp = "Ошибка в темплане";
+                        themeOfLesson = "Ошибка в темплане";
+                        questions = getQuestions(questionsOfLesson);
+                    }
+                    else
+                    {
+                        lessonInMaterialSupp = questionsOfLesson.Substring(0, questionsOfLesson.IndexOf("«"));
+                        try
+                        {
+                            themeOfLesson = questionsOfLesson.Substring(questionsOfLesson.IndexOf("«") + 1, questionsOfLesson.IndexOf("»") - questionsOfLesson.IndexOf("«"));
+                        }
+                        catch (Exception e)
+                        {
+                            themeOfLesson = questionsOfLesson.Substring(questionsOfLesson.IndexOf("«") + 1, questionsOfLesson.IndexOf(".") - questionsOfLesson.IndexOf("«"));
+                        }
+                        questions = getQuestions(questionsOfLesson.Substring(questionsOfLesson.IndexOf("«")));
+                    }
+                    
                     //get material support
                     cell = cells[i + 3];
                     materialSupport= cell.Range.Text.Trim(charsToTrim);
+                   
                     //get literature
                     cell = cells[i + 4];
                     literature = cell.Range.Text.Trim(charsToTrim);
+                    
                     //get hours if first cell was empty
                     if (hours == "")
                     {
@@ -258,8 +285,10 @@ namespace DocumentCreator
                     Lesson lesson = new Lesson();
                     lesson.Type = kindOfLesson;
                     lesson.Literature = literature;
+                    lesson.LessonInMaterialSupp = lessonInMaterialSupp;
+                    lesson.ThemeOfLesson = themeOfLesson;
+                    lesson.Questions = questions;
                     lesson.MaterialSupport = materialSupport;
-                    lesson.Content = questionsOfLesson;
                     lesson.Hours = hours;
                     lessons.Add(lesson);
                     i += 5;
@@ -272,6 +301,34 @@ namespace DocumentCreator
         {
             List<Discipline> disciplines = GetAllDisciplinesWithContent();
             return disciplines;
+        }
+
+        private List<string> getQuestions(string questions)
+        {
+            string temporary;
+            string question;
+            List<string> listQuestions = new List<string>();
+            temporary = questions.Substring(questions.IndexOf("\r")+1);
+            while (temporary.IndexOf("\r") > 0) { 
+            if (temporary.LastIndexOf("\r") > 0)
+            {
+                question = temporary.Substring(0, temporary.IndexOf("\r") + 1);
+                question = question.Trim();
+                listQuestions.Add(question);
+                temporary = temporary.Substring(temporary.IndexOf("\r") + 1);
+            }
+            else
+            {
+                listQuestions.Add(temporary);
+                return listQuestions;
+            }
+        }
+            
+
+            listQuestions.Add(temporary);
+            
+            
+            return listQuestions;
         }
     }
 }
