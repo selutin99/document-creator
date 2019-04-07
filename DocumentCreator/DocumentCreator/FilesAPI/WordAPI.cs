@@ -11,12 +11,13 @@ namespace DocumentCreator.FilesAPI
         public static Word.Document GetDocument(string fileName)
         {
             //app.Visible = true;
+            app = new Word.Application();
 
             Word.Document doc = null;
 
             try
             {
-                doc = app.Documents.Open(fileName);
+                doc = app.Documents.Open(fileName,ReadOnly:false);
             }
             catch (Exception e)
             {

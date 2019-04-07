@@ -1,0 +1,16 @@
+﻿<Window x:Class="DocumentCreator.Disciplene"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DocumentCreator"
+        mc:Ignorable="d"
+        Title="Disciplene" Height="450" Width="800">
+    <Grid>
+        <Label x:Name="NameOfDiscipline" Content="" Margin="122,61,121,0" VerticalAlignment="Top" Height="58"/>
+        <Label x:Name="Theme" Content="" Margin="122,124,121,0" VerticalAlignment="Top" Height="45"/>
+        <Label x:Name="LessonType" Content="" Margin="122,174,121,194" RenderTransformOrigin="-2.899,-1.493"/>
+        <Button x:Name="CreateButton" Content="Создать документ" Margin="325,0,288,10" VerticalAlignment="Bottom" Height="51" Click="CreateButton_Click"/>
+
+    </Grid>
+</Window>
