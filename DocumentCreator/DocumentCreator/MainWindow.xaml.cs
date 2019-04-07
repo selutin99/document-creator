@@ -3,15 +3,12 @@ using System.Windows.Input;
 using System.Windows.Forms;
 using System.IO;
 using System.Collections.Generic;
-<<<<<<< HEAD
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System;
 using System.ComponentModel;
 using System.Threading;
-=======
 using System;
->>>>>>> master
 
 namespace DocumentCreator
 {
@@ -31,9 +28,6 @@ namespace DocumentCreator
             InitializeComponent();
             CreateFolder(folderName);
         }
-
-<<<<<<< HEAD
-=======
         public static void CreateFolder(string folderPath)
         {
             try
@@ -51,7 +45,6 @@ namespace DocumentCreator
             }
         }
 
->>>>>>> master
         private void DownloadButton_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
@@ -80,7 +73,6 @@ namespace DocumentCreator
             string fName = System.IO.Path.GetFileName(fileName);
 
             //Логика
-<<<<<<< HEAD
             ParseWorkPrograming parseWorkPrograming = new ParseWorkPrograming("C:\\programma.docx");
             Dictionary<string,List<string>> requirementsForStudent = parseWorkPrograming.ParsePlan();
             parser = new ParseThematicPlan(fileName, FolderName+"//");
@@ -109,12 +101,6 @@ namespace DocumentCreator
                         }
                     }
                 }
-=======
-            /*ParseWorkPrograming parseWorkPrograming = new ParseWorkPrograming("C:\\programma.docx");
-            List<string> requirementsForStudent = parseWorkPrograming.ParsePlan();*/
-            ParseThematicPlan parser = new ParseThematicPlan(fileName, folderName+"//");
-            List<Discipline> discipline=parser.ParseThematicPlanAndCreateDirectories();
->>>>>>> master
 
             /*ParseThematicPlan parser = new ParseThematicPlan(fileName, folderName);
             parser.ParseThematicPlanAndCreateDirectories();*/
