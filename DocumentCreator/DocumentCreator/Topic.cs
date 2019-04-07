@@ -17,7 +17,7 @@ namespace DocumentCreator
             this.Lessons = lessons;
         }
 
-        public string Name { get => name; set => name = value; }
-        internal List<Lesson> Lessons { get => lessons; set => lessons = value; }
+        public string Name { get { return name; } set { name = value; } }
+        internal List<Lesson> Lessons { get { return lessons; } set { lessons = value; } }
     }
 }
