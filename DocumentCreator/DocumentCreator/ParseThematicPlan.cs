@@ -246,7 +246,6 @@ namespace DocumentCreator
                     //get questions of the lesson
                     cell = cells[i + 2];
                     questionsOfLesson = cell.Range.Text.Trim(charsToTrim);
-                    Console.WriteLine( questionsOfLesson.IndexOf("«"));
                     int a = questionsOfLesson.IndexOf("«");
                     if (questionsOfLesson.IndexOf("«") > 20)
                     {
