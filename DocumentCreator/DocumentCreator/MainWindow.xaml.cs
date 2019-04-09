@@ -185,8 +185,36 @@ namespace DocumentCreator
             if (String.Compare(firstSymb, "Л") == 0)
             {
                 ChangeWindow change = new ChangeWindow();
+                Dictionary<string, Object> keyValuePairs = new Dictionary<string, object>();
+                List<string> goals = new List<string>();
+                goals.Add("Требоване 1");
+                goals.Add("Требоване 2");
+                goals.Add("Требоване 3");
+                goals.Add("Требоване 4");
+                Dictionary<string,string> questions = new Dictionary<string, string>();
+                questions.Add("Вопрос фцворфшцапш фнцпшнфцашцф ивфцивфшцпнц шфгвршг црвфш гврфц 1","20 мин");
+                questions.Add("Вопрос фцвшгрфшдцгап шФГЦПшгпш гфца 2", "30 мин");
+                questions.Add("Вопрос фгцщрашфг апгнпцшфгарфцшгнапг нлфпагцфнапгноцфп ифцгнавпцгфп аифцоври 3", "40 мин");
+                keyValuePairs["{id:name}"]="Название дисциплины";
+                keyValuePairs["{id:theme}"] = "Тема N1";
+                keyValuePairs["{id:themeName}"] = "Название темы";
+                keyValuePairs["{id:lesson}"] = "Занятие 1";
+                keyValuePairs["{id:lessonName}"] = "Назване занятия";
+                keyValuePairs["{id:goal}"] = goals;
+                keyValuePairs["{id:kind}"] = "Групповое заянтие";
+                keyValuePairs["{id:method}"] = "Метод проведения занятия";
+                keyValuePairs["{id:duration}"] = "2 часа";
+                keyValuePairs["{id:place}"] = "Плац";
+                keyValuePairs["{id:literature}"] = "ЛИТЕРАтура занятия";
+                keyValuePairs["{id:intro}"] = "10";
+                keyValuePairs["{id:educationalQuestions}"] = "50";
+                keyValuePairs["{id:questions}"] = questions;
+                keyValuePairs["{id:conclution}"] = "10";
+                keyValuePairs["{id:material}"] = "Материалы занятия!!";
+                keyValuePairs["{id:additionalLiterature}"] = "Дополнительная литература!!";
+                keyValuePairs["{id:technicalMeans}"] = "Технические средства!!";
                 UpdateDoc update = new UpdateDoc(documentPath);
-                update.updateDoc();
+                update.updateDoc(keyValuePairs);
                 change.Show();
             }
             else if (String.Compare(firstSymb, "С") == 0)
