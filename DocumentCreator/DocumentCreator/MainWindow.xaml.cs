@@ -20,6 +20,7 @@ namespace DocumentCreator
         ParseThematicPlan parser;
         public string FolderName { get => folderName; set => folderName = value; }
         internal List<Discipline> Disciplines { get => disciplines; set => disciplines = value; }
+        private Dictionary<string, List<string>> requirementsForStudent;
         private List<Discipline> disciplines;
 
         private string folderName = @"C:\out\";
@@ -76,7 +77,7 @@ namespace DocumentCreator
 
             //Логика
             ParseWorkPrograming parseWorkPrograming = new ParseWorkPrograming("C:\\programma.docx");
-            Dictionary<string,List<string>> requirementsForStudent = parseWorkPrograming.ParsePlan();
+            requirementsForStudent = parseWorkPrograming.ParsePlan();
             parser = new ParseThematicPlan(fileName, FolderName+"//");
             Disciplines = parser.ParseThematicPlanAndCreateDirectories();
             //List<Discipline> disciplines = parser.ParseThematicPlanAndCreateDirectories();
@@ -181,6 +182,12 @@ namespace DocumentCreator
             Console.WriteLine(ComboLesson.SelectedIndex);
             string documentPath= parser.GetOutputPath() + ComboDisciplines.SelectedItem + "\\" + ComboTheme.SelectedItem + "\\" + ComboLesson.SelectedItem + ".doc";
             String firstSymb = ComboLesson.SelectedItem.ToString();
+            String discipline = ComboDisciplines.SelectedItem.ToString();
+            String theme = ComboTheme.SelectedItem.ToString();
+            String lesson = ComboLesson.SelectedItem.ToString();
+            Discipline selectedDiscipline = Disciplines.Find(x => x.Name.Equals(discipline));
+            Topic selectedTopic = selectedDiscipline.Topics.Find(x => x.Name.Equals(theme));
+            Lesson selectedLesson = selectedTopic.Lessons.Find(x => x.Type.Equals(lesson));
             firstSymb = firstSymb[0].ToString();
             if (String.Compare(firstSymb, "Л") == 0)
             {
@@ -215,6 +222,7 @@ namespace DocumentCreator
                 keyValuePairs["{id:technicalMeans}"] = "Технические средства!!";
                 UpdateDoc update = new UpdateDoc(documentPath);
                 update.updateDoc(keyValuePairs);
+                change.initValues(selectedDiscipline, selectedTopic, selectedLesson, requirementsForStudent);
                 change.Show();
             }
             else if (String.Compare(firstSymb, "С") == 0)

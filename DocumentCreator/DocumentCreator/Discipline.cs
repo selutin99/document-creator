@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DocumentCreator
 {
-    class Discipline
+    public class Discipline
     {
         string name;
         List<Topic> topics;
