@@ -64,7 +64,7 @@ namespace DocumentCreator
                             Word.Row newRowENd = table.Rows.Add(ref missing);
                             newRowENd.Cells[1].Range.Text = "3";
                             newRowENd.Cells[2].Range.Text = "Заключение";
-                            newRowENd.Cells[3].Range.Text = "1 мин";
+                            newRowENd.Cells[3].Range.Text = (string)keyValuePairs["{id:conclution}"]+ " мин";
                         }
                         else if (range.Text.Contains("{id:goal}"))
                         {

@@ -19,35 +19,55 @@ namespace DocumentCreator
     /// </summary>
     public partial class ChangeWindow : Window
     {
+        private string documentPath="";
 
         public ChangeWindow()
         {
             InitializeComponent();
         }
-        public void initValues(Discipline discipline, Topic topic, Lesson lesson, Dictionary<string, List<string>> requirementsForStudent)
+        public void initValues(Discipline discipline, Topic topic, Lesson lesson, Dictionary<string, List<string>> requirementsForStudent, string documentPath)
         {
+            this.documentPath = documentPath;
             nameDiscipline.Text = discipline.Name;
-            topicName.Text = topic.Name;
+            numberTopic.Text = topic.Name.Substring(0, topic.Name.IndexOf("«"));
+            string temp = topic.Name.Substring(topic.Name.IndexOf("«")+1);
+            topicName.Text = temp.Substring(0,temp.Length);
+            numberLesson.Text = lesson.LessonInMaterialSupp;
             lessonName.Text = lesson.ThemeOfLesson;
             foreach(String goal in requirementsForStudent["Знать"])
             {
-                selectGoal_1.Items.Add(goal);
+                string tempGoal = goal.Replace("\v", " ");
+                tempGoal = tempGoal.Replace("\r", " ");
+                tempGoal = tempGoal.Replace("\a", " ");
+                tempGoal = Char.ToUpper(tempGoal[0]) + tempGoal.Substring(1);
+                tempGoal = tempGoal.Trim();
+                selectGoal_1.Items.Add(tempGoal);
             }
             foreach (String goal in requirementsForStudent["Уметь"])
             {
-                selectGoal_2.Items.Add(goal);
+                string tempGoal = goal.Replace("\v", " ");
+                tempGoal = tempGoal.Replace("\r", " ");
+                tempGoal = tempGoal.Replace("\a", " ");
+                tempGoal = Char.ToUpper(tempGoal[0]) + tempGoal.Substring(1);
+                tempGoal = tempGoal.Trim();
+                selectGoal_2.Items.Add(tempGoal);
             }
             foreach (String goal in requirementsForStudent["Владеть"])
             {
-                selectGoal_3.Items.Add(goal);
+                string tempGoal = goal.Replace("\v", " ");
+                tempGoal = tempGoal.Replace("\r", " ");
+                tempGoal = tempGoal.Replace("\a", " ");
+                tempGoal = Char.ToUpper(tempGoal[0]) + tempGoal.Substring(1);
+                tempGoal = tempGoal.Trim();
+                selectGoal_3.Items.Add(tempGoal);
             }
             kind.Text = lesson.Type;
             place.Items.Add("Плац");
             place.Items.Add("Учеюный кабинет");
             place.Items.Add("Тренировочный кабинет");
-            hours.Text = lesson.Hours;
-            materialSupport.Text = lesson.LessonInMaterialSupp;
-            literature.Text = lesson.Literature;
+            hours.Text = lesson.Hours+" часа";
+            materialSupport.Text = lesson.MaterialSupport;
+            literature.Text = lesson.Literature.Replace("\r", "; ");
             for(int i=0;i< lesson.Questions.Count; i++)
             {
                 if (i == 0)
@@ -110,6 +130,72 @@ namespace DocumentCreator
         private void SelectGoal_1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             goals_1.Text += selectGoal_1.SelectedItem + "; ";
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (literature.Text.Length==0||place.Text.Length==0||materialSupport.Text.Length==0||intro.Text.Length==0||question1_text.Text.Length==0||conclusion.Text.Length==0)
+            {
+                ErrorWindow error = new ErrorWindow();
+                error.Show();
+            }
+            else {
+                Dictionary<string, Object> keyValuePairs = new Dictionary<string, object>();
+                List<string> goals = goals_1.Text.Replace("; ", ";").Split(';').ToList<string>();
+                goals.AddRange(goals_2.Text.Replace("; ", ";").Split(';').ToList<string>());
+                goals.AddRange(goals_3.Text.Replace("; ", ";").Split(';').ToList<string>());
+                goals.RemoveAll(x => x.Length.Equals(0));
+                //List<string> goals = new List<string>();
+                //goals.Add("Требоване 1");
+                //goals.Add("Требоване 2");
+                //goals.Add("Требоване 3");
+                //goals.Add("Требоване 4");
+                Dictionary<string, string> questions = new Dictionary<string, string>();
+                int sumOfMinInQuestionsOfLesson = 0;
+                questions.Add(questionName1.Text.Substring(2), question1_text.Text + " мин");
+                sumOfMinInQuestionsOfLesson += Int32.Parse(question1_text.Text);
+                if (question2_text.IsEnabled)
+                {
+                    questions.Add(questionName2.Text.Substring(2), question2_text.Text + " мин");
+                    sumOfMinInQuestionsOfLesson += Int32.Parse(question2_text.Text);
+                }
+                if (question3_text.IsEnabled)
+                {
+                    questions.Add(questionName3.Text.Substring(2), question3_text.Text + " мин");
+                    sumOfMinInQuestionsOfLesson += Int32.Parse(question3_text.Text);
+                }
+                if (question4_text.IsEnabled)
+                {
+                    questions.Add(questionName4.Text.Substring(2), question4_text.Text + " мин");
+                    sumOfMinInQuestionsOfLesson += Int32.Parse(question4_text.Text);
+                }
+                if (question5_text.IsEnabled)
+                {
+                    questions.Add(questionName5.Text.Substring(2), question5_text.Text + " мин");
+                    sumOfMinInQuestionsOfLesson += Int32.Parse(question5_text.Text);
+                }
+                keyValuePairs["{id:name}"] = nameDiscipline.Text;
+                keyValuePairs["{id:theme}"] = numberTopic.Text;
+                keyValuePairs["{id:themeName}"] = topicName.Text;
+                keyValuePairs["{id:lesson}"] = numberLesson.Text;
+                keyValuePairs["{id:lessonName}"] = lessonName.Text;
+                keyValuePairs["{id:goal}"] = goals;
+                keyValuePairs["{id:kind}"] = kind.Text;
+                keyValuePairs["{id:method}"] = "Метод в разработке!";
+                keyValuePairs["{id:duration}"] = hours.Text;
+                keyValuePairs["{id:place}"] = place.Text;
+                keyValuePairs["{id:literature}"] = literature.Text;
+                keyValuePairs["{id:intro}"] = intro.Text;
+                keyValuePairs["{id:educationalQuestions}"] = sumOfMinInQuestionsOfLesson;
+                keyValuePairs["{id:questions}"] = questions;
+                keyValuePairs["{id:conclution}"] = conclusion.Text;
+                keyValuePairs["{id:material}"] = materialSupport.Text;
+                keyValuePairs["{id:additionalLiterature}"] = "Дополнительная литература!!";
+                keyValuePairs["{id:technicalMeans}"] = materialSupport.Text;
+                UpdateDoc update = new UpdateDoc(documentPath);
+                update.updateDoc(keyValuePairs);
+                Close();
+            }
         }
 
         //private void Place_SelectionChanged(object sender, SelectionChangedEventArgs e)

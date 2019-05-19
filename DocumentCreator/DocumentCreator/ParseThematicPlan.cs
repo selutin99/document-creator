@@ -258,11 +258,11 @@ namespace DocumentCreator
                         lessonInMaterialSupp = questionsOfLesson.Substring(0, questionsOfLesson.IndexOf("«"));
                         try
                         {
-                            themeOfLesson = questionsOfLesson.Substring(questionsOfLesson.IndexOf("«") + 1, questionsOfLesson.IndexOf("»") - questionsOfLesson.IndexOf("«"));
+                            themeOfLesson = questionsOfLesson.Substring(questionsOfLesson.IndexOf("«") + 1, questionsOfLesson.IndexOf("»") - questionsOfLesson.IndexOf("«")-1);
                         }
                         catch (Exception e)
                         {
-                            themeOfLesson = questionsOfLesson.Substring(questionsOfLesson.IndexOf("«") + 1, questionsOfLesson.IndexOf(".") - questionsOfLesson.IndexOf("«"));
+                            themeOfLesson = questionsOfLesson.Substring(questionsOfLesson.IndexOf("«") + 1, questionsOfLesson.IndexOf(".") - questionsOfLesson.IndexOf("«")-1);
                         }
                         questions = getQuestions(questionsOfLesson.Substring(questionsOfLesson.IndexOf("«")));
                     }
@@ -301,33 +301,86 @@ namespace DocumentCreator
             List<Discipline> disciplines = GetAllDisciplinesWithContent();
             return disciplines;
         }
-
+         
         private List<string> getQuestions(string questions)
         {
             string temporary;
             string question;
             List<string> listQuestions = new List<string>();
-            temporary = questions.Substring(questions.IndexOf("\r")+1);
-            while (temporary.IndexOf("\r") > 0) { 
-            if (temporary.LastIndexOf("\r") > 0)
+            try
             {
-                question = temporary.Substring(0, temporary.IndexOf("\r") + 1);
-                question = question.Trim();
-                listQuestions.Add(question);
-                temporary = temporary.Substring(temporary.IndexOf("\r") + 1);
+                temporary = questions.Substring(questions.IndexOf("1."));
+                if (temporary.IndexOf("2.") > 0)
+                {
+                    question = temporary.Substring(0, temporary.IndexOf("2."));
+                    question = question.Trim();
+                    listQuestions.Add(question);
+                    temporary = temporary.Substring(temporary.IndexOf("2."));
+                }
+                if (temporary.IndexOf("3.") > 0)
+                {
+                    question = temporary.Substring(0, temporary.IndexOf("3."));
+                    question = question.Trim();
+                    listQuestions.Add(question);
+                    temporary = temporary.Substring(temporary.IndexOf("3."));
+                }
+                if (temporary.IndexOf("4.") > 0)
+                {
+                    question = temporary.Substring(0, temporary.IndexOf("4."));
+                    question = question.Trim();
+                    listQuestions.Add(question);
+                    temporary = temporary.Substring(temporary.IndexOf("4."));
+                }
+                if (temporary.IndexOf("5.") > 0)
+                {
+                    question = temporary.Substring(0, temporary.IndexOf("5."));
+                    question = question.Trim();
+                    listQuestions.Add(question);
+                    temporary = temporary.Substring(temporary.IndexOf("5."));
+                }
+                //    while (temporary.IndexOf("\r") > 0) { 
+                //    if (temporary.LastIndexOf("\r") > 0)
+                //    {
+                //        question = temporary.Substring(0, temporary.IndexOf("\r") + 1);
+                //        question = question.Trim();
+                //        listQuestions.Add(question);
+                //        temporary = temporary.Substring(temporary.IndexOf("\r") + 1);
+                //    }
+                //    else
+                //    {
+                //        listQuestions.Add(temporary);
+                //        return listQuestions;
+                //    }
+                //}
+
+
+                listQuestions.Add(temporary);
+
+
+                return listQuestions;
             }
-            else
+            catch(Exception e)
             {
+                temporary = questions.Substring(questions.IndexOf("\r")+1);
+                while (temporary.IndexOf("\r") > 0)
+                {
+                    if (temporary.LastIndexOf("\r") > 0)
+                    {
+                        question = temporary.Substring(0, temporary.IndexOf("\r") + 1);
+                        question = question.Trim();
+                        listQuestions.Add(question);
+                        temporary = temporary.Substring(temporary.IndexOf("\r") + 1);
+                    }
+                    else
+                    {
+                        listQuestions.Add(temporary);
+                        return listQuestions;
+                    }
+                }
+
                 listQuestions.Add(temporary);
                 return listQuestions;
             }
-        }
-            
-
-            listQuestions.Add(temporary);
-            
-            
-            return listQuestions;
         }
     }
 }
