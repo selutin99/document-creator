@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -210,6 +211,48 @@ namespace DocumentCreator
         private void Method_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selected_method.Text += method.SelectedItem + "; ";
+        }
+
+        private void intro_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        private void question1_text_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        private void question2_text_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        private void question3_text_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        private void question4_text_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        private void question5_text_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        private void conclusion_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
+                e.Handled = true;
         }
     }
 }
