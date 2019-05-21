@@ -102,7 +102,7 @@ namespace DocumentCreator
                     {
                         if (re.IsMatch(updateRange.Text))
                         {
-                            nextDiscipline = updateRange.Text.Substring(0, updateRange.Text.Length - 4) + " " + cells[i + 1].Range.Text.Substring(0, cells[i + 1].Range.Text.Length - 2);
+                            nextDiscipline = updateRange.Text.Substring(0, updateRange.Text.Length - 4);
                             if (lastDiscipline == null)
                             {
                                 lastDiscipline = nextDiscipline;
@@ -175,6 +175,7 @@ namespace DocumentCreator
             {
                 resultMap[lastDiscipline] = lastValue + "," + (cells.Count - 1);
             }
+
             return resultMap;
         }
 
@@ -186,6 +187,8 @@ namespace DocumentCreator
             foreach (KeyValuePair<string, string> keyValue in resulterMap)
             {
                 Discipline discipline = new Discipline(keyValue.Key, new List<Topic>());
+
+                
                 
                 Dictionary<string, string> resulterMapTopic = FindByRegexTopics(new Regex(@"Тема*"), Int32.Parse(keyValue.Value.Substring(0, keyValue.Value.IndexOf(','))), Int32.Parse(keyValue.Value.Substring(keyValue.Value.IndexOf(',') + 1)));
                 foreach (KeyValuePair<string, string> keyValueTopic in resulterMapTopic)
@@ -208,8 +211,11 @@ namespace DocumentCreator
                 }
                 disciplines.Add(discipline);
             }
+            disciplines=getMethodicalInstructionsForLecture(disciplines);
             //CLOSE FILE
             FilesAPI.WordAPI.Close(this.doc);
+            //парсим метод указания для лекций
+            
             return disciplines;
         }
 
@@ -381,6 +387,53 @@ namespace DocumentCreator
                 listQuestions.Add(temporary);
                 return listQuestions;
             }
+        }
+        private List<Discipline> getMethodicalInstructionsForLecture(List<Discipline> disciplines)
+        {
+            string content = "";
+            bool wasFounded = false;
+            bool wasFoundedDiscipline = false;
+            int k = 0;
+            foreach(Word.Section section in doc.Sections)
+            {
+                Word.Range range = section.Range;
+                int text1 = range.Text.IndexOf("Организационно-методические указания");
+                if (range.Text.IndexOf("Организационно-методические указания")>=0||wasFounded)
+                {
+                    string restText = range.Text.Substring(range.Text.IndexOf("Организационно-методические указания"));
+                    wasFounded = true;
+                    content += restText.Substring(restText.IndexOf("Часть 1"), restText.IndexOf("Часть 2") - restText.IndexOf("Часть 1"));
+                    content = content.Trim();
+                    content = content.Replace("\v", " ");
+                    content = content.Replace("\r", " ");
+                    content = content.Replace("\a", " ");
+                    for (int i = 0; i < disciplines.Count-1; i++)
+                    {
+                        try
+                        {
+                            if (content.IndexOf(disciplines[i + 1].Name) >= 0)
+                            {
+                                string temp = content.Substring(0, content.IndexOf(disciplines[i + 1].Name));
+                                temp = temp.Substring(temp.IndexOf(disciplines[i].Name) + disciplines[i].Name.Length + 2);
+                                disciplines[i].MethodicalInstructionsForLecture = temp;
+                                content = content.Substring(content.IndexOf(disciplines[i + 1].Name));
+                            }
+                            else
+                            {
+                                disciplines[i].MethodicalInstructionsForLecture = disciplines[i - 1].MethodicalInstructionsForLecture;
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            disciplines[i].MethodicalInstructionsForLecture = content.Substring(0);
+                        }
+                        
+                       
+
+                    }
+                }
+            }
+            return disciplines;
         }
     }
 }

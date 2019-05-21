@@ -25,8 +25,9 @@ namespace DocumentCreator
         {
             InitializeComponent();
         }
-        public void initValues(Discipline discipline, Topic topic, Lesson lesson, Dictionary<string, List<string>> requirementsForStudent, string documentPath)
+        public void initValues(Discipline discipline, Topic topic, Lesson lesson, string documentPath)
         {
+            Dictionary<string, List<string>> requirementsForStudent = discipline.RequirementsForStudent;
             this.documentPath = documentPath;
             nameDiscipline.Text = discipline.Name;
             numberTopic.Text = topic.Name.Substring(0, topic.Name.IndexOf("«"));

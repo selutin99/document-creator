@@ -77,10 +77,10 @@ namespace DocumentCreator
             string fName = System.IO.Path.GetFileName(fileName);
 
             //Логика
-            ParseWorkPrograming parseWorkPrograming = new ParseWorkPrograming(fileNameWorkProgramming);
-            requirementsForStudent = parseWorkPrograming.ParsePlan();
             parser = new ParseThematicPlan(fileName, FolderName+"//");
             Disciplines = parser.ParseThematicPlanAndCreateDirectories();
+            ParseWorkPrograming parseWorkPrograming = new ParseWorkPrograming(fileNameWorkProgramming, Disciplines);
+            Disciplines = parseWorkPrograming.ParsePlan();
             //List<Discipline> disciplines = parser.ParseThematicPlanAndCreateDirectories();
             foreach (Discipline discipline in Disciplines)
                 {
@@ -191,7 +191,7 @@ namespace DocumentCreator
             Lesson selectedLesson = selectedTopic.Lessons.Find(x => x.Type.Equals(lesson));
             firstSymb = firstSymb[0].ToString();
             ChangeWindow change = new ChangeWindow();
-            change.initValues(selectedDiscipline, selectedTopic, selectedLesson, requirementsForStudent, documentPath);
+            change.initValues(selectedDiscipline, selectedTopic, selectedLesson, documentPath);
             change.Show();
             //if (String.Compare(firstSymb, "Л") == 0)
             //{
