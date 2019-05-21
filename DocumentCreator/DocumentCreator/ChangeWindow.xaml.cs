@@ -66,6 +66,9 @@ namespace DocumentCreator
             place.Items.Add("Плац");
             place.Items.Add("Учеюный кабинет");
             place.Items.Add("Тренировочный кабинет");
+            method.Items.Add("Рассказ");
+            method.Items.Add("Показ");
+            method.Items.Add("Тренировка");
             hours.Text = lesson.Hours+" часа";
             materialSupport.Text = lesson.MaterialSupport;
             literature.Text = lesson.Literature.Replace("\r", "; ");
@@ -202,6 +205,11 @@ namespace DocumentCreator
         private void Place_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selected_Place.Text += place.SelectedItem + "; ";
+        }
+
+        private void Method_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selected_method.Text += method.SelectedItem + "; ";
         }
     }
 }

@@ -66,8 +66,8 @@
             <ComboBox x:Name="place" HorizontalAlignment="Left" Margin="23,1195,0,0" VerticalAlignment="Top" Width="199" Height="24" Grid.ColumnSpan="2" SelectionChanged="Place_SelectionChanged"/>
             <Label Content="Время:" HorizontalAlignment="Left" Margin="23,0,0,596" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
             <TextBox x:Name="hours" Margin="9.8,1242,21.8,596" TextWrapping="Wrap" IsEnabled="False" Grid.Column="2"/>
-            <Label Content="Метод проведения???:" HorizontalAlignment="Left" Margin="23,0,0,517" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
-            <TextBox x:Name="method" Margin="9.8,1337,21.8,514" TextWrapping="Wrap" IsEnabled="False" Grid.Column="2"/>
+            <Label Content="Метод проведения:" HorizontalAlignment="Left" Margin="23,0,0,532" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
+            <TextBox x:Name="selected_method" Margin="10,1321,21,499" TextWrapping="Wrap" IsEnabled="False" Grid.Column="2"/>
             <Label Content="Материальная поддержка:" HorizontalAlignment="Left" Margin="23,0,0,393" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
             <TextBox x:Name="materialSupport" Margin="9.8,1403,21.8,338" TextWrapping="Wrap" Grid.Column="2"/>
             <Label Content="Литература:" HorizontalAlignment="Left" Margin="23,1003,0,846" Width="181" Grid.ColumnSpan="2"/>
@@ -106,6 +106,7 @@
             <Label Content="В полях указывается время в минутах на указанный вопрос слева" HorizontalAlignment="Left" Margin="11.8,0,0,289" VerticalAlignment="Bottom" Width="377" RenderTransformOrigin="0.513,-0.633" Grid.Column="2"/>
             <Label Content="Каждая воспитательная цель отделяется знаком ;" HorizontalAlignment="Left" Margin="11.8,348,0,0" VerticalAlignment="Top" Width="403" Grid.Column="2"/>
             <TextBox x:Name="selected_Place" Grid.Column="2" Height="67" Margin="12,0,12,660" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
+            <ComboBox x:Name="method" Margin="23,0,40,499" VerticalAlignment="Bottom" Grid.ColumnSpan="2" SelectionChanged="Method_SelectionChanged"/>
         </Grid>
     </ScrollViewer>
 </Window>
