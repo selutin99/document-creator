@@ -35,7 +35,7 @@
             <Separator Height="18" Margin="0,862,-0.2,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
             <Label Content="Вид занятия:" HorizontalAlignment="Left" Margin="23,885,0,966" Width="199" Grid.ColumnSpan="2"/>
             <TextBox x:Name="kind" Margin="9.8,885,11.8,952" TextWrapping="Wrap" IsEnabled="False" Grid.Column="2"/>
-            <Label Content="Место проведения:" HorizontalAlignment="Left" Margin="23,0,0,690" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
+            <Label Content="Место проведения:" HorizontalAlignment="Left" Margin="23,0,0,706" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
             <TextBox x:Name="numberTopic" Height="35" Margin="9.8,112,21.8,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False" Grid.Column="2"/>
             <TextBox x:Name="topicName" Height="31" Margin="9.8,165,21.8,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False" Grid.Column="2"/>
             <TextBox x:Name="goals_1" Height="141" Margin="9.8,391,21.8,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="2"/>
@@ -63,7 +63,7 @@
             <ComboBox x:Name="selectGoal_3" HorizontalAlignment="Left" Margin="23,790,0,0" VerticalAlignment="Top" Width="199" IsReadOnly="True" SelectionChanged="SelectGoal_3_SelectionChanged" Grid.ColumnSpan="2"/>
             <ComboBox x:Name="selectGoal_2" HorizontalAlignment="Left" Margin="23,622,0,0" VerticalAlignment="Top" Width="199" IsReadOnly="True" SelectionChanged="SelectGoal_2_SelectionChanged" Grid.ColumnSpan="2"/>
             <TextBox x:Name="goals_2" Height="130" Margin="9.8,552,21.8,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="2"/>
-            <ComboBox x:Name="place" HorizontalAlignment="Left" Margin="9.8,1152,0,0" VerticalAlignment="Top" Width="492" Height="38" Grid.Column="2"/>
+            <ComboBox x:Name="place" HorizontalAlignment="Left" Margin="23,1195,0,0" VerticalAlignment="Top" Width="199" Height="24" Grid.ColumnSpan="2" SelectionChanged="Place_SelectionChanged"/>
             <Label Content="Время:" HorizontalAlignment="Left" Margin="23,0,0,596" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
             <TextBox x:Name="hours" Margin="9.8,1242,21.8,596" TextWrapping="Wrap" IsEnabled="False" Grid.Column="2"/>
             <Label Content="Метод проведения???:" HorizontalAlignment="Left" Margin="23,0,0,517" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
@@ -91,7 +91,7 @@
             <TextBox x:Name="lessonName" Height="31" Margin="9.8,280,21.8,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False" Grid.Column="2"/>
             <Separator Height="18" Margin="0,933,-0.2,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
             <Separator Height="18" Margin="0,1129,-0.2,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
-            <Separator Height="18" Margin="0,1205,-0.2,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
+            <Separator Height="18" Margin="0,1219,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
             <Separator Height="18" Margin="0,1298,-0.2,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
             <Separator Height="18" Margin="0,1385,-0.2,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
             <Separator Height="18" Margin="0,1547,-0.2,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
@@ -105,6 +105,7 @@
             <Label Content="Вопросы занятия:" HorizontalAlignment="Left" Margin="23,0,0,289" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
             <Label Content="В полях указывается время в минутах на указанный вопрос слева" HorizontalAlignment="Left" Margin="11.8,0,0,289" VerticalAlignment="Bottom" Width="377" RenderTransformOrigin="0.513,-0.633" Grid.Column="2"/>
             <Label Content="Каждая воспитательная цель отделяется знаком ;" HorizontalAlignment="Left" Margin="11.8,348,0,0" VerticalAlignment="Top" Width="403" Grid.Column="2"/>
+            <TextBox x:Name="selected_Place" Grid.Column="2" Height="67" Margin="12,0,12,660" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
         </Grid>
     </ScrollViewer>
 </Window>

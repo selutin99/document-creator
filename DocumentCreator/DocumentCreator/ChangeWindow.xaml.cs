@@ -199,9 +199,9 @@ namespace DocumentCreator
             }
         }
 
-        //private void Place_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-
-        //}
+        private void Place_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selected_Place.Text += place.SelectedItem + "; ";
+        }
     }
 }
