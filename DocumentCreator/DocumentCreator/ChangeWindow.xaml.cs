@@ -189,7 +189,7 @@ namespace DocumentCreator
                 keyValuePairs["{id:lessonName}"] = lessonName.Text;
                 keyValuePairs["{id:goal}"] = goals;
                 keyValuePairs["{id:kind}"] = kind.Text;
-                keyValuePairs["{id:method}"] = "Метод в разработке!";
+                keyValuePairs["{id:method}"] = method.Text;
                 keyValuePairs["{id:duration}"] = hours.Text;
                 keyValuePairs["{id:place}"] = place.Text;
                 keyValuePairs["{id:literature}"] = literature.Text;
