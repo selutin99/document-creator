@@ -74,7 +74,7 @@
             <TextBox x:Name="question5_text" Margin="9.8,459,11.8,378.4" TextWrapping="Wrap" IsEnabled="False" Grid.Row="1" Grid.Column="2" MaxLength="2"/>
             <TextBox x:Name="question4_text" Margin="9.8,307,11.8,532.4" TextWrapping="Wrap" IsEnabled="False" Grid.Row="1" Grid.Column="2" MaxLength="2"/>
             <TextBox x:Name="question3_text" Margin="11.8,154,9.8,692.4" TextWrapping="Wrap" IsEnabled="False" Grid.Row="1" Grid.Column="2" MaxLength="2"/>
-            <Label Content="Введение:" HorizontalAlignment="Left" Margin="23,0,0,228" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
+            <Label x:Name="introLabel" Content="Введение:" HorizontalAlignment="Left" Margin="23,0,0,228" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
             <TextBox x:Name="intro" Margin="9.8,1613,21.8,223" TextWrapping="Wrap" Grid.Column="2" MaxLength="2"/>
             <TextBox x:Name="question1_text" Margin="9.8,1724,11.8,105" TextWrapping="Wrap" IsEnabled="False" Grid.Column="2" MaxLength="2"/>
             <TextBox x:Name="question2_text" Margin="11.8,8,9.8,832.4" TextWrapping="Wrap" IsEnabled="False" Grid.Column="2" Grid.Row="1" MaxLength="2"/>

@@ -71,6 +71,9 @@ namespace DocumentCreator
             method.Items.Add("Показ");
             method.Items.Add("Тренировка");
             hours.Text = lesson.Hours+" часа";
+            if (lesson.Type.Equals("Лекция")) {
+                introLabel.Content = "Вступительная часть:";
+            }
             materialSupport.Text = lesson.MaterialSupport;
             literature.Text = lesson.Literature.Replace("\r", "; ");
             for(int i=0;i< lesson.Questions.Count; i++)
