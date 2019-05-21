@@ -35,7 +35,7 @@ namespace DocumentCreator
             topicName.Text = temp.Substring(0,temp.Length);
             numberLesson.Text = lesson.LessonInMaterialSupp;
             lessonName.Text = lesson.ThemeOfLesson;
-            foreach(String goal in requirementsForStudent["Знать"])
+            foreach(String goal in requirementsForStudent["Знать:"])
             {
                 string tempGoal = goal.Replace("\v", " ");
                 tempGoal = tempGoal.Replace("\r", " ");
@@ -44,7 +44,7 @@ namespace DocumentCreator
                 tempGoal = tempGoal.Trim();
                 selectGoal_1.Items.Add(tempGoal);
             }
-            foreach (String goal in requirementsForStudent["Уметь"])
+            foreach (String goal in requirementsForStudent["Уметь:"])
             {
                 string tempGoal = goal.Replace("\v", " ");
                 tempGoal = tempGoal.Replace("\r", " ");
@@ -53,7 +53,7 @@ namespace DocumentCreator
                 tempGoal = tempGoal.Trim();
                 selectGoal_2.Items.Add(tempGoal);
             }
-            foreach (String goal in requirementsForStudent["Владеть"])
+            foreach (String goal in requirementsForStudent["Владеть:"])
             {
                 string tempGoal = goal.Replace("\v", " ");
                 tempGoal = tempGoal.Replace("\r", " ");
