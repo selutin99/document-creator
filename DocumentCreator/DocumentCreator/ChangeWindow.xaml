@@ -67,7 +67,7 @@
             <Label Content="Время:" HorizontalAlignment="Left" Margin="23,0,0,596" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
             <TextBox x:Name="hours" Margin="9.8,1242,21.8,596" TextWrapping="Wrap" IsEnabled="False" Grid.Column="2"/>
             <Label Content="Метод проведения:" HorizontalAlignment="Left" Margin="23,0,0,532" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
-            <TextBox x:Name="selected_method" Margin="10,1321,21,499" TextWrapping="Wrap" IsEnabled="False" Grid.Column="2"/>
+            <TextBox x:Name="selected_method" Margin="10,1321,21,499" TextWrapping="Wrap" Grid.Column="2"/>
             <Label Content="Материальная поддержка:" HorizontalAlignment="Left" Margin="23,0,0,393" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
             <TextBox x:Name="materialSupport" Margin="9.8,1403,21.8,338" TextWrapping="Wrap" Grid.Column="2"/>
             <Label Content="Литература:" HorizontalAlignment="Left" Margin="23,1003,0,846" Width="181" Grid.ColumnSpan="2"/>
