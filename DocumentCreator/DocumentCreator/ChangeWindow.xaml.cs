@@ -109,11 +109,11 @@ namespace DocumentCreator
             }
             if (lesson.Type.StartsWith("Лекци"))
             {
-                methodical.Content = discipline.MethodicalInstructionsForLecture;
+                methodical.Text = discipline.MethodicalInstructionsForLecture;
             }
             else
             {
-                methodical.Content = discipline.MethodicalInstructionsForRest;
+                methodical.Text = discipline.MethodicalInstructionsForRest;
             }
 
 
