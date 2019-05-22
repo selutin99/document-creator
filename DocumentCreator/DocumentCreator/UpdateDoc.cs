@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Word = Microsoft.Office.Interop.Word;
 
@@ -23,23 +24,26 @@ namespace DocumentCreator
             Word.Application wordApp = new Word.Application();
             Word.Document doc = wordApp.Documents.Open(documentPath, ReadOnly: false);
             doc.Activate();
-            foreach(Word.Paragraph paragraph in doc.Paragraphs)
+            if (((string)(keyValuePairs["{id:kind}"])).Contains("Тренировк"))
             {
-                if (paragraph.Range.Text.Contains("{id:cardOfTask}"))
+                foreach (Word.Paragraph paragraph in doc.Paragraphs)
                 {
-                    Dictionary<string, string> questions = (Dictionary<string, string>)(keyValuePairs["{id:questions}"]);
-                    for(int i = 0; i < questions.Count; i++)
+                    if (paragraph.Range.Text.Contains("{id:cardOfTask}"))
                     {
-                        paragraph.Range.InsertFile(Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/Spravochnik.docx")));
-                        KeyValuePair<string, string> question = questions.ElementAt(i);
-                        FindAndReplace(wordApp, "{id:questionName}", question.Key);
-                        FindAndReplace(wordApp, "{id:questionDuration}", question.Value);
+                        Dictionary<string, string> questions = (Dictionary<string, string>)(keyValuePairs["{id:questions}"]);
+                        for (int i = 0; i < questions.Count; i++)
+                        {
+                            paragraph.Range.InsertFile(Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/Spravochnik.docx")));
+                            KeyValuePair<string, string> question = questions.ElementAt(i);
+                            FindAndReplace(wordApp, "{id:questionName}", question.Key);
+                            FindAndReplace(wordApp, "{id:questionDuration}", question.Value);
+
+                        }
 
                     }
-                    
                 }
             }
-            FindAndReplace(wordApp, "{ id:name}", keyValuePairs["{id:name}"]);
+            FindAndReplace(wordApp, "{id:name}", keyValuePairs["{id:name}"]);
             FindAndReplace(wordApp, "{id:theme}", keyValuePairs["{id:theme}"]);
             FindAndReplace(wordApp, "{id:themeName}", keyValuePairs["{id:themeName}"]);
             FindAndReplace(wordApp, "{id:lesson}", keyValuePairs["{id:lesson}"]);
@@ -117,7 +121,15 @@ namespace DocumentCreator
                                 newRow.Cells[1].Range.Text = "2."+count;
                                 newRow.Cells[2].Range.Text = question.Key;
                                 newRow.Cells[3].Range.Text = question.Value;
-                                string questionFull = "Учебный вопрос " + count + ". " + question.Key + question.Value + "минут.\n";
+                                Regex regex = new Regex("^*[0-9]*$");
+                                string questionFull = "";
+                                if (regex.IsMatch(question.Key))
+                                {
+                                    questionFull = "Учебный вопрос. " + question.Key + question.Value + "минут.\n";
+                                }
+                                else { 
+                                    questionFull = "Учебный вопрос " + count + ". " + question.Key + question.Value + "минут.\n";
+                                }
                                 int r = 0;
                                 for (int e = 0; e < literature.Length; e += 30)
                                 {
@@ -125,7 +137,7 @@ namespace DocumentCreator
                                     {
                                         try
                                         {
-                                            FindAndReplace(wordApp, "{id:questionOfLesson}", questionFull.Substring(e + 1, 30) + "{id:questionOfLesson}");
+                                            FindAndReplace(wordApp, "{id:questionOfLesson}", questionFull.Substring(e, 30) + "{id:questionOfLesson}");
                                         }
                                         catch (Exception q)
                                         {
@@ -139,6 +151,7 @@ namespace DocumentCreator
                                     }
                                     r = e;
                                 }
+                                FindAndReplace(wordApp, "{id:questionOfLesson}", questionFull.Substring(r+30) + "{id:questionOfLesson}");
                                 temporary = newRow;
                                 count++;
                             }

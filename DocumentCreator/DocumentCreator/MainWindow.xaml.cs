@@ -103,6 +103,10 @@ namespace DocumentCreator
                         {
                             fileName = path + "MethodicaForTrenirovka.docx";
                         }
+                        else if (lesson.Type.Contains("Самостоятельн"))
+                        {
+                            fileName = path + "MethodicaForSamostoyatelnayaRabota.docx";
+                        }
                         else
                         {
                             fileName = path + "theme1.docx";

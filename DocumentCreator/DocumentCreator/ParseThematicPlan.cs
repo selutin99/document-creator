@@ -226,7 +226,10 @@ namespace DocumentCreator
                     string topicName;
                     if (keyValueTopic.Key.Length < 100)
                     {
-                        topicName = keyValueTopic.Key.Substring(0, keyValueTopic.Key.Length - 4);
+                        topicName = keyValueTopic.Key.Substring(0, keyValueTopic.Key.Length);
+                        topicName = topicName.Trim();
+                        topicName = topicName.Replace("\r", "");
+                        topicName = topicName.Replace("\a", "");
                         char[] unacceptableChars = { '\\', '/', ':', '*', '?', '\"', '<', '>', '|' };
                         if (topicName.IndexOfAny(unacceptableChars) > 0)
                         {
@@ -236,6 +239,9 @@ namespace DocumentCreator
                     else
                     {
                         topicName = keyValueTopic.Key.Substring(0, 96);
+                        topicName = topicName.Trim();
+                        topicName = topicName.Replace("\r", "");
+                        topicName = topicName.Replace("\a", "");
                     }
                     discipline.Topics.Add(new Topic(topicName, GetLessonsByTopic(keyValueTopic)));
                 }
