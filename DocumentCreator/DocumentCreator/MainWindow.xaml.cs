@@ -98,10 +98,25 @@ namespace DocumentCreator
                             //disciplineWindow.LessonType.Content = lesson.Type;
                             //disciplineWindow.ShowDialog();
                             string path = Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/"));
-                            string fileName = path + "theme.doc";
+                        string fileName = "";
+                        if (lesson.Type.Contains("Трениров"))
+                        {
+                            fileName = path + "MethodicaForTrenirovka.docx";
+                        }
+                        else
+                        {
+                            fileName = path + "theme1.docx";
+                        }
                             string outputFileName = parser.GetOutputPath() + discipline.Name + "\\" + topic.Name + "\\" + lesson.Type + ".doc";
                             outputFileName = outputFileName.Replace("//", "\\");
+                        try
+                        {
                             File.Copy(@fileName, @outputFileName);
+                        }
+                        catch (Exception exception)
+                        {
+
+                        }
                         }
                     }
                 }

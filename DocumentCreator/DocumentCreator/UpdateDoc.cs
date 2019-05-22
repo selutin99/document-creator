@@ -1,6 +1,7 @@
 ﻿ using DocumentCreator.FilesAPI;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,23 @@ namespace DocumentCreator
             Word.Application wordApp = new Word.Application();
             Word.Document doc = wordApp.Documents.Open(documentPath, ReadOnly: false);
             doc.Activate();
-            FindAndReplace(wordApp, "{id:name}", keyValuePairs["{id:name}"]);
+            foreach(Word.Paragraph paragraph in doc.Paragraphs)
+            {
+                if (paragraph.Range.Text.Contains("{id:cardOfTask}"))
+                {
+                    Dictionary<string, string> questions = (Dictionary<string, string>)(keyValuePairs["{id:questions}"]);
+                    for(int i = 0; i < questions.Count; i++)
+                    {
+                        paragraph.Range.InsertFile(Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/Spravochnik.docx")));
+                        KeyValuePair<string, string> question = questions.ElementAt(i);
+                        FindAndReplace(wordApp, "{id:questionName}", question.Key);
+                        FindAndReplace(wordApp, "{id:questionDuration}", question.Value);
+
+                    }
+                    
+                }
+            }
+            FindAndReplace(wordApp, "{ id:name}", keyValuePairs["{id:name}"]);
             FindAndReplace(wordApp, "{id:theme}", keyValuePairs["{id:theme}"]);
             FindAndReplace(wordApp, "{id:themeName}", keyValuePairs["{id:themeName}"]);
             FindAndReplace(wordApp, "{id:lesson}", keyValuePairs["{id:lesson}"]);
@@ -31,8 +48,51 @@ namespace DocumentCreator
             FindAndReplace(wordApp, "{id:method}", keyValuePairs["{id:method}"]);
             FindAndReplace(wordApp, "{id:duration}", keyValuePairs["{id:duration}"]);
             FindAndReplace(wordApp, "{id:place}", keyValuePairs["{id:place}"]);
-            FindAndReplace(wordApp, "{id:literature}", keyValuePairs["{id:literature}"]);
-            FindAndReplace(wordApp, "{id:additionalLiterature}", keyValuePairs["{id:additionalLiterature}"]);
+            string methodical = (string)keyValuePairs["{id:methodical}"];
+            int k = 0;
+            for(int i = 0; i < methodical.Length; i += 30)
+            {
+                if (i > 0)
+                {
+                    try
+                    {
+                        FindAndReplace(wordApp, "{id:methodical}", methodical.Substring(i + 1, 30) + "{id:methodical}");
+                    }
+                    catch (Exception e)
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    FindAndReplace(wordApp, "{id:methodical}", methodical.Substring(i, 30) + "{id:methodical}");
+                }
+                    k = i;
+            }
+            FindAndReplace(wordApp, "{id:methodical}", methodical.Substring(k + 1));
+            string literature = (string)keyValuePairs["{id:literature}"];
+            int l = 0;
+            for (int i = 0; i < literature.Length; i += 30)
+            {
+                if (i > 0)
+                {
+                    try
+                    {
+                        FindAndReplace(wordApp, "{id:literature}", literature.Substring(i + 1, 30) + "{id:literature}");
+                    }
+                    catch (Exception e)
+                    {
+                        break;
+                    }
+                    
+                }
+                else
+                {
+                    FindAndReplace(wordApp, "{id:literature}", literature.Substring(i, 30) + "{id:literature}");
+                }
+                l = i;
+            }
+            FindAndReplace(wordApp, "{id:literature}", literature.Substring(l + 1));
             FindAndReplace(wordApp, "{id:technicalMeans}", keyValuePairs["{id:technicalMeans}"]);
             FindAndReplace(wordApp, "{id:intro}", keyValuePairs["{id:intro}"]);
             FindAndReplace(wordApp, "{id:material}", keyValuePairs["{id:material}"]);
@@ -57,6 +117,28 @@ namespace DocumentCreator
                                 newRow.Cells[1].Range.Text = "2."+count;
                                 newRow.Cells[2].Range.Text = question.Key;
                                 newRow.Cells[3].Range.Text = question.Value;
+                                string questionFull = "Учебный вопрос " + count + ". " + question.Key + question.Value + "минут.\n";
+                                int r = 0;
+                                for (int e = 0; e < literature.Length; e += 30)
+                                {
+                                    if (e > 0)
+                                    {
+                                        try
+                                        {
+                                            FindAndReplace(wordApp, "{id:questionOfLesson}", questionFull.Substring(e + 1, 30) + "{id:questionOfLesson}");
+                                        }
+                                        catch (Exception q)
+                                        {
+                                            break;
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        FindAndReplace(wordApp, "{id:questionOfLesson}", questionFull.Substring(e, 30) + "{id:questionOfLesson}");
+                                    }
+                                    r = e;
+                                }
                                 temporary = newRow;
                                 count++;
                             }
@@ -82,6 +164,7 @@ namespace DocumentCreator
                     }
                 }
             }
+            FindAndReplace(wordApp, "{id:questionOfLesson}", "");
             WordAPI.SaveFile(doc);
             WordAPI.Close(doc);
         }

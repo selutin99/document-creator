@@ -35,7 +35,7 @@
             <Separator Height="18" Margin="0,862,-0.2,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
             <Label Content="Вид занятия:" HorizontalAlignment="Left" Margin="23,885,0,966" Width="199" Grid.ColumnSpan="2"/>
             <TextBox x:Name="kind" Margin="9.8,885,11.8,952" TextWrapping="Wrap" IsEnabled="False" Grid.Column="2"/>
-            <Label Content="Место проведения:" HorizontalAlignment="Left" Margin="23,0,0,690" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
+            <Label Content="Место проведения:" HorizontalAlignment="Left" Margin="23,0,0,706" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
             <TextBox x:Name="numberTopic" Height="35" Margin="9.8,112,21.8,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False" Grid.Column="2"/>
             <TextBox x:Name="topicName" Height="31" Margin="9.8,165,21.8,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False" Grid.Column="2"/>
             <TextBox x:Name="goals_1" Height="141" Margin="9.8,391,21.8,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="2"/>
@@ -56,30 +56,30 @@
                     </TransformGroup>
                 </Separator.RenderTransform>
             </Separator>-->
-            <Button Content="ГОТОВО" Margin="23.8,0,281.8,10.4" VerticalAlignment="Bottom" Height="45" FontSize="24" FontWeight="Bold" Grid.Column="2" Grid.Row="1" Click="Button_Click"/>
+            <Button Content="ГОТОВО" Margin="23.8,0,281.8,10.4" VerticalAlignment="Bottom" Height="45" FontSize="24" FontWeight="Bold" Grid.Column="2" Grid.Row="1" Click="Button_Click" RenderTransformOrigin="0.501,0.5"/>
             <ComboBox x:Name="selectGoal_1" HorizontalAlignment="Left" Margin="23,478,0,0" VerticalAlignment="Top" Width="199" IsReadOnly="True" SelectionChanged="SelectGoal_1_SelectionChanged" Grid.ColumnSpan="2"/>
             <Label Content="Знать:" HorizontalAlignment="Left" Margin="23,438,0,0" VerticalAlignment="Top" Width="199" Grid.ColumnSpan="2"/>
             <Label Content="Уметь:" HorizontalAlignment="Left" Margin="23,550,0,0" VerticalAlignment="Top" Width="199" Height="28" Grid.ColumnSpan="2"/>
             <ComboBox x:Name="selectGoal_3" HorizontalAlignment="Left" Margin="23,790,0,0" VerticalAlignment="Top" Width="199" IsReadOnly="True" SelectionChanged="SelectGoal_3_SelectionChanged" Grid.ColumnSpan="2"/>
             <ComboBox x:Name="selectGoal_2" HorizontalAlignment="Left" Margin="23,622,0,0" VerticalAlignment="Top" Width="199" IsReadOnly="True" SelectionChanged="SelectGoal_2_SelectionChanged" Grid.ColumnSpan="2"/>
             <TextBox x:Name="goals_2" Height="130" Margin="9.8,552,21.8,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="2"/>
-            <ComboBox x:Name="place" HorizontalAlignment="Left" Margin="9.8,1152,0,0" VerticalAlignment="Top" Width="492" Height="38" Grid.Column="2"/>
+            <ComboBox x:Name="place" HorizontalAlignment="Left" Margin="23,1195,0,0" VerticalAlignment="Top" Width="199" Height="24" Grid.ColumnSpan="2" SelectionChanged="Place_SelectionChanged"/>
             <Label Content="Время:" HorizontalAlignment="Left" Margin="23,0,0,596" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
             <TextBox x:Name="hours" Margin="9.8,1242,21.8,596" TextWrapping="Wrap" IsEnabled="False" Grid.Column="2"/>
-            <Label Content="Метод проведения???:" HorizontalAlignment="Left" Margin="23,0,0,517" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
-            <TextBox x:Name="method" Margin="9.8,1337,21.8,514" TextWrapping="Wrap" IsEnabled="False" Grid.Column="2"/>
+            <Label Content="Метод проведения:" HorizontalAlignment="Left" Margin="23,0,0,532" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
+            <TextBox x:Name="selected_method" Margin="10,1321,21,499" TextWrapping="Wrap" IsEnabled="False" Grid.Column="2"/>
             <Label Content="Материальная поддержка:" HorizontalAlignment="Left" Margin="23,0,0,393" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
             <TextBox x:Name="materialSupport" Margin="9.8,1403,21.8,338" TextWrapping="Wrap" Grid.Column="2"/>
             <Label Content="Литература:" HorizontalAlignment="Left" Margin="23,1003,0,846" Width="181" Grid.ColumnSpan="2"/>
-            <TextBox x:Name="question5_text" Margin="9.8,459,11.8,378.4" TextWrapping="Wrap" IsEnabled="False" Grid.Row="1" Grid.Column="2"/>
-            <TextBox x:Name="question4_text" Margin="9.8,307,11.8,532.4" TextWrapping="Wrap" IsEnabled="False" Grid.Row="1" Grid.Column="2"/>
-            <TextBox x:Name="question3_text" Margin="11.8,154,9.8,692.4" TextWrapping="Wrap" IsEnabled="False" Grid.Row="1" Grid.Column="2"/>
-            <Label Content="Введение:" HorizontalAlignment="Left" Margin="23,0,0,228" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
-            <TextBox x:Name="intro" Margin="9.8,1613,21.8,223" TextWrapping="Wrap" Grid.Column="2"/>
-            <TextBox x:Name="question1_text" Margin="9.8,1724,11.8,105" TextWrapping="Wrap" IsEnabled="False" Grid.Column="2"/>
-            <TextBox x:Name="question2_text" Margin="11.8,8,9.8,832.4" TextWrapping="Wrap" IsEnabled="False" Grid.Column="2" Grid.Row="1"/>
+            <TextBox x:Name="question5_text" Margin="9.8,459,11.8,378.4" TextWrapping="Wrap" IsEnabled="False" Grid.Row="1" Grid.Column="2" MaxLength="2"/>
+            <TextBox x:Name="question4_text" Margin="9.8,307,11.8,532.4" TextWrapping="Wrap" IsEnabled="False" Grid.Row="1" Grid.Column="2" MaxLength="2"/>
+            <TextBox x:Name="question3_text" Margin="11.8,154,9.8,692.4" TextWrapping="Wrap" IsEnabled="False" Grid.Row="1" Grid.Column="2" MaxLength="2"/>
+            <Label x:Name="introLabel" Content="Введение:" HorizontalAlignment="Left" Margin="23,0,0,228" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
+            <TextBox x:Name="intro" Margin="9.8,1613,21.8,223" TextWrapping="Wrap" Grid.Column="2" MaxLength="2"/>
+            <TextBox x:Name="question1_text" Margin="9.8,1724,11.8,105" TextWrapping="Wrap" IsEnabled="False" Grid.Column="2" MaxLength="2"/>
+            <TextBox x:Name="question2_text" Margin="11.8,8,9.8,832.4" TextWrapping="Wrap" IsEnabled="False" Grid.Column="2" Grid.Row="1" MaxLength="2"/>
             <Label Content="Заключение:" HorizontalAlignment="Left" Margin="23,0,0,241.4" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.Row="1" Grid.ColumnSpan="2"/>
-            <TextBox x:Name="conclusion" Margin="9.8,609,11.8,230.4" TextWrapping="Wrap" Grid.Row="1" Grid.Column="2"/>
+            <TextBox x:Name="conclusion" Margin="9.8,609,11.8,230.4" TextWrapping="Wrap" Grid.Row="1" Grid.Column="2" MaxLength="2"/>
             <TextBox x:Name="questionName5" Margin="10,422,10.2,318.4" TextWrapping="Wrap" Grid.Row="1" IsEnabled="False" Grid.ColumnSpan="2"/>
             <TextBox x:Name="questionName4" Margin="10,266,10.2,486.4" TextWrapping="Wrap" Grid.Row="1" IsEnabled="False" RenderTransformOrigin="0.497,0.492" Grid.ColumnSpan="2"/>
             <TextBox x:Name="questionName3" Margin="10,122,10.2,642.4" TextWrapping="Wrap" Grid.Row="1" IsEnabled="False" Grid.ColumnSpan="2"/>
@@ -91,7 +91,7 @@
             <TextBox x:Name="lessonName" Height="31" Margin="9.8,280,21.8,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False" Grid.Column="2"/>
             <Separator Height="18" Margin="0,933,-0.2,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
             <Separator Height="18" Margin="0,1129,-0.2,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
-            <Separator Height="18" Margin="0,1205,-0.2,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
+            <Separator Height="18" Margin="0,1219,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
             <Separator Height="18" Margin="0,1298,-0.2,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
             <Separator Height="18" Margin="0,1385,-0.2,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
             <Separator Height="18" Margin="0,1547,-0.2,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
@@ -105,6 +105,9 @@
             <Label Content="Вопросы занятия:" HorizontalAlignment="Left" Margin="23,0,0,289" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
             <Label Content="В полях указывается время в минутах на указанный вопрос слева" HorizontalAlignment="Left" Margin="11.8,0,0,289" VerticalAlignment="Bottom" Width="377" RenderTransformOrigin="0.513,-0.633" Grid.Column="2"/>
             <Label Content="Каждая воспитательная цель отделяется знаком ;" HorizontalAlignment="Left" Margin="11.8,348,0,0" VerticalAlignment="Top" Width="403" Grid.Column="2"/>
+            <TextBox x:Name="selected_Place" Grid.Column="2" Height="67" Margin="12,0,12,660" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
+            <ComboBox x:Name="method" Margin="23,0,40,499" VerticalAlignment="Bottom" Grid.ColumnSpan="2" SelectionChanged="Method_SelectionChanged"/>
+            <ScrollViewer x:Name="methodical" Grid.Column="1" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" HorizontalAlignment="Left" Height="108" Margin="9.6,678,0,0" Grid.Row="1" VerticalAlignment="Top" Width="707" Grid.ColumnSpan="2"/>
         </Grid>
     </ScrollViewer>
 </Window>

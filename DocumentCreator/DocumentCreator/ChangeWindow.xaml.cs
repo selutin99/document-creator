@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -35,6 +36,7 @@ namespace DocumentCreator
             topicName.Text = temp.Substring(0,temp.Length);
             numberLesson.Text = lesson.LessonInMaterialSupp;
             lessonName.Text = lesson.ThemeOfLesson;
+            
             foreach(String goal in requirementsForStudent["Знать:"])
             {
                 string tempGoal = goal.Replace("\v", " ");
@@ -62,11 +64,18 @@ namespace DocumentCreator
                 tempGoal = tempGoal.Trim();
                 selectGoal_3.Items.Add(tempGoal);
             }
-            kind.Text = lesson.Type;
+            kind.Text = lesson.Type.Substring(0,lesson.Type.LastIndexOf(' '));
             place.Items.Add("Плац");
             place.Items.Add("Учеюный кабинет");
             place.Items.Add("Тренировочный кабинет");
-            hours.Text = lesson.Minutes+" часа";
+            hours.Text = lesson.Minutes+" минут";
+            method.Items.Add("Рассказ");
+            method.Items.Add("Показ");
+            method.Items.Add("Тренировка");
+            if (lesson.Type.StartsWith("Лекция")) {
+                introLabel.Content = "Вступительная часть:";
+            }
+
             materialSupport.Text = lesson.MaterialSupport;
             literature.Text = lesson.Literature.Replace("\r", "; ");
             for(int i=0;i< lesson.Questions.Count; i++)
@@ -98,6 +107,15 @@ namespace DocumentCreator
                     question5_text.IsEnabled = true;
                 }
             }
+            if (lesson.Type.StartsWith("Лекци"))
+            {
+                methodical.Content = discipline.MethodicalInstructionsForLecture;
+            }
+            else
+            {
+                methodical.Content = discipline.MethodicalInstructionsForRest;
+            }
+
 
 
 
@@ -153,26 +171,26 @@ namespace DocumentCreator
                 //goals.Add("Требоване 4");
                 Dictionary<string, string> questions = new Dictionary<string, string>();
                 int sumOfMinInQuestionsOfLesson = 0;
-                questions.Add(questionName1.Text.Substring(2), question1_text.Text + " мин");
+                questions.Add(questionName1.Text.Substring(0), question1_text.Text + " мин");
                 sumOfMinInQuestionsOfLesson += Int32.Parse(question1_text.Text);
                 if (question2_text.IsEnabled)
                 {
-                    questions.Add(questionName2.Text.Substring(2), question2_text.Text + " мин");
+                    questions.Add(questionName2.Text.Substring(0), question2_text.Text + " мин");
                     sumOfMinInQuestionsOfLesson += Int32.Parse(question2_text.Text);
                 }
                 if (question3_text.IsEnabled)
                 {
-                    questions.Add(questionName3.Text.Substring(2), question3_text.Text + " мин");
+                    questions.Add(questionName3.Text.Substring(0), question3_text.Text + " мин");
                     sumOfMinInQuestionsOfLesson += Int32.Parse(question3_text.Text);
                 }
                 if (question4_text.IsEnabled)
                 {
-                    questions.Add(questionName4.Text.Substring(2), question4_text.Text + " мин");
+                    questions.Add(questionName4.Text.Substring(0), question4_text.Text + " мин");
                     sumOfMinInQuestionsOfLesson += Int32.Parse(question4_text.Text);
                 }
                 if (question5_text.IsEnabled)
                 {
-                    questions.Add(questionName5.Text.Substring(2), question5_text.Text + " мин");
+                    questions.Add(questionName5.Text.Substring(0), question5_text.Text + " мин");
                     sumOfMinInQuestionsOfLesson += Int32.Parse(question5_text.Text);
                 }
                 keyValuePairs["{id:name}"] = nameDiscipline.Text;
@@ -182,7 +200,7 @@ namespace DocumentCreator
                 keyValuePairs["{id:lessonName}"] = lessonName.Text;
                 keyValuePairs["{id:goal}"] = goals;
                 keyValuePairs["{id:kind}"] = kind.Text;
-                keyValuePairs["{id:method}"] = "Метод в разработке!";
+                keyValuePairs["{id:method}"] = method.Text;
                 keyValuePairs["{id:duration}"] = hours.Text;
                 keyValuePairs["{id:place}"] = place.Text;
                 keyValuePairs["{id:literature}"] = literature.Text;
@@ -191,7 +209,7 @@ namespace DocumentCreator
                 keyValuePairs["{id:questions}"] = questions;
                 keyValuePairs["{id:conclution}"] = conclusion.Text;
                 keyValuePairs["{id:material}"] = materialSupport.Text;
-                keyValuePairs["{id:additionalLiterature}"] = "Дополнительная литература!!";
+                keyValuePairs["{id:methodical}"] = methodical.Content;
                 keyValuePairs["{id:technicalMeans}"] = materialSupport.Text;
                 UpdateDoc update = new UpdateDoc(documentPath);
                 update.updateDoc(keyValuePairs);
@@ -199,9 +217,56 @@ namespace DocumentCreator
             }
         }
 
-        //private void Place_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
+        private void Place_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selected_Place.Text += place.SelectedItem + "; ";
+        }
 
-        //}
+        private void Method_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selected_method.Text += method.SelectedItem + "; ";
+        }
+
+        private void intro_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        private void question1_text_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        private void question2_text_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        private void question3_text_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        private void question4_text_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        private void question5_text_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        private void conclusion_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
+                e.Handled = true;
+        }
     }
 }
