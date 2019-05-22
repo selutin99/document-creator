@@ -101,11 +101,17 @@ namespace DocumentCreator
                 {
                     string restText = range.Text.Substring(range.Text.IndexOf("Методические указания обучающимся студентам"));
                     wasFounded = true;
-                    content += restText.Substring(restText.IndexOf("Методические указания обучающимся студентам"), restText.IndexOf("Методические указания преподавателю") - restText.IndexOf("Методические указания обучающимся студентам"));
+                    content += restText.Substring(restText.IndexOf("Методические указания обучающимся")+ "Методические указания обучающимся".Length, restText.IndexOf("Методические указания препода") - restText.IndexOf("Методические указания обучающимся"));
                     content = content.Trim();
                     content = content.Replace("\v", " ");
                     content = content.Replace("\r", " ");
                     content = content.Replace("\a", " ");
+                    if (disciplines.Count == 1)
+                    {
+                        int a = content.IndexOf(disciplines[0].Name);
+                        disciplines[0].MethodicalInstructionsForRest = content.Substring(content.IndexOf(disciplines[0].Name) + disciplines[0].Name.Length);
+                        return disciplines;
+                    }
                     for (int i = 0; i < disciplines.Count - 1; i++)
                     {
                         try

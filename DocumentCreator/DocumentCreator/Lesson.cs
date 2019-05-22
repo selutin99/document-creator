@@ -9,14 +9,14 @@ namespace DocumentCreator
     public class Lesson
     {
         string type;
-        string hours;
+        string minutes;
         string materialSupport;
         string lessonInMaterialSupp;
         string themeOfLesson;
         List<string> questions;
         string literature;
         public string Type { get => type; set => type = value; }
-        public string Hours { get => hours; set => hours = value; }
+        public string Minutes { get => minutes; set => minutes = value; }
         public string MaterialSupport { get => materialSupport; set => materialSupport = value; }
         public string LessonInMaterialSupp { get => lessonInMaterialSupp; set => lessonInMaterialSupp = value; }
         public string ThemeOfLesson { get => themeOfLesson; set => themeOfLesson = value; }

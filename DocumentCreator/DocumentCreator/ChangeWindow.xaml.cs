@@ -66,7 +66,7 @@ namespace DocumentCreator
             place.Items.Add("Плац");
             place.Items.Add("Учеюный кабинет");
             place.Items.Add("Тренировочный кабинет");
-            hours.Text = lesson.Hours+" часа";
+            hours.Text = lesson.Minutes+" часа";
             materialSupport.Text = lesson.MaterialSupport;
             literature.Text = lesson.Literature.Replace("\r", "; ");
             for(int i=0;i< lesson.Questions.Count; i++)

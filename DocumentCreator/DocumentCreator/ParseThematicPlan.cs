@@ -11,7 +11,7 @@ namespace DocumentCreator
     {
         private string outputPath;
         private Word.Document doc;
-        private Word.Table table;
+        private Word.Table table = null;
 
         public string GetOutputPath()
         {
@@ -21,7 +21,32 @@ namespace DocumentCreator
         public ParseThematicPlan(string inputFilePath, string outputPath)
         {
             this.doc = FilesAPI.WordAPI.GetDocument(inputFilePath);
-            this.table = doc.Tables[2];
+            foreach(Word.Table tbl in doc.Tables)
+            {
+                int k = 0;
+                if (this.table == null)
+                {
+                    foreach (Word.Cell cell in tbl.Range.Cells)
+                    {
+                        if (k >= 200)
+                        {
+                            break;
+                        }
+
+                        if (cell.Range.Text.Contains("Тема и учебные вопросы занятия"))
+                        {
+                            this.table = tbl;
+                        }
+                        k++;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+                
+                
+            }
 
             this.outputPath = outputPath;
         }
@@ -102,7 +127,12 @@ namespace DocumentCreator
                     {
                         if (re.IsMatch(updateRange.Text))
                         {
-                            nextDiscipline = updateRange.Text.Substring(0, updateRange.Text.Length - 4);
+                            nextDiscipline = updateRange.Text.Substring(0, updateRange.Text.Length);
+                            nextDiscipline = nextDiscipline.Trim();
+                            nextDiscipline = nextDiscipline.Replace("\v", "");
+                            nextDiscipline = nextDiscipline.Replace("\r", "");
+                            nextDiscipline = nextDiscipline.Replace("\a", "");
+                            nextDiscipline = nextDiscipline.Replace("  ", " ");
                             if (lastDiscipline == null)
                             {
                                 lastDiscipline = nextDiscipline;
@@ -181,7 +211,7 @@ namespace DocumentCreator
 
         private List<Discipline> GetAllDisciplinesWithContent()
         {
-            Dictionary<string, string> resulterMap = FindByRegexDisciplin(new Regex(@"^ОВП*"), new Regex(@"^ОГП*"));
+            Dictionary<string, string> resulterMap = FindByRegexDisciplin(new Regex(@"^ОВП*"), new Regex(@"^ОГП*"),new Regex(@"^ВТП*"));
             List<Discipline> disciplines = new List<Discipline>();
             
             foreach (KeyValuePair<string, string> keyValue in resulterMap)
@@ -212,6 +242,7 @@ namespace DocumentCreator
                 disciplines.Add(discipline);
             }
             disciplines=getMethodicalInstructionsForLecture(disciplines);
+            disciplines = replaceLiterature(disciplines);
             //CLOSE FILE
             FilesAPI.WordAPI.Close(this.doc);
             //парсим метод указания для лекций
@@ -223,7 +254,7 @@ namespace DocumentCreator
         {
             List<Lesson> lessons = new List<Lesson>();
             string kindOfLesson = "";
-            string hours = "";
+            string minutes = "";
             string questionsOfLesson = "";
             string materialSupport = "";
             string lessonInMaterialSupp = "";
@@ -247,7 +278,7 @@ namespace DocumentCreator
                     cell = cells[i + 1];
                     if(cell.Range.Text.Length>0)
                     {
-                        hours = cell.Range.Text.Trim(charsToTrim);
+                        minutes = cell.Range.Text.Trim(charsToTrim);
                     }
                     //get questions of the lesson
                     cell = cells[i + 2];
@@ -282,10 +313,10 @@ namespace DocumentCreator
                     literature = cell.Range.Text.Trim(charsToTrim);
                     
                     //get hours if first cell was empty
-                    if (hours == "")
+                    if (minutes == "")
                     {
                         cell = cells[i + 5];
-                        hours= cell.Range.Text.Trim(charsToTrim);
+                        minutes= cell.Range.Text.Trim(charsToTrim);
                     }
                     Lesson lesson = new Lesson();
                     lesson.Type = kindOfLesson;
@@ -294,7 +325,17 @@ namespace DocumentCreator
                     lesson.ThemeOfLesson = themeOfLesson;
                     lesson.Questions = questions;
                     lesson.MaterialSupport = materialSupport;
-                    lesson.Hours = hours;
+                    //ПРО САМОСТОЯТЕЛЬНУ РАБОТУ СПРОСИТЬ СКОЛЬКО ТАМ МИНУТ БУДЕТ
+                    if(lesson.Type.Contains("Лекци")|| lesson.Type.Contains("Групповое")|| lesson.Type.Contains("Практичес"))
+                    {
+                        int count = Int32.Parse(minutes) * 45;
+                        minutes = count.ToString();
+                    }
+                    else if (lesson.Type.Contains("Трениров"))
+                    {
+                        minutes = "30";
+                    }
+                    lesson.Minutes = minutes;
                     lessons.Add(lesson);
                     i += 5;
                 }
@@ -398,38 +439,178 @@ namespace DocumentCreator
             {
                 Word.Range range = section.Range;
                 int text1 = range.Text.IndexOf("Организационно-методические указания");
-                if (range.Text.IndexOf("Организационно-методические указания")>=0||wasFounded)
+                if (range.Text.IndexOf("Организационно-методические указания") >= 0 || wasFounded)
                 {
-                    string restText = range.Text.Substring(range.Text.IndexOf("Организационно-методические указания"));
+                    string restText = range.Text.Substring(range.Text.IndexOf("Организационно-методические указания") + "Организационно-методические указания".Length);
                     wasFounded = true;
-                    content += restText.Substring(restText.IndexOf("Часть 1"), restText.IndexOf("Часть 2") - restText.IndexOf("Часть 1"));
+                    if (restText.IndexOf("Часть 1") < 0)
+                    {
+                        content += restText.Substring(0, restText.IndexOf("Часть 2"));
+                    }
+                    else
+                    {
+                        content += restText.Substring(restText.IndexOf("Часть 1") + "Часть 1".Length, restText.IndexOf("Часть 2") - restText.IndexOf("Часть 1"));
+                    }
                     content = content.Trim();
                     content = content.Replace("\v", " ");
                     content = content.Replace("\r", " ");
                     content = content.Replace("\a", " ");
-                    for (int i = 0; i < disciplines.Count-1; i++)
+                    if (disciplines.Count == 1)
                     {
-                        try
+                        disciplines[0].MethodicalInstructionsForLecture = content.Substring(0);
+                        return disciplines;
+                    }
+                    {
+                        for (int i = 0; i < disciplines.Count - 1; i++)
                         {
-                            if (content.IndexOf(disciplines[i + 1].Name) >= 0)
+                            try
                             {
-                                string temp = content.Substring(0, content.IndexOf(disciplines[i + 1].Name));
-                                temp = temp.Substring(temp.IndexOf(disciplines[i].Name) + disciplines[i].Name.Length + 2);
-                                disciplines[i].MethodicalInstructionsForLecture = temp;
-                                content = content.Substring(content.IndexOf(disciplines[i + 1].Name));
+                                if (content.IndexOf(disciplines[i + 1].Name) >= 0)
+                                {
+                                    string temp = content.Substring(0, content.IndexOf(disciplines[i + 1].Name));
+                                    temp = temp.Substring(temp.IndexOf(disciplines[i].Name) + disciplines[i].Name.Length + 2);
+                                    disciplines[i].MethodicalInstructionsForLecture = temp;
+                                    content = content.Substring(content.IndexOf(disciplines[i + 1].Name));
+                                }
+                                else
+                                {
+                                    disciplines[i].MethodicalInstructionsForLecture = disciplines[i - 1].MethodicalInstructionsForLecture;
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                disciplines[i].MethodicalInstructionsForLecture = content.Substring(0);
+                            }
+
+
+
+                        }
+                    }
+                }
+            }
+            return disciplines;
+        }
+        private List<Discipline> replaceLiterature(List<Discipline> disciplines)
+        {
+            Word.Table tableWithLiterature = null;
+            foreach (Word.Table tbl in doc.Tables)
+            {
+                int k = 0;
+                if (tableWithLiterature == null)
+                {
+                    foreach (Word.Cell cell in tbl.Range.Cells)
+                    {
+                        if (k >= 3)
+                        {
+                            break;
+                        }
+
+                        if (cell.Range.Text.Contains("ЛИТЕРАТУРА")|| cell.Range.Text.Contains("литература")|| cell.Range.Text.Contains("Литература"))
+                        {
+                            tableWithLiterature = tbl;
+                        }
+                        k++;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+            Dictionary<string, string> mainLiterature = new Dictionary<string, string>();
+            Dictionary<string, string> additionalLiterature = new Dictionary<string, string>();
+            string temp = "";
+            for (int i=1; i<tableWithLiterature.Range.Cells.Count;i++)
+            {
+                if (temp.Equals("main")&& (!tableWithLiterature.Range.Cells[i].Range.Text.Contains(" Дополнительная")))
+                {
+                    string replaceKey = tableWithLiterature.Range.Cells[i].Range.Text;
+                    replaceKey = replaceKey.Trim();
+                    replaceKey = replaceKey.Replace("\v", "");
+                    replaceKey = replaceKey.Replace("\r", "");
+                    replaceKey = replaceKey.Replace("\a", "");
+                    replaceKey = replaceKey.Replace(".", "");
+                    if (replaceKey.Equals(""))
+                    {
+                        replaceKey = mainLiterature.Keys.Count + 1 + "";
+                    }
+                    string replaceValue=tableWithLiterature.Range.Cells[i + 1].Range.Text;
+                    replaceValue = replaceValue.Trim();
+                    replaceValue = replaceValue.Replace("\v", " ");
+                    replaceValue = replaceValue.Replace("\r", " ");
+                    replaceValue = replaceValue.Replace("\a", " ");
+                    mainLiterature.Add(replaceKey, replaceValue);
+                    i = i + 1;
+                }
+                else if (temp.Equals("additional"))
+                {
+                    string replaceKey = tableWithLiterature.Range.Cells[i].Range.Text;
+                    replaceKey = replaceKey.Trim();
+                    replaceKey = replaceKey.Replace("\v", "");
+                    replaceKey = replaceKey.Replace("\r", "");
+                    replaceKey = replaceKey.Replace("\a", "");
+                    replaceKey = replaceKey.Replace(".", "");
+                    if (replaceKey.Equals(""))
+                    {
+                        replaceKey = additionalLiterature.Keys.Count + 1 + "";
+                    }
+                    string replaceValue = tableWithLiterature.Range.Cells[i + 1].Range.Text;
+                    replaceValue = replaceValue.Trim();
+                    replaceValue = replaceValue.Replace("\v", " ");
+                    replaceValue = replaceValue.Replace("\r", " ");
+                    replaceValue = replaceValue.Replace("\a", " ");
+                    additionalLiterature.Add(replaceKey, replaceValue);
+                    i = i + 1;
+                }
+                if(tableWithLiterature.Range.Cells[i].Range.Text.Contains(" Основная"))
+                {
+                    temp = "main";
+                }
+                else if (tableWithLiterature.Range.Cells[i].Range.Text.Contains(" Дополнительная") || (!temp.Equals("") && tableWithLiterature.Range.Cells[i].Range.Text.Contains(" Дополнительная")))
+                {
+                    temp = "additional";
+                }
+
+            }
+            List<Discipline> disciplinesCopy = new List<Discipline>();
+            string finalStringConcat = "";
+            for (int i= 0; i < disciplines.Count; i++)
+            {
+                for (int j = 0; j < disciplines[i].Topics.Count; j++)
+                {
+                    for (int k = 0; k < disciplines[i].Topics[j].Lessons.Count; k++)
+                    {
+                        
+                        string[] mas= disciplines[i].Topics[j].Lessons[k].Literature.Split(';');
+                        disciplines[i].Topics[j].Lessons[k].Literature="";
+                        for (int e = 0; e < mas.Length-1; e++)
+                        {
+                            string literature = mas[e];
+                            literature = literature.Trim();
+                            if (literature.IndexOf(",") < literature.IndexOf(" ")&& literature.IndexOf(",")!=-1)
+                            {
+                                literature = literature.Split(',')[0];
+                                finalStringConcat = mas[e].Substring(mas[e].IndexOf(","));
                             }
                             else
                             {
-                                disciplines[i].MethodicalInstructionsForLecture = disciplines[i - 1].MethodicalInstructionsForLecture;
+                                literature = literature.Split(' ')[0];
+                                finalStringConcat = mas[e].Substring(mas[e].IndexOf(" "));
+                            }
+                            literature = literature.Replace("\v", "");
+                            literature = literature.Replace("\r", "");
+                            literature = literature.Replace("\a", "");
+                            if (literature.StartsWith("А") || literature.StartsWith("A"))
+                            {
+                                literature = literature.Substring(1);
+                                disciplines[i].Topics[j].Lessons[k].Literature += mainLiterature[literature] + finalStringConcat + ";";
+                            }
+                            else
+                            {
+                                literature = literature.Substring(1);
+                                disciplines[i].Topics[j].Lessons[k].Literature += additionalLiterature[literature] + finalStringConcat + ";";
                             }
                         }
-                        catch (Exception e)
-                        {
-                            disciplines[i].MethodicalInstructionsForLecture = content.Substring(0);
-                        }
-                        
-                       
-
                     }
                 }
             }
