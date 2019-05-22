@@ -209,7 +209,7 @@ namespace DocumentCreator
                 keyValuePairs["{id:questions}"] = questions;
                 keyValuePairs["{id:conclution}"] = conclusion.Text;
                 keyValuePairs["{id:material}"] = materialSupport.Text;
-                keyValuePairs["{id:methodical}"] = methodical.Content;
+                keyValuePairs["{id:methodical}"] = methodical.Text;
                 keyValuePairs["{id:technicalMeans}"] = materialSupport.Text;
                 UpdateDoc update = new UpdateDoc(documentPath);
                 update.updateDoc(keyValuePairs);
