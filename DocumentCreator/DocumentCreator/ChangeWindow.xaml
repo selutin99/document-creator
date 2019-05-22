@@ -107,7 +107,9 @@
             <Label Content="Каждая воспитательная цель отделяется знаком ;" HorizontalAlignment="Left" Margin="11.8,348,0,0" VerticalAlignment="Top" Width="403" Grid.Column="2"/>
             <TextBox x:Name="selected_Place" Grid.Column="2" Height="67" Margin="12,0,12,660" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
             <ComboBox x:Name="method" Margin="23,0,40,499" VerticalAlignment="Bottom" Grid.ColumnSpan="2" SelectionChanged="Method_SelectionChanged"/>
-            <ScrollViewer x:Name="methodical" Grid.Column="1" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" HorizontalAlignment="Left" Height="108" Margin="9.6,678,0,0" Grid.Row="1" VerticalAlignment="Top" Width="707" Grid.ColumnSpan="2"/>
+            <ScrollViewer x:Name="scroll_methodical" Grid.Column="1" VerticalScrollBarVisibility="Visible" HorizontalAlignment="Left" Height="108" Margin="9.6,678,0,0" Grid.Row="1" VerticalAlignment="Top" Width="707" Grid.ColumnSpan="2">
+                <TextBlock x:Name="methodical" FontSize="12" FontStyle="Oblique" TextWrapping="Wrap" FontWeight="DemiBold"/>
+            </ScrollViewer>
         </Grid>
     </ScrollViewer>
 </Window>
