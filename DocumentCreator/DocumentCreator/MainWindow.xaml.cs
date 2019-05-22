@@ -12,6 +12,9 @@ using System.ComponentModel;
 using System.Threading;
 using System;
 
+using Word = Microsoft.Office.Interop.Word;
+using DocumentCreator.FilesAPI;
+
 namespace DocumentCreator
 {
     public partial class MainWindow : Window
@@ -19,8 +22,8 @@ namespace DocumentCreator
         private string fileName { get; set; }
         private string fileNameWorkProgramming { get; set; }
         ParseThematicPlan parser;
-        public string FolderName { get => folderName; set => folderName = value; }
-        internal List<Discipline> Disciplines { get => disciplines; set => disciplines = value; }
+        public string FolderName { get { return folderName; } set { folderName = value; } }
+        internal List<Discipline> Disciplines { get { return disciplines; } set { disciplines = value; } }
         private Dictionary<string, List<string>> requirementsForStudent;
         private List<Discipline> disciplines;
 
@@ -254,6 +257,19 @@ namespace DocumentCreator
                 dialogWindow.Show();
             }
             CheckEnabledForGenerate();
+        }
+
+        // Проверка для поиска тэга
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            string path = Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/"));
+            string quiz = path + "theme.doc";
+            string outer = path + "theme1.doc";
+
+            Word.Document document = FilesAPI.WordAPI.GetDocument(quiz);
+            WordAPI.FindAndReplace(document, "<univer>", "test");
+            WordAPI.SaveFile(document, outer);
+            WordAPI.KillWord();
         }
     }
 }
