@@ -327,15 +327,28 @@ namespace DocumentCreator
                     Lesson lesson = new Lesson();
                     lesson.Type = kindOfLesson;
                     lesson.Literature = literature;
+                    lessonInMaterialSupp = lessonInMaterialSupp.Trim();
+                    lessonInMaterialSupp = lessonInMaterialSupp.Replace("\r", "");
+                    lessonInMaterialSupp = lessonInMaterialSupp.Replace("\a", "");
                     lesson.LessonInMaterialSupp = lessonInMaterialSupp;
                     lesson.ThemeOfLesson = themeOfLesson;
                     lesson.Questions = questions;
+                    materialSupport = materialSupport.Trim();
+                    materialSupport = materialSupport.Replace("\r", "");
+                    materialSupport = materialSupport.Replace("\a", "");
                     lesson.MaterialSupport = materialSupport;
                     //ПРО САМОСТОЯТЕЛЬНУ РАБОТУ СПРОСИТЬ СКОЛЬКО ТАМ МИНУТ БУДЕТ
-                    if(lesson.Type.Contains("Лекци")|| lesson.Type.Contains("Групповое")|| lesson.Type.Contains("Практичес"))
+                    if(lesson.Type.Contains("Лекци")|| lesson.Type.Contains("Групповое")|| lesson.Type.Contains("Практичес") || lesson.Type.Contains("Самосто"))
                     {
-                        int count = Int32.Parse(minutes) * 45;
-                        minutes = count.ToString();
+                        try
+                        {
+                            int count = Int32.Parse(minutes) * 45;
+                            minutes = count.ToString();
+                        }
+                        catch(Exception e)
+                        {
+                            minutes = "Не было указано в темплане!";
+                        }
                     }
                     else if (lesson.Type.Contains("Трениров"))
                     {
@@ -526,7 +539,7 @@ namespace DocumentCreator
             Dictionary<string, string> mainLiterature = new Dictionary<string, string>();
             Dictionary<string, string> additionalLiterature = new Dictionary<string, string>();
             string temp = "";
-            for (int i=1; i<tableWithLiterature.Range.Cells.Count;i++)
+            for (int i=1; i<=tableWithLiterature.Range.Cells.Count;i++)
             {
                 if (temp.Equals("main")&& (!tableWithLiterature.Range.Cells[i].Range.Text.Contains(" Дополнительная")))
                 {
@@ -593,19 +606,19 @@ namespace DocumentCreator
                         {
                             string literature = mas[e];
                             literature = literature.Trim();
-                            if (literature.IndexOf(",") < literature.IndexOf(" ")&& literature.IndexOf(",")!=-1)
-                            {
-                                literature = literature.Split(',')[0];
-                                finalStringConcat = mas[e].Substring(mas[e].IndexOf(","));
-                            }
-                            else
-                            {
-                                literature = literature.Split(' ')[0];
-                                finalStringConcat = mas[e].Substring(mas[e].IndexOf(" "));
-                            }
                             literature = literature.Replace("\v", "");
                             literature = literature.Replace("\r", "");
                             literature = literature.Replace("\a", "");
+                            if (literature.IndexOf(",") < literature.IndexOf(" ")&& literature.IndexOf(",")!=-1)
+                            {
+                                finalStringConcat = literature.Substring(literature.IndexOf(","));
+                                literature = literature.Split(',')[0];
+                            }
+                            else
+                            {
+                                finalStringConcat = literature.Substring(literature.IndexOf(" "));
+                                literature = literature.Split(' ')[0];
+                            }
                             if (literature.StartsWith("А") || literature.StartsWith("A"))
                             {
                                 literature = literature.Substring(1);

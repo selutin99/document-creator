@@ -73,6 +73,7 @@ namespace DocumentCreator
                 }
                     k = i;
             }
+            k += 30;
             FindAndReplace(wordApp, "{id:methodical}", methodical.Substring(k + 1));
             string literature = (string)keyValuePairs["{id:literature}"];
             int l = 0;
@@ -96,6 +97,7 @@ namespace DocumentCreator
                 }
                 l = i;
             }
+            l += 30;
             FindAndReplace(wordApp, "{id:literature}", literature.Substring(l + 1));
             FindAndReplace(wordApp, "{id:technicalMeans}", keyValuePairs["{id:technicalMeans}"]);
             FindAndReplace(wordApp, "{id:intro}", keyValuePairs["{id:intro}"]);
@@ -121,17 +123,17 @@ namespace DocumentCreator
                                 newRow.Cells[1].Range.Text = "2."+count;
                                 newRow.Cells[2].Range.Text = question.Key;
                                 newRow.Cells[3].Range.Text = question.Value;
-                                Regex regex = new Regex("^*[0-9]*$");
+                                Regex regex = new Regex("^ ?[1-9].*$");
                                 string questionFull = "";
                                 if (regex.IsMatch(question.Key))
                                 {
-                                    questionFull = "Учебный вопрос. " + question.Key + question.Value + "минут.\n";
+                                    questionFull = "Учебный вопрос. " + question.Key + question.Value + "^l";
                                 }
                                 else { 
-                                    questionFull = "Учебный вопрос " + count + ". " + question.Key + question.Value + "минут.\n";
+                                    questionFull = "Учебный вопрос " + count + ". " + question.Key + question.Value + "^l";
                                 }
                                 int r = 0;
-                                for (int e = 0; e < literature.Length; e += 30)
+                                for (int e = 0; e < questionFull.Length; e += 30)
                                 {
                                     if (e > 0)
                                     {
@@ -151,7 +153,8 @@ namespace DocumentCreator
                                     }
                                     r = e;
                                 }
-                                FindAndReplace(wordApp, "{id:questionOfLesson}", questionFull.Substring(r+30) + "{id:questionOfLesson}");
+                                r += 30;
+                                FindAndReplace(wordApp, "{id:questionOfLesson}", questionFull.Substring(r) + "{id:questionOfLesson}");
                                 temporary = newRow;
                                 count++;
                             }

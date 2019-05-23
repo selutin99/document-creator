@@ -23,6 +23,7 @@ namespace DocumentCreator
 
         public List<Discipline> ParsePlan()
         {
+            List<Discipline> disciplinesCopy = new List<Discipline>(disciplenes);
             for (int j = 1; j < table.Count; j++)
             {
                 Word.Range range = table[j].Range;
@@ -32,15 +33,15 @@ namespace DocumentCreator
                 requirementsForStudent.Add("Знать", new List<string>());
                 requirementsForStudent.Add("Уметь", new List<string>());
                 requirementsForStudent.Add("Владеть", new List<string>());
-                List<Discipline> disciplinesCopy = new List<Discipline>(disciplenes);
-                if (cells[1].Range.Text.StartsWith("В результате изучения"))
+                string cell1 = cells[1].Range.Text.Trim();
+                if (cell1.StartsWith("В результате изучения"))
                 {
                     foreach(Discipline disciplene in disciplenes)
                     {
                         if (cells[1].Range.Text.Contains(disciplene.Name))
                         {
                             string temporary = "";
-                            for (int i = 1; i < cells.Count; i++)
+                            for (int i = 1; i <= cells.Count; i++)
                             {
                                 Word.Cell cell = cells[i];
                                 Word.Range updateRange = cell.Range;
@@ -48,6 +49,7 @@ namespace DocumentCreator
                                 text = text.Replace("\v", "");
                                 text = text.Replace("\r", "");
                                 text = text.Replace("\a", "");
+                                text=text.Trim();
                                 if (text.ToLower().Equals("знать:"))
                                 {
                                     temporary = "знать:";
@@ -63,7 +65,8 @@ namespace DocumentCreator
                                     temporary = "владеть:";
                                     continue;
                                 }
-                              
+                                text=text.Replace(";", "");
+                                text=text.Replace(".", "");
                                 if (temporary.Equals("знать:"))
                                 {
                                     disciplinesCopy.Find(x => x.Name.Equals(disciplene.Name)).RequirementsForStudent["Знать:"].Add(text);
@@ -79,13 +82,13 @@ namespace DocumentCreator
                             }
                         }
                     }
-                    disciplenes=getMethodicalInstructionsForRest(disciplinesCopy);
-                    WordAPI.Close(doc);
-                    return disciplenes;
+                    
                 }
             }
+            disciplenes = getMethodicalInstructionsForRest(disciplinesCopy);
+            
             WordAPI.Close(doc);
-            return null;
+            return disciplenes;
         }
         private List<Discipline> getMethodicalInstructionsForRest(List<Discipline> disciplines)
         {
@@ -96,20 +99,33 @@ namespace DocumentCreator
             foreach (Word.Section section in doc.Sections)
             {
                 Word.Range range = section.Range;
-                int text1 = range.Text.IndexOf("Методические указания обучающимся студентам");
-                if (range.Text.IndexOf("Методические указания обучающимся студентам") >= 0 || wasFounded)
+                int text1 = range.Text.IndexOf("Методические указания обучающимся");
+                if (range.Text.IndexOf("Методические указания обучающимся") >= 0 || wasFounded)
                 {
-                    string restText = range.Text.Substring(range.Text.IndexOf("Методические указания обучающимся студентам"));
+                    string restText = range.Text.Substring(range.Text.IndexOf("Методические указания обучающимся"));
                     wasFounded = true;
                     content += restText.Substring(restText.IndexOf("Методические указания обучающимся")+ "Методические указания обучающимся".Length, restText.IndexOf("Методические указания препода") - restText.IndexOf("Методические указания обучающимся"));
+                    content = content.Substring(content.IndexOf('\r'));
                     content = content.Trim();
                     content = content.Replace("\v", " ");
                     content = content.Replace("\r", " ");
                     content = content.Replace("\a", " ");
+                    if(content.IndexOf("Методические указания препода") > 0)
+                    {
+                        content = content.Substring(0,content.IndexOf("Методические указания препода"));
+                    }
                     if (disciplines.Count == 1)
                     {
                         int a = content.IndexOf(disciplines[0].Name);
-                        disciplines[0].MethodicalInstructionsForRest = content.Substring(content.IndexOf(disciplines[0].Name) + disciplines[0].Name.Length);
+                        if (a != -1)
+                        {
+                            disciplines[0].MethodicalInstructionsForRest = content.Substring(content.IndexOf(disciplines[0].Name) + disciplines[0].Name.Length);
+                        }
+                        else
+                        {
+                            disciplines[0].MethodicalInstructionsForRest = content;
+                        }
+                        
                         return disciplines;
                     }
                     for (int i = 0; i < disciplines.Count - 1; i++)
