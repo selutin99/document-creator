@@ -18,7 +18,7 @@
         <Button x:Name="GenerateButton" Content="Начать работу" HorizontalAlignment="Right" Margin="0,265,197.4,0" VerticalAlignment="Top" Width="133" Click="GenerateButton_Click" Height="39" IsEnabled="False" Grid.ColumnSpan="2"/>
         <Label x:Name="WelcomeLable_Copy" Content="Создать учебно-методическую разработоку" Height="35" Margin="83,87,47,0" VerticalAlignment="Top" FontSize="18" Grid.ColumnSpan="2" />
         <Separator Margin="0,309,0,0" RenderTransformOrigin="0.507,-0.8" Grid.ColumnSpan="2" Height="17" VerticalAlignment="Top" />
-        <Label x:Name="WelcomeLable_Copy1" Content="Изменить учебно-методические разработки" Margin="66,331,64,342" FontSize="18" Grid.ColumnSpan="2" />
+        <Label x:Name="WelcomeLable_Copy1" Content="Изменить учебно-методические разработки" Margin="66,331,64,318" FontSize="18" Grid.ColumnSpan="2" />
         <Separator Margin="0,53,0,0" RenderTransformOrigin="0.507,-0.8" Grid.ColumnSpan="2" Height="22" VerticalAlignment="Top" />
         <ComboBox x:Name="ComboTheme" Grid.Column="1" HorizontalAlignment="Left" Margin="-58,0,0,237" VerticalAlignment="Bottom" Width="120" SelectionChanged="ComboTheme_SelectionChanged"/>
         <ComboBox x:Name="ComboLesson" Grid.Column="1" Margin="95,0,43,237" VerticalAlignment="Bottom" SelectionChanged="ComboLesson_SelectionChanged"/>
