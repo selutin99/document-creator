@@ -245,7 +245,7 @@ namespace DocumentCreator
             {
                 DialogWindow dialogWindow = new DialogWindow();
                 fileNameWorkProgramming = dlg.FileName;
-                PathToProgramm.Content = fileName; //вывод в окно имени файла
+                PathToProgramm.Content = fileNameWorkProgramming; //вывод в окно имени файла
                 //dialogWindow.unswerLabel.Content = dlg.FileName + "\nуспешно загружен!";
                 dialogWindow.unswerLabel.Content = "Рабочая программа успешно загружена!";
                 dialogWindow.Show();
