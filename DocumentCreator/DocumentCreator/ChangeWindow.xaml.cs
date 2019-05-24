@@ -153,7 +153,7 @@ namespace DocumentCreator
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (literature.Text.Length==0||place.Text.Length==0||materialSupport.Text.Length==0||intro_text.Text.Length==0||question1_text.Text.Length==0||conclusion.Text.Length==0)
+            if (literature.Text.Length==0||place.Text.Length==0||materialSupport.Text.Length==0||intro_text.Text.Length==0||question1_text.Text.Length==0||conclusion_text.Text.Length==0)
             {
                 ErrorWindow error = new ErrorWindow();
                 error.Show();

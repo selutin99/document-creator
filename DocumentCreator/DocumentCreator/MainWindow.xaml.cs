@@ -5,12 +5,9 @@ using System.IO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Diagnostics;
 using System;
 using System.ComponentModel;
 using System.Threading;
-using System;
 
 namespace DocumentCreator
 {
@@ -137,7 +134,7 @@ namespace DocumentCreator
 
         private void CheckEnabledForGenerate()
         {
-            if (string.IsNullOrEmpty(PathToFile.Content.ToString())|| string.IsNullOrEmpty(PathToFile_Copy.Content.ToString()))
+            if (string.IsNullOrEmpty(PathToFile.Content.ToString())|| string.IsNullOrEmpty(PathToProgramm.Content.ToString()))
             {
                 GenerateButton.IsEnabled = false;
             }
@@ -236,7 +233,7 @@ namespace DocumentCreator
             //}
         }
 
-        private void DownloadButton_Copy_Click(object sender, RoutedEventArgs e)
+        private void DownloadProgrammButton_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.DefaultExt = ".doc";
@@ -248,7 +245,7 @@ namespace DocumentCreator
             {
                 DialogWindow dialogWindow = new DialogWindow();
                 fileNameWorkProgramming = dlg.FileName;
-                PathToFile_Copy.Content = fileName; //вывод в окно имени файла
+                PathToProgramm.Content = fileName; //вывод в окно имени файла
                 //dialogWindow.unswerLabel.Content = dlg.FileName + "\nуспешно загружен!";
                 dialogWindow.unswerLabel.Content = "Рабочая программа успешно загружена!";
                 dialogWindow.Show();

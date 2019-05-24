@@ -27,8 +27,8 @@
         <Label Content="Выберите &#xA;занятие:" Margin="94,0,44,134" VerticalAlignment="Bottom" Height="49" Grid.Column="1"/>
         <ComboBox x:Name="ComboDisciplines" Margin="45,0,94,107" VerticalAlignment="Bottom" SelectionChanged="ComboDisciplines_SelectionChanged"/>
         <Button x:Name="ChangeButton" Content="Изменить документ" HorizontalAlignment="Right" Margin="0,0,-61,24" VerticalAlignment="Bottom" Width="133" Height="46" IsEnabled="False" Click="ChangeButton_Click"/>
-        <Button x:Name="DownloadButton_Copy" Content="Обзор" HorizontalAlignment="Right" Margin="0,232,44.4,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.399,2.131" Height="28" Click="DownloadButton_Copy_Click" Grid.Column="1" />
-        <Label x:Name="PathToFile_Copy" Content="" Margin="25,232,122.4,0" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="1" RenderTransformOrigin="0.484,1.621" Grid.ColumnSpan="2" Height="28" />
+        <Button x:Name="DownloadProgrammButton" Content="Обзор" HorizontalAlignment="Right" Margin="0,232,44.4,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.399,2.131" Height="28" Click="DownloadProgrammButton_Click" Grid.Column="1" />
+        <Label x:Name="PathToProgramm" Content="" Margin="25,232,122.4,0" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="1" RenderTransformOrigin="0.484,1.621" Grid.ColumnSpan="2" Height="28" />
         <Label x:Name="ChooseFile_Copy" Content="Выберите рабочую программу:" Margin="25,201,42,0" VerticalAlignment="Top" RenderTransformOrigin="0.429,2.233" Height="26"/>
     </Grid>
 </Window>
