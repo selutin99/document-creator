@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DocumentCreator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="588.792" Width="525">
-    <Grid Margin="0,14,0.4,-14.8">
+        Title="MainWindow" Height="753.792" Width="525">
+    <Grid Margin="0,14,0,1">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="259*"/>
             <ColumnDefinition Width="258*"/>
@@ -17,18 +17,21 @@
         <Label x:Name="ChooseFile" Content="Выберите темплан:" Margin="25,127,42,0" VerticalAlignment="Top" RenderTransformOrigin="0.429,2.233" Height="26"/>
         <Button x:Name="GenerateButton" Content="Начать работу" HorizontalAlignment="Right" Margin="0,265,197.4,0" VerticalAlignment="Top" Width="133" Click="GenerateButton_Click" Height="39" IsEnabled="False" Grid.ColumnSpan="2"/>
         <Label x:Name="WelcomeLable_Copy" Content="Создать учебно-методическую разработоку" Height="35" Margin="83,87,47,0" VerticalAlignment="Top" FontSize="18" Grid.ColumnSpan="2" />
-        <Separator Margin="0,309,0.4,216" RenderTransformOrigin="0.507,-0.8" Grid.ColumnSpan="2" />
-        <Label x:Name="WelcomeLable_Copy1" Content="Изменить учебно-методические разработки" Height="35" Margin="83,0,47,201" VerticalAlignment="Bottom" FontSize="18" Grid.ColumnSpan="2" />
+        <Separator Margin="0,309,0,0" RenderTransformOrigin="0.507,-0.8" Grid.ColumnSpan="2" Height="17" VerticalAlignment="Top" />
+        <Label x:Name="WelcomeLable_Copy1" Content="Изменить учебно-методические разработки" Margin="66,326,64,347" FontSize="18" Grid.ColumnSpan="2" />
         <Separator Margin="0,53,0,0" RenderTransformOrigin="0.507,-0.8" Grid.ColumnSpan="2" Height="22" VerticalAlignment="Top" />
-        <ComboBox x:Name="ComboTheme" Grid.Column="1" HorizontalAlignment="Left" Margin="-59,0,0,107" VerticalAlignment="Bottom" Width="120" SelectionChanged="ComboTheme_SelectionChanged"/>
-        <ComboBox x:Name="ComboLesson" Grid.Column="1" Margin="94,0,44,107" VerticalAlignment="Bottom" SelectionChanged="ComboLesson_SelectionChanged"/>
-        <Label Content="Выберите &#xD;&#xA;дисциплину:" Margin="45,0,94,134" VerticalAlignment="Bottom" Height="49"/>
-        <Label Content="Выберите &#xA;тему:" Margin="-59,0,0,134" VerticalAlignment="Bottom" Height="49" Grid.Column="1" HorizontalAlignment="Left" Width="120"/>
-        <Label Content="Выберите &#xA;занятие:" Margin="94,0,44,134" VerticalAlignment="Bottom" Height="49" Grid.Column="1"/>
-        <ComboBox x:Name="ComboDisciplines" Margin="45,0,94,107" VerticalAlignment="Bottom" SelectionChanged="ComboDisciplines_SelectionChanged"/>
-        <Button x:Name="ChangeButton" Content="Изменить документ" HorizontalAlignment="Right" Margin="0,0,-61,24" VerticalAlignment="Bottom" Width="133" Height="46" IsEnabled="False" Click="ChangeButton_Click"/>
+        <ComboBox x:Name="ComboTheme" Grid.Column="1" HorizontalAlignment="Left" Margin="-59,0,0,268" VerticalAlignment="Bottom" Width="120" SelectionChanged="ComboTheme_SelectionChanged"/>
+        <ComboBox x:Name="ComboLesson" Grid.Column="1" Margin="94,0,44,268" VerticalAlignment="Bottom" SelectionChanged="ComboLesson_SelectionChanged"/>
+        <Label Content="Выберите &#xD;&#xA;дисциплину:" Margin="45,0,94,295" VerticalAlignment="Bottom" Height="49"/>
+        <Label Content="Выберите &#xA;тему:" Margin="-59,0,0,295" VerticalAlignment="Bottom" Height="49" Grid.Column="1" HorizontalAlignment="Left" Width="120"/>
+        <Label Content="Выберите &#xA;занятие:" Margin="94,0,44,295" VerticalAlignment="Bottom" Height="49" Grid.Column="1"/>
+        <ComboBox x:Name="ComboDisciplines" Margin="45,0,94,268" VerticalAlignment="Bottom" SelectionChanged="ComboDisciplines_SelectionChanged"/>
+        <Button x:Name="ChangeButton" Content="Изменить документ" HorizontalAlignment="Right" Margin="0,0,-61,185" VerticalAlignment="Bottom" Width="133" Height="46" IsEnabled="False" Click="ChangeButton_Click"/>
         <Button x:Name="DownloadProgrammButton" Content="Обзор" HorizontalAlignment="Right" Margin="0,232,44.4,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.399,2.131" Height="28" Click="DownloadProgrammButton_Click" Grid.Column="1" />
         <Label x:Name="PathToProgramm" Content="" Margin="25,232,122.4,0" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="1" RenderTransformOrigin="0.484,1.621" Grid.ColumnSpan="2" Height="28" />
         <Label x:Name="ChooseFile_Copy" Content="Выберите рабочую программу:" Margin="25,201,42,0" VerticalAlignment="Top" RenderTransformOrigin="0.429,2.233" Height="26"/>
+        <Separator Margin="0,523,0,164" RenderTransformOrigin="0.507,-0.8" Grid.ColumnSpan="2" />
+        <Button x:Name="Refresh_button" Content="Обновить" HorizontalAlignment="Right" Margin="0,0,-61,30" VerticalAlignment="Bottom" Width="133" Height="49" IsEnabled="False"/>
+        <Label Content="Обновить существующие документы" Margin="66,0,64,116" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Height="43" FontSize="22"/>
     </Grid>
 </Window>
