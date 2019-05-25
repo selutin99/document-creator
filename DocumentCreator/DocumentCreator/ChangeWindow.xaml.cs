@@ -21,15 +21,17 @@ namespace DocumentCreator
     public partial class ChangeWindow : Window
     {
         private string documentPath="";
+        private string documentPathPlan = "";
 
         public ChangeWindow()
         {
             InitializeComponent();
         }
-        public void initValues(Discipline discipline, Topic topic, Lesson lesson, string documentPath)
+        public void initValues(Discipline discipline, Topic topic, Lesson lesson, string documentPath,string documentPathPlan)
         {
             Dictionary<string, List<string>> requirementsForStudent = discipline.RequirementsForStudent;
             this.documentPath = documentPath;
+            this.documentPathPlan = documentPathPlan;
             nameDiscipline.Text = discipline.Name;
             numberTopic.Text = topic.Name.Substring(0, topic.Name.IndexOf("«"));
             string temp = topic.Name.Substring(topic.Name.IndexOf("«")+1);
@@ -77,7 +79,7 @@ namespace DocumentCreator
             }
 
             materialSupport.Text = lesson.MaterialSupport;
-            literature.Text = lesson.Literature.Replace("\r", "; ");
+            literature.Text = lesson.Literature.Trim().Replace("\r", "; ").Replace("  ","").Replace("   ", "");
             for(int i=0;i< lesson.Questions.Count; i++)
             {
                 if (i == 0)
@@ -211,7 +213,7 @@ namespace DocumentCreator
                 keyValuePairs["{id:material}"] = materialSupport.Text;
                 keyValuePairs["{id:methodical}"] = methodical.Text;
                 keyValuePairs["{id:technicalMeans}"] = materialSupport.Text;
-                UpdateDoc update = new UpdateDoc(documentPath);
+                UpdateDoc update = new UpdateDoc(documentPath,documentPathPlan);
                 update.updateDoc(keyValuePairs);
                 Close();
             }

@@ -99,20 +99,26 @@ namespace DocumentCreator
                             //disciplineWindow.ShowDialog();
                             string path = Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/"));
                         string fileName = "";
+                        string fileNamePlan = "";
                         if (lesson.Type.Contains("Трениров"))
                         {
                             fileName = path + "MethodicaForTrenirovka.docx";
+                            fileNamePlan = path + "PlanSamostoyatelnaya.docx";
                         }
                         else if (lesson.Type.Contains("Самостоятельн"))
                         {
                             fileName = path + "MethodicaForSamostoyatelnayaRabota.docx";
+                            fileNamePlan = path + "PlanTrenirovka.docx";
                         }
                         else
                         {
-                            fileName = path + "theme1.docx";
+                            fileName = path + "MethodicaForRest.docx";
+                            fileNamePlan = path + "PlanLesson.docx";
                         }
                             string outputFileName = parser.GetOutputPath() + discipline.Name + "\\" + topic.Name + "\\" + lesson.Type + ".doc";
                             outputFileName = outputFileName.Replace("//", "\\");
+                            string outputFileNameForPlan = parser.GetOutputPath() + discipline.Name + "\\" + topic.Name + "\\" + "Plan"+lesson.Type + ".doc";
+                            outputFileNameForPlan = outputFileNameForPlan.Replace("//", "\\");
                         try
                         {
                             File.Copy(@fileName, @outputFileName);
@@ -121,7 +127,15 @@ namespace DocumentCreator
                         {
 
                         }
+                        try
+                        {
+                            File.Copy(@fileNamePlan, @outputFileNameForPlan);
                         }
+                        catch (Exception exception)
+                        {
+
+                        }
+                    }
                     }
                 }
             /*ParseThematicPlan parser = new ParseThematicPlan(fileName, folderName);
@@ -201,6 +215,7 @@ namespace DocumentCreator
         {
             Console.WriteLine(ComboLesson.SelectedIndex);
             string documentPath= parser.GetOutputPath() + ComboDisciplines.SelectedItem + "\\" + ComboTheme.SelectedItem + "\\" + ComboLesson.SelectedItem + ".doc";
+            string documentPathPlan= parser.GetOutputPath() + ComboDisciplines.SelectedItem + "\\" + ComboTheme.SelectedItem + "\\" + "Plan"+ComboLesson.SelectedItem + ".doc";
             String firstSymb = ComboLesson.SelectedItem.ToString();
             String discipline = ComboDisciplines.SelectedItem.ToString();
             String theme = ComboTheme.SelectedItem.ToString();
@@ -210,7 +225,7 @@ namespace DocumentCreator
             Lesson selectedLesson = selectedTopic.Lessons.Find(x => x.Type.Equals(lesson));
             firstSymb = firstSymb[0].ToString();
             ChangeWindow change = new ChangeWindow();
-            change.initValues(selectedDiscipline, selectedTopic, selectedLesson, documentPath);
+            change.initValues(selectedDiscipline, selectedTopic, selectedLesson, documentPath,documentPathPlan);
             change.Show();
             //if (String.Compare(firstSymb, "Л") == 0)
             //{
