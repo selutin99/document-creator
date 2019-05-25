@@ -86,27 +86,32 @@ namespace DocumentCreator
                 {
                     questionName1.Text = lesson.Questions[i];
                     question1_text.IsEnabled = true;
+                    question1_time.IsEnabled = true;
 
                 }
                 else if(i ==1)
                 {
                     questionName2.Text = lesson.Questions[i];
                     question2_text.IsEnabled = true;
+                    question2_time.IsEnabled = true;
                 }
                 else if (i == 2)
                 {
                     questionName3.Text = lesson.Questions[i];
                     question3_text.IsEnabled = true;
+                    question3_time.IsEnabled = true;
                 }
                 else if (i == 3)
                 {
                     questionName4.Text = lesson.Questions[i];
                     question4_text.IsEnabled = true;
+                    question4_time.IsEnabled = true;
                 }
                 else if (i == 4)
                 {
                     questionName5.Text = lesson.Questions[i];
                     question5_text.IsEnabled = true;
+                    question5_time.IsEnabled = true;
                 }
             }
             if (lesson.Type.StartsWith("Лекци"))
@@ -155,7 +160,7 @@ namespace DocumentCreator
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (literature.Text.Length==0||place.Text.Length==0||materialSupport.Text.Length==0||intro_text.Text.Length==0||question1_text.Text.Length==0||conclusion_text.Text.Length==0)
+            if (literature.Text.Length==0||place.Text.Length==0||materialSupport.Text.Length==0||intro_time.Text.Length==0||question1_time.Text.Length==0)
             {
                 ErrorWindow error = new ErrorWindow();
                 error.Show();
@@ -172,28 +177,29 @@ namespace DocumentCreator
                 //goals.Add("Требоване 3");
                 //goals.Add("Требоване 4");
                 Dictionary<string, string> questions = new Dictionary<string, string>();
+                char separator = '$';
                 int sumOfMinInQuestionsOfLesson = 0;
-                questions.Add(questionName1.Text.Substring(0), question1_text.Text + " мин");
-                sumOfMinInQuestionsOfLesson += Int32.Parse(question1_text.Text);
+                questions.Add(questionName1.Text.Substring(0), question1_time.Text + " мин"+separator+ question1_text.Text);
+                sumOfMinInQuestionsOfLesson += Int32.Parse(question1_time.Text);
                 if (question2_text.IsEnabled)
                 {
-                    questions.Add(questionName2.Text.Substring(0), question2_text.Text + " мин");
-                    sumOfMinInQuestionsOfLesson += Int32.Parse(question2_text.Text);
+                    questions.Add(questionName2.Text.Substring(0), question2_time.Text + " мин" + separator + question2_text.Text);
+                    sumOfMinInQuestionsOfLesson += Int32.Parse(question2_time.Text);
                 }
                 if (question3_text.IsEnabled)
                 {
-                    questions.Add(questionName3.Text.Substring(0), question3_text.Text + " мин");
-                    sumOfMinInQuestionsOfLesson += Int32.Parse(question3_text.Text);
+                    questions.Add(questionName3.Text.Substring(0), question3_time.Text + " мин" + separator + question3_text.Text);
+                    sumOfMinInQuestionsOfLesson += Int32.Parse(question3_time.Text);
                 }
                 if (question4_text.IsEnabled)
                 {
-                    questions.Add(questionName4.Text.Substring(0), question4_text.Text + " мин");
-                    sumOfMinInQuestionsOfLesson += Int32.Parse(question4_text.Text);
+                    questions.Add(questionName4.Text.Substring(0), question4_time.Text + " мин" + separator + question4_text.Text);
+                    sumOfMinInQuestionsOfLesson += Int32.Parse(question4_time.Text);
                 }
                 if (question5_text.IsEnabled)
                 {
-                    questions.Add(questionName5.Text.Substring(0), question5_text.Text + " мин");
-                    sumOfMinInQuestionsOfLesson += Int32.Parse(question5_text.Text);
+                    questions.Add(questionName5.Text.Substring(0), question5_time.Text + " мин" + separator + question5_text.Text);
+                    sumOfMinInQuestionsOfLesson += Int32.Parse(question5_time.Text);
                 }
                 keyValuePairs["{id:name}"] = nameDiscipline.Text;
                 keyValuePairs["{id:theme}"] = numberTopic.Text;
@@ -206,10 +212,10 @@ namespace DocumentCreator
                 keyValuePairs["{id:duration}"] = hours.Text;
                 keyValuePairs["{id:place}"] = place.Text;
                 keyValuePairs["{id:literature}"] = literature.Text;
-                keyValuePairs["{id:intro}"] = intro_text.Text;
+                keyValuePairs["{id:intro}"] = intro_time.Text+separator+intro_text.Text;
                 keyValuePairs["{id:educationalQuestions}"] = sumOfMinInQuestionsOfLesson;
                 keyValuePairs["{id:questions}"] = questions;
-                keyValuePairs["{id:conclution}"] = conclusion_text.Text;
+                keyValuePairs["{id:conclution}"] = conclusion_time.Text+separator+conclusion_text.Text;
                 keyValuePairs["{id:material}"] = materialSupport.Text;
                 keyValuePairs["{id:methodical}"] = methodical.Text;
                 keyValuePairs["{id:technicalMeans}"] = materialSupport.Text;

@@ -20,6 +20,7 @@ namespace DocumentCreator
 
         public ParseThematicPlan(string inputFilePath, string outputPath)
         {
+
             this.doc = FilesAPI.WordAPI.GetDocument(inputFilePath);
             foreach(Word.Table tbl in doc.Tables)
             {
@@ -54,57 +55,65 @@ namespace DocumentCreator
         private Dictionary<string, string> FindByRegexTopics(Regex regex, int beginIndex, int endIndex)
         {
             Dictionary<string, string> resultMap = new Dictionary<string, string>();
-
-            Word.Range range = table.Range;
-            Word.Cells cells = range.Cells;
-            string lastDiscipline = null;
-            string nextDiscipline = null;
-            for (int i = beginIndex; i <= endIndex; i++)
+            try
             {
-                Word.Cell cell = cells[i];
-                Word.Range updateRange = cell.Range;
-                try
+                Word.Range range = table.Range;
+                Word.Cells cells = range.Cells;
+                string lastDiscipline = null;
+                string nextDiscipline = null;
+                for (int i = beginIndex; i <= endIndex; i++)
                 {
-                    if (regex.IsMatch(updateRange.Text))
+                    Word.Cell cell = cells[i];
+                    Word.Range updateRange = cell.Range;
+                    try
                     {
-                        nextDiscipline = updateRange.Text;
-                        if (lastDiscipline == null)
+                        if (regex.IsMatch(updateRange.Text))
                         {
-                            lastDiscipline = nextDiscipline;
-                        }
-                        if (resultMap.ContainsKey(lastDiscipline)&&resultMap[lastDiscipline].IndexOf(',')>0)
-                        {
-                            string value;
-                            resultMap.TryGetValue(lastDiscipline, out value);
-                            value = value.Substring(0, value.IndexOf(','));
-                            resultMap[lastDiscipline] = value + "," + i;
-                            resultMap.Add(nextDiscipline, i.ToString());
+                            nextDiscipline = updateRange.Text;
+                            if (lastDiscipline == null)
+                            {
+                                lastDiscipline = nextDiscipline;
+                            }
+                            if (resultMap.ContainsKey(lastDiscipline) && resultMap[lastDiscipline].IndexOf(',') > 0)
+                            {
+                                string value;
+                                resultMap.TryGetValue(lastDiscipline, out value);
+                                value = value.Substring(0, value.IndexOf(','));
+                                resultMap[lastDiscipline] = value + "," + i;
+                                resultMap.Add(nextDiscipline, i.ToString());
 
+                            }
+                            else if (resultMap.ContainsKey(lastDiscipline))
+                            {
+                                string value;
+                                resultMap.TryGetValue(lastDiscipline, out value);
+                                resultMap[lastDiscipline] = value + "," + i;
+                                resultMap.Add(nextDiscipline, i.ToString());
+                            }
+                            else
+                            {
+                                resultMap.Add(nextDiscipline, i.ToString());
+                            }
                         }
-                        else if (resultMap.ContainsKey(lastDiscipline))
-                        {
-                            string value;
-                            resultMap.TryGetValue(lastDiscipline, out value);
-                            resultMap[lastDiscipline] = value + "," + i;
-                            resultMap.Add(nextDiscipline, i.ToString());
-                        }
-                        else
-                        {
-                            resultMap.Add(nextDiscipline, i.ToString());
-                        }
+                        lastDiscipline = nextDiscipline;
+
                     }
-                    lastDiscipline = nextDiscipline;
+                    catch (Exception e)
+                    {
+
+                    }
 
                 }
-                catch (Exception e)
-                {
-
-                }
-
+                string lastValue;
+                resultMap.TryGetValue(lastDiscipline, out lastValue);
+                resultMap[lastDiscipline] = lastValue + "," + endIndex;
             }
-            string lastValue;
-            resultMap.TryGetValue(lastDiscipline, out lastValue);
-            resultMap[lastDiscipline] = lastValue + "," + endIndex;
+            catch (Exception e)
+            {
+                doc.Close();
+                new ExceptionWindow()
+                    .Show();
+            }
             return resultMap;
         }
 
@@ -112,7 +121,7 @@ namespace DocumentCreator
         private Dictionary<string, string> FindByRegexDisciplin(params Regex[] regexs)
         {
             Dictionary<string, string> resultMap = new Dictionary<string, string>();
-
+            try { 
             Word.Range range = table.Range;
             Word.Cells cells = range.Cells;
             string lastDiscipline = null;
@@ -205,7 +214,13 @@ namespace DocumentCreator
             {
                 resultMap[lastDiscipline] = lastValue + "," + (cells.Count - 1);
             }
-
+        }
+            catch (Exception e)
+            {
+                doc.Close();
+                new ExceptionWindow()
+                    .Show();
+    }
             return resultMap;
         }
 
@@ -213,7 +228,7 @@ namespace DocumentCreator
         {
             Dictionary<string, string> resulterMap = FindByRegexDisciplin(new Regex(@"^ОВП*"), new Regex(@"^ОГП*"),new Regex(@"^ВТП*"));
             List<Discipline> disciplines = new List<Discipline>();
-            
+            try { 
             foreach (KeyValuePair<string, string> keyValue in resulterMap)
             {
                 Discipline discipline = new Discipline(keyValue.Key, new List<Topic>());
@@ -252,7 +267,13 @@ namespace DocumentCreator
             //CLOSE FILE
             FilesAPI.WordAPI.Close(this.doc);
             //парсим метод указания для лекций
-            
+        }
+            catch (Exception e)
+            {
+                doc.Close();
+                new ExceptionWindow()
+                    .Show();
+    }
             return disciplines;
         }
 
@@ -271,6 +292,7 @@ namespace DocumentCreator
             Word.Cells cells = range.Cells;
             Regex regex = new Regex(@"^Лекция|^Самостоя|^Группов|^Практичес|^Трениров");
             char[] charsToTrim = { '\a', '\r' };
+
             for (int i=Int32.Parse(topic.Value.Substring(0,topic.Value.IndexOf(',')))+1;i< Int32.Parse(topic.Value.Substring(topic.Value.IndexOf(',') + 1)); i++)
             {
                 Word.Cell cell = cells[i];
@@ -359,6 +381,7 @@ namespace DocumentCreator
                     i += 5;
                 }
             }
+
             return lessons;
         }
 
@@ -454,6 +477,7 @@ namespace DocumentCreator
             bool wasFounded = false;
             bool wasFoundedDiscipline = false;
             int k = 0;
+            try { 
             foreach(Word.Section section in doc.Sections)
             {
                 Word.Range range = section.Range;
@@ -507,11 +531,19 @@ namespace DocumentCreator
                     }
                 }
             }
+            }
+            catch (Exception e)
+            {
+                doc.Close();
+                new ExceptionWindow()
+                    .Show();
+            }
             return disciplines;
         }
         private List<Discipline> replaceLiterature(List<Discipline> disciplines)
         {
             Word.Table tableWithLiterature = null;
+            try { 
             foreach (Word.Table tbl in doc.Tables)
             {
                 int k = 0;
@@ -632,6 +664,13 @@ namespace DocumentCreator
                         }
                     }
                 }
+            }
+            }
+            catch (Exception e)
+            {
+                doc.Close();
+                new ExceptionWindow()
+                    .Show();
             }
             return disciplines;
         }

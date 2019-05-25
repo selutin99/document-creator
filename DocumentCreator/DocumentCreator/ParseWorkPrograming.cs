@@ -24,6 +24,7 @@ namespace DocumentCreator
         public List<Discipline> ParsePlan()
         {
             List<Discipline> disciplinesCopy = new List<Discipline>(disciplenes);
+            try { 
             for (int j = 1; j < table.Count; j++)
             {
                 Word.Range range = table[j].Range;
@@ -88,6 +89,13 @@ namespace DocumentCreator
             disciplenes = getMethodicalInstructionsForRest(disciplinesCopy);
             
             WordAPI.Close(doc);
+            }
+            catch (Exception e)
+            {
+                doc.Close();
+                new ExceptionWindow()
+                    .Show();
+            }
             return disciplenes;
         }
         private List<Discipline> getMethodicalInstructionsForRest(List<Discipline> disciplines)
@@ -96,6 +104,7 @@ namespace DocumentCreator
             bool wasFounded = false;
             bool wasFoundedDiscipline = false;
             int k = 0;
+            try { 
             foreach (Word.Section section in doc.Sections)
             {
                 Word.Range range = section.Range;
@@ -158,6 +167,13 @@ namespace DocumentCreator
 
                     }
                 }
+            }
+            }
+            catch (Exception e)
+            {
+                doc.Close();
+                new ExceptionWindow()
+                    .Show();
             }
             return disciplines;
         }

@@ -14,6 +14,7 @@ namespace DocumentCreator
     {
         private string documentPath;
         private string documentPathPlan;
+        char separator = '$';
         public UpdateDoc(string path,string documentPathPlan)
         {
             this.documentPath = path;
@@ -22,9 +23,10 @@ namespace DocumentCreator
 
         public void updateDoc(Dictionary<string, Object> keyValuePairs)
         {
-            //
+            
             Word.Application wordApp = new Word.Application();
             Word.Document doc = wordApp.Documents.Open(documentPath, ReadOnly: false);
+            try { 
             doc.Activate();
             if (((string)(keyValuePairs["{id:kind}"])).Contains("Тренировк")|| ((string)(keyValuePairs["{id:kind}"])).Contains("Самостояте")|| ((string)(keyValuePairs["{id:kind}"])).Contains("Практическо"))
             {
@@ -69,7 +71,7 @@ namespace DocumentCreator
                         p.Range.InsertFile(Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/AdditionalDocs/Spravochnik.docx")));
                         FindAndReplace(wordApp, "{id:questionName}", question.Key);
                         FindAndReplace(wordApp, "{id:countAjunct}", temp);
-                        FindAndReplace(wordApp, "{id:questionDuration}", question.Value);
+                        FindAndReplace(wordApp, "{id:questionDuration}", question.Value.Split(separator)[0]);
                     }
                     int afterInsert = doc.Tables.Count;
 
@@ -158,11 +160,25 @@ namespace DocumentCreator
             l += 30;
             FindAndReplace(wordApp, "{id:literature}", literature.Substring(l + 1));
             FindAndReplace(wordApp, "{id:technicalMeans}", keyValuePairs["{id:technicalMeans}"]);
-            FindAndReplace(wordApp, "{id:intro}", keyValuePairs["{id:intro}"]);
+            string introTime = (keyValuePairs["{id:intro}"]).ToString().Split(separator)[0];
+            FindAndReplace(wordApp, "{id:intro}", introTime);
+            string[] introQuestions = (keyValuePairs["{id:intro}"]).ToString().Split(separator)[1].Split(';');
+            for (int e = 0; e < introQuestions.Length - 1; e++)
+            {
+                FindAndReplace(wordApp, "{id:introQuestions}", introQuestions[e]+ ";\r\n{id:introQuestions}");
+            }
+            FindAndReplace(wordApp, "{id:introQuestions}","");
             FindAndReplace(wordApp, "{id:material}", keyValuePairs["{id:material}"]);
             FindAndReplace(wordApp, "{id:educationalQuestions}", keyValuePairs["{id:educationalQuestions}"]);
-            FindAndReplace(wordApp, "{id:conclution}", keyValuePairs["{id:conclution}"]);
-            foreach(Word.Table table in doc.Tables)
+            string conclusionTime = (keyValuePairs["{id:conclution}"]).ToString().Split(separator)[0];
+            FindAndReplace(wordApp, "{id:conclution}", conclusionTime);
+            string[] conclusionQuestions = (keyValuePairs["{id:conclution}"]).ToString().Split(separator)[1].Split(';');
+            for (int e = 0; e < conclusionQuestions.Length - 1; e++)
+            {
+                FindAndReplace(wordApp, "{id:conclutionsQuestions}", conclusionQuestions[e] + ";\r\n{id:conclutionsQuestions}");
+            }
+            FindAndReplace(wordApp, "{id:conclutionsQuestions}", "");
+            foreach (Word.Table table in doc.Tables)
             {
                 Word.Range rangeTable = table.Range;
                 foreach (Word.Row row in rangeTable.Rows) {
@@ -180,15 +196,15 @@ namespace DocumentCreator
                                 Word.Row newRow = table.Rows.Add(ref oMissing);
                                 newRow.Cells[1].Range.Text = "2."+count;
                                 newRow.Cells[2].Range.Text = question.Key;
-                                newRow.Cells[3].Range.Text = question.Value;
+                                newRow.Cells[3].Range.Text = question.Value.Split(separator)[0];
                                 Regex regex = new Regex("^ ?[1-9].*$");
                                 string questionFull = "";
                                 if (regex.IsMatch(question.Key))
                                 {
-                                    questionFull = "Учебный вопрос. " + question.Key+" "+ question.Value + ".\r\n";
+                                    questionFull = "Учебный вопрос. " + question.Key+" "+ question.Value.Split(separator)[0] + ".\r\n";
                                 }
                                 else { 
-                                    questionFull = "Учебный вопрос " + count + ". " + question.Key + " " + question.Value + ".\r\n";
+                                    questionFull = "Учебный вопрос " + count + ". " + question.Key + " " + question.Value.Split(separator)[0] + ".\r\n";
                                 }
                                 int r = 0;
                                 for (int e = 0; e < questionFull.Length; e += 30)
@@ -212,7 +228,30 @@ namespace DocumentCreator
                                     r = e;
                                 }
                                 r += 30;
-                                FindAndReplace(wordApp, "{id:questionOfLesson}", questionFull.Substring(r) + "{id:questionOfLesson}");
+                                FindAndReplace(wordApp, "{id:questionOfLesson}", questionFull.Substring(r) + "\r\n{id:contentOfQuestion}");
+                                int w = 0;
+                                string temp = question.Value.Split(separator)[1];
+                                for (int z=0;z< temp.Length; z+=30)
+                                {
+                                    if (z > 0)
+                                    {
+                                        try
+                                        {
+                                            FindAndReplace(wordApp, "{id:contentOfQuestion}", temp.Substring(z, 30) + "{id:contentOfQuestion}");
+                                        }
+                                        catch (Exception q)
+                                        {
+                                            break;
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        FindAndReplace(wordApp, "{id:contentOfQuestion}", temp.Substring(z, 30) + "{id:contentOfQuestion}");
+                                    }
+                                    w = z;
+                                }
+                                FindAndReplace(wordApp, "{id:contentOfQuestion}", temp.Substring(w) + "\r\n{id:questionOfLesson}\r\n");
                                 temporary = newRow;
                                 count++;
                             }
@@ -239,15 +278,33 @@ namespace DocumentCreator
                 }
             }
             FindAndReplace(wordApp, "{id:questionOfLesson}", "");
+            }
+            catch (Exception e)
+            {
+                doc.Close();
+                new ExceptionWindow()
+                    .Show();
+            }
             WordAPI.SaveFile(doc);
             WordAPI.Close(doc);
             updatePlan(keyValuePairs);
         }
+
+
+
+
+
+
+
+
+
+
         private void updatePlan(Dictionary<string, Object> keyValuePairs)
         {
             //
             Word.Application wordApp = new Word.Application();
             Word.Document doc = wordApp.Documents.Open(documentPathPlan, ReadOnly: false);
+            try { 
             doc.Activate();
             if (((string)(keyValuePairs["{id:kind}"])).Contains("Тренировк") || ((string)(keyValuePairs["{id:kind}"])).Contains("Самостояте") || ((string)(keyValuePairs["{id:kind}"])).Contains("Практическо"))
             {
@@ -276,7 +333,7 @@ namespace DocumentCreator
                             KeyValuePair<string, string> question = questions.ElementAt(i);
                             FindAndReplace(wordApp, "{id:questionName}", question.Key);
                             FindAndReplace(wordApp, "{id:countAjunct}", i + 1);
-                            FindAndReplace(wordApp, "{id:questionDuration}", question.Value);
+                            FindAndReplace(wordApp, "{id:questionDuration}", question.Value.Split(separator)[0]);
                             if (questions.Count > 1)
                             {
                                 countQuestions = 1;
@@ -318,6 +375,7 @@ namespace DocumentCreator
             }
 
             FindAndReplace(wordApp, "{id:image}", "");
+            FindAndReplace(wordApp, "{id:adjunct}", "");
             FindAndReplace(wordApp, "{id:name}", keyValuePairs["{id:name}"]);
             FindAndReplace(wordApp, "{id:theme}", keyValuePairs["{id:theme}"]);
             FindAndReplace(wordApp, "{id:themeName}", keyValuePairs["{id:themeName}"]);
@@ -327,6 +385,7 @@ namespace DocumentCreator
             FindAndReplace(wordApp, "{id:method}", keyValuePairs["{id:method}"]);
             FindAndReplace(wordApp, "{id:duration}", keyValuePairs["{id:duration}"]);
             FindAndReplace(wordApp, "{id:place}", keyValuePairs["{id:place}"]);
+
             string methodical = (string)keyValuePairs["{id:methodical}"];
             int k = 0;
             for (int i = 0; i < methodical.Length; i += 30)
@@ -375,10 +434,10 @@ namespace DocumentCreator
             l += 30;
             FindAndReplace(wordApp, "{id:literature}", literature.Substring(l + 1));
             FindAndReplace(wordApp, "{id:technicalMeans}", keyValuePairs["{id:technicalMeans}"]);
-            FindAndReplace(wordApp, "{id:intro}", keyValuePairs["{id:intro}"]);
+            FindAndReplace(wordApp, "{id:intro}", keyValuePairs["{id:intro}"].ToString().Split(separator)[0]);
             FindAndReplace(wordApp, "{id:material}", keyValuePairs["{id:material}"]);
             FindAndReplace(wordApp, "{id:educationalQuestions}", keyValuePairs["{id:educationalQuestions}"]);
-            FindAndReplace(wordApp, "{id:conclution}", keyValuePairs["{id:conclution}"]);
+            FindAndReplace(wordApp, "{id:conclution}", keyValuePairs["{id:conclution}"].ToString().Split(separator)[0]);
             foreach (Word.Table table in doc.Tables)
             {
                 Word.Range rangeTable = table.Range;
@@ -398,16 +457,16 @@ namespace DocumentCreator
                                 Word.Row newRow = table.Rows.Add(ref oMissing);
                                 newRow.Cells[1].Range.Text = "2." + count;
                                 newRow.Cells[2].Range.Text = question.Key;
-                                newRow.Cells[3].Range.Text = question.Value;
+                                newRow.Cells[3].Range.Text = question.Value.Split(separator)[0];
                                 Regex regex = new Regex("^ ?[1-9].*$");
                                 string questionFull = "";
                                 if (regex.IsMatch(question.Key))
                                 {
-                                    questionFull = "Учебный вопрос. " + question.Key + " " + question.Value + "\r\n";
+                                    questionFull = "Учебный вопрос. " + question.Key + " " + question.Value.Split(separator)[0] + "\r\n";
                                 }
                                 else
                                 {
-                                    questionFull = "Учебный вопрос " + count + ". " + question.Key + " " + question.Value + "\r\n";
+                                    questionFull = "Учебный вопрос " + count + ". " + question.Key + " " + question.Value.Split(separator)[0] + "\r\n";
                                 }
                                 int r = 0;
                                 for (int e = 0; e < questionFull.Length; e += 30)
@@ -439,7 +498,7 @@ namespace DocumentCreator
                             Word.Row newRowENd = table.Rows.Add(ref missing);
                             newRowENd.Cells[1].Range.Text = "3";
                             newRowENd.Cells[2].Range.Text = "Заключение";
-                            newRowENd.Cells[3].Range.Text = (string)keyValuePairs["{id:conclution}"] + " мин";
+                            newRowENd.Cells[3].Range.Text = (string)keyValuePairs["{id:conclution}"].ToString().Split(separator)[0] + " мин";
                         }
                         else if (range.Text.Contains("{id:goal}"))
                         {
@@ -458,6 +517,13 @@ namespace DocumentCreator
                 }
             }
             FindAndReplace(wordApp, "{id:questionOfLesson}", "");
+            }
+            catch (Exception e)
+            {
+                doc.Close();
+                new ExceptionWindow()
+                    .Show();
+            }
             WordAPI.SaveFile(doc);
             WordAPI.Close(doc);
         }
