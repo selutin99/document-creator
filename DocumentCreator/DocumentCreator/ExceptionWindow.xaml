@@ -1,0 +1,14 @@
+﻿<Window x:Class="DocumentCreator.ExceptionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DocumentCreator"
+        mc:Ignorable="d"
+        Title="ExceptionWindow" Height="389.885" Width="666.031">
+    <Grid>
+        <Button Content="Закрыть" HorizontalAlignment="Left" Margin="225,266,0,0" VerticalAlignment="Top" Width="216" Height="50" FontSize="22" Click="Button_Click"/>
+        <TextBlock HorizontalAlignment="Left" Margin="35,56,0,0" TextWrapping="Wrap" Text="Во время работы с темпланом и рабочей программой произошла ошибка, проверьте правильность форматов выбранных документов и повторите попытку!" VerticalAlignment="Top" Height="138" Width="589" FontSize="20"/>
+
+    </Grid>
+</Window>

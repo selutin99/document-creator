@@ -155,7 +155,7 @@ namespace DocumentCreator
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (literature.Text.Length==0||place.Text.Length==0||materialSupport.Text.Length==0||intro.Text.Length==0||question1_text.Text.Length==0||conclusion.Text.Length==0)
+            if (literature.Text.Length==0||place.Text.Length==0||materialSupport.Text.Length==0||intro_text.Text.Length==0||question1_text.Text.Length==0||conclusion_text.Text.Length==0)
             {
                 ErrorWindow error = new ErrorWindow();
                 error.Show();
@@ -206,10 +206,10 @@ namespace DocumentCreator
                 keyValuePairs["{id:duration}"] = hours.Text;
                 keyValuePairs["{id:place}"] = place.Text;
                 keyValuePairs["{id:literature}"] = literature.Text;
-                keyValuePairs["{id:intro}"] = intro.Text;
+                keyValuePairs["{id:intro}"] = intro_text.Text;
                 keyValuePairs["{id:educationalQuestions}"] = sumOfMinInQuestionsOfLesson;
                 keyValuePairs["{id:questions}"] = questions;
-                keyValuePairs["{id:conclution}"] = conclusion.Text;
+                keyValuePairs["{id:conclution}"] = conclusion_text.Text;
                 keyValuePairs["{id:material}"] = materialSupport.Text;
                 keyValuePairs["{id:methodical}"] = methodical.Text;
                 keyValuePairs["{id:technicalMeans}"] = materialSupport.Text;
@@ -229,46 +229,56 @@ namespace DocumentCreator
             selected_method.Text += method.SelectedItem + "; ";
         }
 
-        private void intro_KeyPress(object sender, KeyPressEventArgs e)
+        private void intro_time_KeyPress(object sender, KeyPressEventArgs e)
         {
             if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
                 e.Handled = true;
         }
 
-        private void question1_text_KeyPress(object sender, KeyPressEventArgs e)
+        private void question1_time_KeyPress(object sender, KeyPressEventArgs e)
         {
             if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
                 e.Handled = true;
         }
 
-        private void question2_text_KeyPress(object sender, KeyPressEventArgs e)
+        private void question2_time_KeyPress(object sender, KeyPressEventArgs e)
         {
             if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
                 e.Handled = true;
         }
 
-        private void question3_text_KeyPress(object sender, KeyPressEventArgs e)
+        private void question3_time_KeyPress(object sender, KeyPressEventArgs e)
         {
             if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
                 e.Handled = true;
         }
 
-        private void question4_text_KeyPress(object sender, KeyPressEventArgs e)
+        private void question4_time_KeyPress(object sender, KeyPressEventArgs e)
         {
             if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
                 e.Handled = true;
         }
 
-        private void question5_text_KeyPress(object sender, KeyPressEventArgs e)
+        private void question5_time_KeyPress(object sender, KeyPressEventArgs e)
         {
             if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
                 e.Handled = true;
         }
 
-        private void conclusion_KeyPress(object sender, KeyPressEventArgs e)
+        private void conclusion_time_KeyPress(object sender, KeyPressEventArgs e)
         {
             if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
                 e.Handled = true;
+        }
+
+        private void Intro_combo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            intro_text.Text += intro_combo.SelectedItem + "; ";
+        }
+
+        private void Conclusion_combo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            conclusion_text.Text += conclusion_combo.SelectedItem + "; ";
         }
     }
 }
