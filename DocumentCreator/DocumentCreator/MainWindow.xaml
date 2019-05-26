@@ -30,5 +30,8 @@
         <Button x:Name="DownloadProgrammButton" Content="Обзор" HorizontalAlignment="Right" Margin="0,232,44.4,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.399,2.131" Height="28" Click="DownloadProgrammButton_Click" Grid.Column="1" />
         <Label x:Name="PathToProgramm" Content="" Margin="25,232,122.4,0" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="1" RenderTransformOrigin="0.484,1.621" Grid.ColumnSpan="2" Height="28" />
         <Label x:Name="ChooseFile_Copy" Content="Выберите рабочую программу:" Margin="25,201,42,0" VerticalAlignment="Top" RenderTransformOrigin="0.429,2.233" Height="26"/>
+        <Label HorizontalAlignment="Left" Margin="104,287,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="LoadingText" Content="Документы загружаются.&#xD;&#xA;Не закрывайте окно и не&#xD;&#xA;выключайте компьютер" Margin="83,262,3,240.8" Visibility="Hidden"/>
+        <Image x:Name="LoadingImg" Grid.Column="1" Margin="48,277,178,249.8" Source="ajax-loader.gif" Stretch="Fill" Visibility="Hidden"/>
     </Grid>
 </Window>
