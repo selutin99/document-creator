@@ -1,0 +1,14 @@
+﻿<Window x:Class="DocumentCreator.LoadingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DocumentCreator"
+        mc:Ignorable="d"
+        Title="LoadingWindow" Height="132.727" Width="300">
+    <Grid>
+        <Label Content="Документы загружаются.&#xD;&#xA;Не закрывайте окно и не&#xD;&#xA;выключайте компьютер" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,16,0,0" Height="70" Width="185"/>
+        <Image Margin="216,32,44,38" Source="ajax-loader.gif" Stretch="Fill"/>
+
+    </Grid>
+</Window>

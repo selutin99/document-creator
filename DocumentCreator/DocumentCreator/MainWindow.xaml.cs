@@ -12,7 +12,7 @@ using System.Threading;
 namespace DocumentCreator
 {
     public partial class MainWindow : Window
-    {
+    {     
         private string fileName { get; set; }
         private string fileNameWorkProgramming { get; set; }
         ParseThematicPlan parser;
@@ -69,9 +69,16 @@ namespace DocumentCreator
         //Сгенерировать УМР
         private void GenerateButton_Click(object sender, RoutedEventArgs e)
         {
+
+           
+
             string sourceDir = System.IO.Path.GetDirectoryName(fileName);
             string backupDir = FolderName;
             string fName = System.IO.Path.GetFileName(fileName);
+
+            GenerateButton.Visibility = Visibility.Hidden;
+            LoadingImg.Visibility = Visibility.Visible;
+            LoadingText.Visibility = Visibility.Visible;
 
             //Логика
             parser = new ParseThematicPlan(fileName, FolderName+"//");
@@ -129,7 +136,10 @@ namespace DocumentCreator
             string folderName = @"C:\out\";
             Process.Start(folderName);
             dialogWindow.unswerLabel.Content = "УМР успешно созданы";
-            dialogWindow.Show();   
+            GenerateButton.Visibility = Visibility.Visible;
+            LoadingImg.Visibility = Visibility.Hidden;
+            LoadingText.Visibility = Visibility.Hidden;
+            dialogWindow.Show();          
         }
 
         private void CheckEnabledForGenerate()

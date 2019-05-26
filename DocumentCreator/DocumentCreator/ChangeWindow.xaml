@@ -105,8 +105,8 @@
             <Label Content="В полях указывается время(слева) в минутах и содержание вопроса(справа) &#xD;&#xA;на указанный вопрос слева" HorizontalAlignment="Left" Margin="10,0,0,279" VerticalAlignment="Bottom" Width="491" RenderTransformOrigin="0.513,-0.633" Grid.Column="2" Height="44"/>
             <Label Content="Каждая воспитательная цель отделяется знаком ;" HorizontalAlignment="Left" Margin="11.8,348,0,0" VerticalAlignment="Top" Width="403" Grid.Column="2"/>
             <TextBox x:Name="selected_Place" Grid.Column="2" Height="50" Margin="10,0,14,707" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
-            <ComboBox x:Name="method" Margin="23,0,40,539" VerticalAlignment="Bottom" Grid.ColumnSpan="2" SelectionChanged="Method_SelectionChanged"/>
-            <TextBox x:Name="methodical" FontSize="12" FontStyle="Oblique" TextWrapping="Wrap" FontWeight="DemiBold" Grid.Column="2" Margin="12,683,9,94" Grid.Row="1" VerticalScrollBarVisibility="Visible" />
+            <ComboBox x:Name="method" Margin="23,0,40,539" VerticalAlignment="Bottom" Grid.ColumnSpan="2" SelectionChanged="Method_SelectionChanged"/> 
+            <TextBox x:Name="methodical" FontSize="12" FontStyle="Oblique" TextWrapping="Wrap" FontWeight="DemiBold" Grid.Column="2" Margin="12,683,9,94" Grid.Row="1" VerticalScrollBarVisibility="Visible" Height="113"  />
             <Label Content="Методические указания:" Margin="23,0,84,186" Grid.Row="1" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
             <Separator Height="18" Margin="0,660,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.Row="1"/>
             <Separator Height="18" Margin="0,796,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.Row="1"/>
