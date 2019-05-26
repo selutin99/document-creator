@@ -68,8 +68,16 @@ namespace DocumentCreator
             }
             kind.Text = lesson.Type.Substring(0,lesson.Type.LastIndexOf(' '));
             place.Items.Add("Плац");
-            place.Items.Add("Учеюный кабинет");
-            place.Items.Add("Тренировочный кабинет");
+            place.Items.Add("Тир");
+            place.Items.Add("Учебная лаборатория");
+            place.Items.Add("Учебно-тренировочная площадка");
+            place.Items.Add("Кумысная поляна");
+            place.Items.Add("Аудитория 322");
+            place.Items.Add("Аудитория 333");
+            place.Items.Add("Аудитория 342");
+            place.Items.Add("Аудитория 348");
+            place.Items.Add("Аудитория 348б");
+            place.Items.Add("Аудитория 501");
             hours.Text = lesson.Minutes+" минут";
             method.Items.Add("Рассказ");
             method.Items.Add("Показ");
