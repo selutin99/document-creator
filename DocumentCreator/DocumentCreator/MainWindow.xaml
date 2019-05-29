@@ -32,6 +32,6 @@
         <Label x:Name="ChooseFile_Copy" Content="Выберите рабочую программу:" Margin="25,201,42,0" VerticalAlignment="Top" RenderTransformOrigin="0.429,2.233" Height="26"/>
         <Separator Margin="0,551,0,136" RenderTransformOrigin="0.507,-0.8" Grid.ColumnSpan="2" />
         <Button x:Name="Refresh_button" Content="Обновить" HorizontalAlignment="Left" Margin="-59,0,0,10" VerticalAlignment="Bottom" Width="133" Height="49" IsEnabled="False" Grid.Column="1"/>
-        <Label Content="Обновить существующие документы" Margin="66,0,64,88" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Height="43" FontSize="22"/>
+        <Label Content="Обновить существующие документы" Margin="83,0,64,88" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Height="43" FontSize="20"/>
     </Grid>
 </Window>
