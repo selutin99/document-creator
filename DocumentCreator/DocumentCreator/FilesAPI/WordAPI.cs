@@ -62,7 +62,7 @@ namespace DocumentCreator.FilesAPI
             if (doc != null)
             {
                 doc.Close();
-                KillWord();
+                //KillWord();
             }
             else
             {

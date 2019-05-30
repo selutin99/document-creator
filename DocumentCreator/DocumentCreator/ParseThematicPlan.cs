@@ -264,12 +264,13 @@ namespace DocumentCreator
             }
             disciplines=getMethodicalInstructionsForLecture(disciplines);
             disciplines = replaceLiterature(disciplines);
-            //CLOSE FILE
+                //CLOSE FILE
             FilesAPI.WordAPI.Close(this.doc);
             //парсим метод указания для лекций
         }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 doc.Close();
                 new ExceptionWindow()
                     .Show();
@@ -543,7 +544,6 @@ namespace DocumentCreator
         private List<Discipline> replaceLiterature(List<Discipline> disciplines)
         {
             Word.Table tableWithLiterature = null;
-            try { 
             foreach (Word.Table tbl in doc.Tables)
             {
                 int k = 0;
@@ -613,11 +613,11 @@ namespace DocumentCreator
                     additionalLiterature.Add(replaceKey, replaceValue);
                     i = i + 1;
                 }
-                if(tableWithLiterature.Range.Cells[i].Range.Text.Contains(" Основная"))
+                if(tableWithLiterature.Range.Cells[i].Range.Text.Contains("Основная")|| tableWithLiterature.Range.Cells[i].Range.Text.Contains("основная")|| tableWithLiterature.Range.Cells[i].Range.Text.Contains("ОСНОВНАЯ"))
                 {
                     temp = "main";
                 }
-                else if (tableWithLiterature.Range.Cells[i].Range.Text.Contains(" Дополнительная") || (!temp.Equals("") && tableWithLiterature.Range.Cells[i].Range.Text.Contains(" Дополнительная")))
+                else if ((tableWithLiterature.Range.Cells[i].Range.Text.Contains("Дополнительная"))||(tableWithLiterature.Range.Cells[i].Range.Text.Contains("дополнительная")) || (tableWithLiterature.Range.Cells[i].Range.Text.Contains("ДОПОЛНИТЕЛЬНАЯ")) || (!temp.Equals("") && tableWithLiterature.Range.Cells[i].Range.Text.Contains(" Дополнительная")))
                 {
                     temp = "additional";
                 }
@@ -665,13 +665,7 @@ namespace DocumentCreator
                     }
                 }
             }
-            }
-            catch (Exception e)
-            {
-                doc.Close();
-                new ExceptionWindow()
-                    .Show();
-            }
+
             return disciplines;
         }
     }

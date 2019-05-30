@@ -259,7 +259,7 @@ namespace DocumentCreator
                             Word.Row newRowENd = table.Rows.Add(ref missing);
                             newRowENd.Cells[1].Range.Text = "3";
                             newRowENd.Cells[2].Range.Text = "Заключение";
-                            newRowENd.Cells[3].Range.Text = (string)keyValuePairs["{id:conclution}"]+ " мин";
+                            newRowENd.Cells[3].Range.Text = (string)keyValuePairs["{id:conclution}"].ToString().Split(separator)[0]+ " мин";
                         }
                         else if (range.Text.Contains("{id:goal}"))
                         {
@@ -277,6 +277,7 @@ namespace DocumentCreator
                     }
                 }
             }
+            FindAndReplace(wordApp, "{id:adjunct}", "");
             FindAndReplace(wordApp, "{id:questionOfLesson}", "");
             }
             catch (Exception e)

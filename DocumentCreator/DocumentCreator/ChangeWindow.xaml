@@ -71,12 +71,12 @@
             <Label Content="Материальная поддержка:" HorizontalAlignment="Left" Margin="23,0,0,450" VerticalAlignment="Bottom" Width="199" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2"/>
             <TextBox x:Name="materialSupport" Margin="10,1368,22,415" TextWrapping="Wrap" Grid.Column="2"/>
             <Label Content="Литература:" HorizontalAlignment="Left" Margin="23,1003,0,846" Width="181" Grid.ColumnSpan="2"/>
-            <TextBox x:Name="question5_text" Margin="88,427,12,323" TextWrapping="Wrap" Grid.Row="1" Grid.Column="2" MaxLength="2" VerticalScrollBarVisibility="Visible" Height="140" IsEnabled="False"/>
-            <TextBox x:Name="question4_text" Margin="88,271,12,486" TextWrapping="Wrap" Grid.Row="1" Grid.Column="2" MaxLength="2" VerticalScrollBarVisibility="Visible" IsEnabled="False"/>
-            <TextBox x:Name="question3_text" Margin="88,127,10,647" TextWrapping="Wrap" Grid.Row="1" Grid.Column="2" MaxLength="2" VerticalScrollBarVisibility="Visible" Height="116" IsEnabled="False"/>
+            <TextBox x:Name="question5_text" Margin="88,427,12,323" TextWrapping="Wrap" Grid.Row="1" Grid.Column="2"  VerticalScrollBarVisibility="Visible" Height="140" IsEnabled="False"/>
+            <TextBox x:Name="question4_text" Margin="88,271,12,486" TextWrapping="Wrap" Grid.Row="1" Grid.Column="2" VerticalScrollBarVisibility="Visible" IsEnabled="False"/>
+            <TextBox x:Name="question3_text" Margin="88,127,10,647" TextWrapping="Wrap" Grid.Row="1" Grid.Column="2"  VerticalScrollBarVisibility="Visible" Height="116" IsEnabled="False"/>
             <Label x:Name="introLabel" Content="Введение:" HorizontalAlignment="Left" Margin="10,0,0,227" VerticalAlignment="Bottom" Width="212" RenderTransformOrigin="0.513,-0.633" Grid.ColumnSpan="2" Height="29"/>
             <TextBox x:Name="intro_time" Margin="10,1623,0,200" TextWrapping="Wrap" Grid.Column="2" MaxLength="2" HorizontalAlignment="Left" Width="49"/>
-            <TextBox x:Name="question2_text" Margin="88,-26,10,791" TextWrapping="Wrap" Grid.Column="2" MaxLength="2" VerticalScrollBarVisibility="Visible" Height="125" Grid.Row="1" IsEnabled="False"/>
+            <TextBox x:Name="question2_text" Margin="88,-26,10,791" TextWrapping="Wrap" Grid.Column="2"  VerticalScrollBarVisibility="Visible" Height="125" Grid.Row="1" IsEnabled="False"/>
             <Label Content="Заключение:" HorizontalAlignment="Left" Margin="10,0,0,274" VerticalAlignment="Bottom" Width="242" RenderTransformOrigin="0.513,-0.633" Grid.Row="1" Grid.ColumnSpan="2"/>
             <TextBox x:Name="conclusion_time" Margin="12,590,0,235" TextWrapping="Wrap" Grid.Row="1" Grid.Column="2" MaxLength="2" HorizontalAlignment="Left" Width="47" d:LayoutOverrides="HorizontalAlignment"/>
             <TextBox x:Name="questionName5" Margin="10,422,10.2,318.4" TextWrapping="Wrap" Grid.Row="1" IsEnabled="False" Grid.ColumnSpan="2"/>
