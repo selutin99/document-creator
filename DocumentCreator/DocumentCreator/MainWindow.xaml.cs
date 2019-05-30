@@ -77,11 +77,12 @@ namespace DocumentCreator
             string fName = System.IO.Path.GetFileName(fileName);
 
             GenerateButton.Visibility = Visibility.Hidden;
-            LoadingImg.Visibility = Visibility.Visible;
-            LoadingText.Visibility = Visibility.Visible;
+            //LoadingImg.Visibility = Visibility.Visible;
+            //LoadingText.Visibility = Visibility.Visible;
 
             //Логика
-            parser = new ParseThematicPlan(fileName, FolderName+"//");
+            
+            parser = new ParseThematicPlan(fileName, Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/ВоспитательныеЦелиИФразыДополнения.docx")) ,FolderName +"//");
             Disciplines = parser.ParseThematicPlanAndCreateDirectories();
             ParseWorkPrograming parseWorkPrograming = new ParseWorkPrograming(fileNameWorkProgramming, Disciplines);
             Disciplines = parseWorkPrograming.ParsePlan();
@@ -90,11 +91,16 @@ namespace DocumentCreator
                 {
                     ComboDisciplines.Items.Add(discipline.Name);
                     Directory.CreateDirectory(parser.GetOutputPath() + discipline.Name);
+                int topicNumber = 0;
+                int lessonNumber = 0;
                     foreach (Topic topic in discipline.Topics)
                     {
+                    topicNumber++;
+                    lessonNumber = 0;
                         Directory.CreateDirectory(parser.GetOutputPath() + discipline.Name + "\\" + topic.Name);
                         for (int i = 0; i < topic.Lessons.Count;i++)
                         {
+                        lessonNumber++;
                             Lesson lesson = topic.Lessons[i];
                             //Disciplene disciplineWindow = new Disciplene();
                             //disciplineWindow.NameOfDiscipline.Content = discipline.Name;
@@ -121,7 +127,7 @@ namespace DocumentCreator
                         }
                             string outputFileName = parser.GetOutputPath() + discipline.Name + "\\" + topic.Name + "\\" + lesson.Type + ".doc";
                             outputFileName = outputFileName.Replace("//", "\\");
-                            string outputFileNameForPlan = parser.GetOutputPath() + discipline.Name + "\\" + topic.Name + "\\" + "Plan"+lesson.Type + ".doc";
+                            string outputFileNameForPlan = parser.GetOutputPath() + discipline.Name + "\\" + topic.Name + "\\" + "ПланДля"+lesson.Type + ".doc";
                             outputFileNameForPlan = outputFileNameForPlan.Replace("//", "\\");
                         try
                         {
@@ -151,8 +157,8 @@ namespace DocumentCreator
             Process.Start(folderName);
             dialogWindow.unswerLabel.Content = "УМР успешно созданы";
             GenerateButton.Visibility = Visibility.Visible;
-            LoadingImg.Visibility = Visibility.Hidden;
-            LoadingText.Visibility = Visibility.Hidden;
+            //LoadingImg.Visibility = Visibility.Hidden;
+            //LoadingText.Visibility = Visibility.Hidden;
             dialogWindow.Show();          
         }
 
@@ -222,17 +228,21 @@ namespace DocumentCreator
         {
             Console.WriteLine(ComboLesson.SelectedIndex);
             string documentPath= parser.GetOutputPath() + ComboDisciplines.SelectedItem + "\\" + ComboTheme.SelectedItem + "\\" + ComboLesson.SelectedItem + ".doc";
-            string documentPathPlan= parser.GetOutputPath() + ComboDisciplines.SelectedItem + "\\" + ComboTheme.SelectedItem + "\\" + "Plan"+ComboLesson.SelectedItem + ".doc";
+            string documentPathPlan= parser.GetOutputPath() + ComboDisciplines.SelectedItem + "\\" + ComboTheme.SelectedItem + "\\" + "ПланДля"+ComboLesson.SelectedItem + ".doc";
+            documentPath.Replace("//", "");
+            documentPath.Replace("//", "");
             String firstSymb = ComboLesson.SelectedItem.ToString();
             String discipline = ComboDisciplines.SelectedItem.ToString();
             String theme = ComboTheme.SelectedItem.ToString();
             String lesson = ComboLesson.SelectedItem.ToString();
             Discipline selectedDiscipline = Disciplines.Find(x => x.Name.Equals(discipline));
             Topic selectedTopic = selectedDiscipline.Topics.Find(x => x.Name.Equals(theme));
+            
             Lesson selectedLesson = selectedTopic.Lessons.Find(x => x.Type.Equals(lesson));
+
             firstSymb = firstSymb[0].ToString();
             ChangeWindow change = new ChangeWindow();
-            change.initValues(selectedDiscipline, selectedTopic, selectedLesson, documentPath,documentPathPlan);
+            change.initValues(selectedDiscipline, selectedTopic, selectedLesson, documentPath, documentPathPlan);
             change.Show();
             //if (String.Compare(firstSymb, "Л") == 0)
             //{
@@ -276,6 +286,15 @@ namespace DocumentCreator
                 dialogWindow.Show();
             }
             CheckEnabledForGenerate();
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            System.Diagnostics.Process[] procs = System.Diagnostics.Process.GetProcessesByName("winword");
+            foreach (System.Diagnostics.Process p in procs)
+            {
+                p.Kill();
+            }
         }
     }
 }

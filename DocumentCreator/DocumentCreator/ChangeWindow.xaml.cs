@@ -12,6 +12,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO;
+using Word = Microsoft.Office.Interop.Word;
+using Path = System.IO.Path;
 
 namespace DocumentCreator
 {
@@ -29,6 +32,21 @@ namespace DocumentCreator
         }
         public void initValues(Discipline discipline, Topic topic, Lesson lesson, string documentPath,string documentPathPlan)
         {
+            Word.Document docWithGoals;
+            Word.Table tableInDoc = null;
+            string tem = Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/ВоспитательныеЦелиИФразыДополнения.docx");
+            docWithGoals = FilesAPI.WordAPI.GetDocument(Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/ВоспитательныеЦелиИФразыДополнения.docx")));
+            tableInDoc = docWithGoals.Tables[2];
+            List<string> additionalPhraze = new List<string>();
+            foreach(Word.Cell cell in tableInDoc.Range.Cells){
+                string tempGoal = cell.Range.Text.Replace("\v", " ");
+                tempGoal = tempGoal.Replace("\r", " ");
+                tempGoal = tempGoal.Replace("\a", " ");
+                tempGoal = Char.ToUpper(tempGoal[0]) + tempGoal.Substring(1);
+                tempGoal = tempGoal.Trim();
+                additionalPhraze.Add(tempGoal);
+            }
+            FilesAPI.WordAPI.Close(docWithGoals);
             Dictionary<string, List<string>> requirementsForStudent = discipline.RequirementsForStudent;
             this.documentPath = documentPath;
             this.documentPathPlan = documentPathPlan;
@@ -38,7 +56,14 @@ namespace DocumentCreator
             topicName.Text = temp.Substring(0,temp.Length);
             numberLesson.Text = lesson.LessonInMaterialSupp;
             lessonName.Text = lesson.ThemeOfLesson;
-            
+            foreach(string additionalPh in additionalPhraze)
+            {
+                additionalPhraze_1.Items.Add(additionalPh);
+                additionalPhraze_2.Items.Add(additionalPh);
+                additionalPhraze_3.Items.Add(additionalPh);
+                additionalPhraze_4.Items.Add(additionalPh);
+                additionalPhraze_5.Items.Add(additionalPh);
+            }
             foreach(String goal in requirementsForStudent["Знать:"])
             {
                 string tempGoal = goal.Replace("\v", " ");
@@ -65,6 +90,15 @@ namespace DocumentCreator
                 tempGoal = Char.ToUpper(tempGoal[0]) + tempGoal.Substring(1);
                 tempGoal = tempGoal.Trim();
                 selectGoal_3.Items.Add(tempGoal);
+            }
+            foreach (String goal in requirementsForStudent["Воспитательные:"])
+            {
+                string tempGoal = goal.Replace("\v", " ");
+                tempGoal = tempGoal.Replace("\r", " ");
+                tempGoal = tempGoal.Replace("\a", " ");
+                tempGoal = Char.ToUpper(tempGoal[0]) + tempGoal.Substring(1);
+                tempGoal = tempGoal.Trim();
+                selectGoal_4.Items.Add(tempGoal);
             }
             kind.Text = lesson.Type.Substring(0,lesson.Type.LastIndexOf(' '));
             place.Items.Add("Плац");
@@ -186,6 +220,11 @@ namespace DocumentCreator
             goals_1.Text += selectGoal_1.SelectedItem + "; ";
         }
 
+        private void SelectGoal_4_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            goals_4.Text += selectGoal_4.SelectedItem + "; ";
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (literature.Text.Length==0||place.Text.Length==0||materialSupport.Text.Length==0||intro_time.Text.Length==0||question1_time.Text.Length==0)
@@ -198,6 +237,7 @@ namespace DocumentCreator
                 List<string> goals = goals_1.Text.Replace("; ", ";").Split(';').ToList<string>();
                 goals.AddRange(goals_2.Text.Replace("; ", ";").Split(';').ToList<string>());
                 goals.AddRange(goals_3.Text.Replace("; ", ";").Split(';').ToList<string>());
+                goals.AddRange(goals_4.Text.Replace("; ", ";").Split(';').ToList<string>());
                 goals.RemoveAll(x => x.Length.Equals(0));
                 //List<string> goals = new List<string>();
                 //goals.Add("Требоване 1");
@@ -247,6 +287,8 @@ namespace DocumentCreator
                 keyValuePairs["{id:material}"] = materialSupport.Text;
                 keyValuePairs["{id:methodical}"] = methodical.Text;
                 keyValuePairs["{id:technicalMeans}"] = materialSupport.Text;
+                documentPath = documentPath.Replace("//", "");
+                documentPathPlan = documentPath.Replace("//", "");
                 UpdateDoc update = new UpdateDoc(documentPath,documentPathPlan);
                 update.updateDoc(keyValuePairs);
                 Close();
@@ -313,6 +355,71 @@ namespace DocumentCreator
         private void Conclusion_combo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             conclusion_text.Text += conclusion_combo.SelectedItem + "; ";
+        }
+
+        private void AdditionalPhraze_1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            question1_text.Text +="\n"+ additionalPhraze_1.SelectedItem+"\n";
+        }
+
+        private void AdditionalPhraze_2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            question2_text.Text += "\n" + additionalPhraze_2.SelectedItem + "\n";
+        }
+
+        private void AdditionalPhraze_3_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            question3_text.Text += "\n" + additionalPhraze_3.SelectedItem + "\n";
+        }
+
+        private void AdditionalPhraze_4_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            question4_text.Text += "\n" + additionalPhraze_4.SelectedItem + "\n";
+        }
+
+        private void AdditionalPhraze_5_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            question5_text.Text += "\n" + additionalPhraze_5.SelectedItem + "\n";
+        }
+
+        private void Question1_text_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                question1_text.Text += "\n";
+            }
+        }
+
+        private void Question2_text_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                question2_text.Text += "\n";
+            }
+        }
+
+        private void Question3_text_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                question3_text.Text += "\n";
+            }
+        }
+
+        private void Question4_text_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                question4_text.Text += "\n";
+            }
+        }
+
+        private void Question5_text_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                question5_text.Text += "\n";
+            }
         }
     }
 }

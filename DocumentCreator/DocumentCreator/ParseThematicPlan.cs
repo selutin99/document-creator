@@ -10,6 +10,7 @@ namespace DocumentCreator
     internal class ParseThematicPlan
     {
         private string outputPath;
+        private string inputFilePathToEducationGoals;
         private Word.Document doc;
         private Word.Table table = null;
 
@@ -18,7 +19,7 @@ namespace DocumentCreator
             return this.outputPath;
         }
 
-        public ParseThematicPlan(string inputFilePath, string outputPath)
+        public ParseThematicPlan(string inputFilePath, string inputFilePathToEducationGoals, string outputPath)
         {
 
             this.doc = FilesAPI.WordAPI.GetDocument(inputFilePath);
@@ -48,7 +49,7 @@ namespace DocumentCreator
                 
                 
             }
-
+            this.inputFilePathToEducationGoals = inputFilePathToEducationGoals;
             this.outputPath = outputPath;
         }
 
@@ -271,7 +272,7 @@ namespace DocumentCreator
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                doc.Close();
+                FilesAPI.WordAPI.Close(this.doc);
                 new ExceptionWindow()
                     .Show();
     }
@@ -324,11 +325,11 @@ namespace DocumentCreator
                         lessonInMaterialSupp = questionsOfLesson.Substring(0, questionsOfLesson.IndexOf("«"));
                         try
                         {
-                            themeOfLesson = questionsOfLesson.Substring(questionsOfLesson.IndexOf("«") + 1, questionsOfLesson.IndexOf("»") - questionsOfLesson.IndexOf("«")-1);
+                            themeOfLesson = questionsOfLesson.Substring(questionsOfLesson.IndexOf("«"), questionsOfLesson.IndexOf("»") - questionsOfLesson.IndexOf("«")-1);
                         }
                         catch (Exception e)
                         {
-                            themeOfLesson = questionsOfLesson.Substring(questionsOfLesson.IndexOf("«") + 1, questionsOfLesson.IndexOf(".") - questionsOfLesson.IndexOf("«")-1);
+                            themeOfLesson = questionsOfLesson.Substring(questionsOfLesson.IndexOf("«"), questionsOfLesson.IndexOf(".") - questionsOfLesson.IndexOf("«")-1);
                         }
                         questions = getQuestions(questionsOfLesson.Substring(questionsOfLesson.IndexOf("«")));
                     }
@@ -389,9 +390,33 @@ namespace DocumentCreator
         public List<Discipline> ParseThematicPlanAndCreateDirectories()
         {
             List<Discipline> disciplines = GetAllDisciplinesWithContent();
+            disciplines = GetEducationGoals(disciplines);
             return disciplines;
         }
-         
+
+        private List<Discipline> GetEducationGoals(List<Discipline> disciplines)
+        {
+            Word.Document docWithGoals;
+            Word.Table tableInDoc = null;
+            docWithGoals=FilesAPI.WordAPI.GetDocument(inputFilePathToEducationGoals);
+            tableInDoc = docWithGoals.Tables[1];
+            List<string> goals = new List<string>();
+            foreach(Word.Cell cell in tableInDoc.Range.Cells)
+            {
+                goals.Add(cell.Range.Text);
+            }
+            foreach(Discipline discipline in disciplines)
+            {
+                discipline.RequirementsForStudent.Add("Воспитательные:", goals);
+            }
+            FilesAPI.WordAPI.Close(docWithGoals);
+            return disciplines;
+        }
+        
+            
+        
+
+
         private List<string> getQuestions(string questions)
         {
             string temporary;

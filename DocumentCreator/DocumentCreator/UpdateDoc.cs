@@ -201,7 +201,7 @@ namespace DocumentCreator
                                 string questionFull = "";
                                 if (regex.IsMatch(question.Key))
                                 {
-                                    questionFull = "Учебный вопрос. " + question.Key+" "+ question.Value.Split(separator)[0] + ".\r\n";
+                                    questionFull = "Учебный вопрос. " + question.Key+" "+ question.Value.Split(separator)[0]+ ".\r\n";
                                 }
                                 else { 
                                     questionFull = "Учебный вопрос " + count + ". " + question.Key + " " + question.Value.Split(separator)[0] + ".\r\n";
@@ -230,7 +230,7 @@ namespace DocumentCreator
                                 r += 30;
                                 FindAndReplace(wordApp, "{id:questionOfLesson}", questionFull.Substring(r) + "\r\n{id:contentOfQuestion}");
                                 int w = 0;
-                                string temp = question.Value.Split(separator)[1];
+                                string temp = question.Value.Split(separator)[1].Replace("\n", "\r\n");
                                 for (int z=0;z< temp.Length; z+=30)
                                 {
                                     if (z > 0)
@@ -279,6 +279,9 @@ namespace DocumentCreator
             }
             FindAndReplace(wordApp, "{id:adjunct}", "");
             FindAndReplace(wordApp, "{id:questionOfLesson}", "");
+            WordAPI.SaveFile(doc);
+            WordAPI.Close(doc);
+            updatePlan(keyValuePairs);
             }
             catch (Exception e)
             {
@@ -286,9 +289,7 @@ namespace DocumentCreator
                 new ExceptionWindow()
                     .Show();
             }
-            WordAPI.SaveFile(doc);
-            WordAPI.Close(doc);
-            updatePlan(keyValuePairs);
+            
         }
 
 
@@ -518,6 +519,8 @@ namespace DocumentCreator
                 }
             }
             FindAndReplace(wordApp, "{id:questionOfLesson}", "");
+            WordAPI.SaveFile(doc);
+            WordAPI.Close(doc);
             }
             catch (Exception e)
             {
@@ -525,8 +528,7 @@ namespace DocumentCreator
                 new ExceptionWindow()
                     .Show();
             }
-            WordAPI.SaveFile(doc);
-            WordAPI.Close(doc);
+            
         }
 
         private void FindAndReplace(Word.Application doc, object findText, object replaceWithText)
