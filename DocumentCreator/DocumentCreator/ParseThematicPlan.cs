@@ -432,21 +432,21 @@ namespace DocumentCreator
                     listQuestions.Add(question);
                     temporary = temporary.Substring(temporary.IndexOf("2."));
                 }
-                if (temporary.IndexOf("3.") > 0)
+                if (temporary.IndexOf("3.") > 0 && listQuestions.Count == 1)
                 {
                     question = temporary.Substring(0, temporary.IndexOf("3."));
                     question = question.Trim();
                     listQuestions.Add(question);
                     temporary = temporary.Substring(temporary.IndexOf("3."));
                 }
-                if (temporary.IndexOf("4.") > 0)
+                if (temporary.IndexOf("4.") > 0 && listQuestions.Count == 2)
                 {
                     question = temporary.Substring(0, temporary.IndexOf("4."));
                     question = question.Trim();
                     listQuestions.Add(question);
                     temporary = temporary.Substring(temporary.IndexOf("4."));
                 }
-                if (temporary.IndexOf("5.") > 0)
+                if (temporary.IndexOf("5.") > 0 &&listQuestions.Count==3)
                 {
                     question = temporary.Substring(0, temporary.IndexOf("5."));
                     question = question.Trim();

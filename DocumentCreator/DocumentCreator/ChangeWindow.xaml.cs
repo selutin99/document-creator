@@ -38,7 +38,9 @@ namespace DocumentCreator
             docWithGoals = FilesAPI.WordAPI.GetDocument(Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/ВоспитательныеЦелиИФразыДополнения.docx")));
             tableInDoc = docWithGoals.Tables[2];
             List<string> additionalPhraze = new List<string>();
-            foreach(Word.Cell cell in tableInDoc.Range.Cells){
+            List<string> placeOfEducations = new List<string>();
+            List<string> methodOfEducation = new List<string>();
+            foreach (Word.Cell cell in tableInDoc.Range.Cells){
                 string tempGoal = cell.Range.Text.Replace("\v", " ");
                 tempGoal = tempGoal.Replace("\r", " ");
                 tempGoal = tempGoal.Replace("\a", " ");
@@ -46,13 +48,33 @@ namespace DocumentCreator
                 tempGoal = tempGoal.Trim();
                 additionalPhraze.Add(tempGoal);
             }
+            tableInDoc = docWithGoals.Tables[3];
+            foreach (Word.Cell cell in tableInDoc.Range.Cells)
+            {
+                string tempGoal = cell.Range.Text.Replace("\v", " ");
+                tempGoal = tempGoal.Replace("\r", " ");
+                tempGoal = tempGoal.Replace("\a", " ");
+                tempGoal = Char.ToUpper(tempGoal[0]) + tempGoal.Substring(1);
+                tempGoal = tempGoal.Trim();
+                placeOfEducations.Add(tempGoal);
+            }
+            tableInDoc = docWithGoals.Tables[3];
+            foreach (Word.Cell cell in tableInDoc.Range.Cells)
+            {
+                string tempGoal = cell.Range.Text.Replace("\v", " ");
+                tempGoal = tempGoal.Replace("\r", " ");
+                tempGoal = tempGoal.Replace("\a", " ");
+                tempGoal = Char.ToUpper(tempGoal[0]) + tempGoal.Substring(1);
+                tempGoal = tempGoal.Trim();
+                methodOfEducation.Add(tempGoal);
+            }
             FilesAPI.WordAPI.Close(docWithGoals);
             Dictionary<string, List<string>> requirementsForStudent = discipline.RequirementsForStudent;
             this.documentPath = documentPath;
             this.documentPathPlan = documentPathPlan;
             nameDiscipline.Text = discipline.Name;
             numberTopic.Text = topic.Name.Substring(0, topic.Name.IndexOf("«"));
-            string temp = topic.Name.Substring(topic.Name.IndexOf("«")+1);
+            string temp = topic.Name.Substring(topic.Name.IndexOf("«"));
             topicName.Text = temp.Substring(0,temp.Length);
             numberLesson.Text = lesson.LessonInMaterialSupp;
             lessonName.Text = lesson.ThemeOfLesson;
@@ -101,17 +123,15 @@ namespace DocumentCreator
                 selectGoal_4.Items.Add(tempGoal);
             }
             kind.Text = lesson.Type.Substring(0,lesson.Type.LastIndexOf(' '));
-            place.Items.Add("Плац");
-            place.Items.Add("Тир");
-            place.Items.Add("Учебная лаборатория");
-            place.Items.Add("Учебно-тренировочная площадка");
-            place.Items.Add("Кумысная поляна");
-            place.Items.Add("Аудитория 322");
-            place.Items.Add("Аудитория 333");
-            place.Items.Add("Аудитория 342");
-            place.Items.Add("Аудитория 348");
-            place.Items.Add("Аудитория 348б");
-            place.Items.Add("Аудитория 501");
+            
+            foreach(String pl in placeOfEducations)
+            {
+                place.Items.Add(pl);
+            }
+            foreach (String pl in methodOfEducation)
+            {
+                method.Items.Add(pl);
+            }
 
             intro_combo.Items.Add("Принять рапорт дежурного по взводу");
             intro_combo.Items.Add("Проверить наличие и внешний вид обучаемых, сделать необходимые отметки в журнале учета занятий и воспитательной работы");
@@ -133,9 +153,7 @@ namespace DocumentCreator
             conclusion_combo.Items.Add("Отметить дисциплину, организованность учебной группы");
             conclusion_combo.Items.Add("Нацелить обучающихся на следующее занятие, дать задание на самостоятельную подготовку и указать литературу");
             hours.Text = lesson.Minutes+" минут";
-            method.Items.Add("Рассказ");
-            method.Items.Add("Показ");
-            method.Items.Add("Тренировка");
+            
             if (lesson.Type.StartsWith("Лекция")) {
                 introLabel.Content = "Вступительная часть:";
             }
