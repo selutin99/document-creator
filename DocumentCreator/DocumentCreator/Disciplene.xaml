@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DocumentCreator"
         mc:Ignorable="d"
-        Title="Disciplene" Height="450" Width="800">
+        Title="Создание документа" Height="450" Width="800">
     <Grid>
         <Label x:Name="NameOfDiscipline" Content="" Margin="122,61,121,0" VerticalAlignment="Top" Height="58"/>
         <Label x:Name="Theme" Content="" Margin="122,124,121,0" VerticalAlignment="Top" Height="45"/>

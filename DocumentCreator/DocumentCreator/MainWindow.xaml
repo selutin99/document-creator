@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DocumentCreator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="753.792" Width="525" Closing="Window_Closing">
+        Title="Главная" Height="753.792" Width="525" Closing="Window_Closing">
     <Grid Margin="0,14,0,1">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="259*"/>

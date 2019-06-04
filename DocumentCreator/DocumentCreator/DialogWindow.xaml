@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DocumentCreator"
         mc:Ignorable="d"
-        Title="Window1" Height="237.259" Width="525">
+        Title="Успешная загрузка" Height="237.259" Width="525">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="259*"/>
