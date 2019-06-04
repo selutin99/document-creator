@@ -439,5 +439,10 @@ namespace DocumentCreator
                 question5_text.Text += "\n";
             }
         }
+
+        private void goals_1_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
