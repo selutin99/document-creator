@@ -8,7 +8,7 @@
         Title="Ошибка при заполнении" Height="450" Width="800">
     <Grid>
         <Button Content="Закрыть" HorizontalAlignment="Left" Margin="288,339,0,0" VerticalAlignment="Top" Width="216" Height="51" FontSize="22" Click="Button_Click"/>
-        <TextBlock HorizontalAlignment="Left" Margin="80,83,0,0" TextWrapping="Wrap" Text="При заполнении были заполнены не все поля, проверьре заполнение полей Литература, Место проведения занятия, Материальная поддержка, Количество минут на Введение, на Первый вопрос занятия и на Заключение" VerticalAlignment="Top" Height="139" Width="637" FontSize="20"/>
+        <TextBlock HorizontalAlignment="Left" Margin="80,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="187" Width="637" FontSize="20"><Run Text="При заполнении были заполнены не все поля, проверьре заполнение полей Литература, Место проведения занятия, Материальная поддержка, Количество минут на Введение, на вопрос"/><Run Text="ы"/><Run Text=" занятия"/><Run Text=" "/><Run Text="и на Заключение"/><Run Text=". Также должны быть заполнены содержания доступных вопросов."/></TextBlock>
 
     </Grid>
 </Window>

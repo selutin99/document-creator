@@ -143,7 +143,7 @@ namespace DocumentCreator
                             if (content.IndexOf(disciplines[i + 1].Name) >= 0)
                             {
                                 string temp = content.Substring(0, content.IndexOf(disciplines[i + 1].Name));
-                                temp = temp.Substring(temp.IndexOf(disciplines[i].Name)+ disciplines[i].Name.Length+2);
+                                temp = temp.Substring(temp.IndexOf(disciplines[i].Name)+ disciplines[i].Name.Length);
                                 disciplines[i].MethodicalInstructionsForRest = temp;
                                 content = content.Substring(content.IndexOf(disciplines[i + 1].Name));
                             }
@@ -161,7 +161,7 @@ namespace DocumentCreator
                         {
                             disciplines[i].MethodicalInstructionsForRest = content.Substring(0);
                         }
-
+                        disciplines[disciplenes.Count - 1].MethodicalInstructionsForRest = content.Substring(content.IndexOf(disciplines[disciplenes.Count - 1].Name)+ disciplines[disciplenes.Count - 1].Name.Length);
 
 
                     }

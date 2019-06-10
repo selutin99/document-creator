@@ -240,8 +240,8 @@ namespace DocumentCreator
                 foreach (KeyValuePair<string, string> keyValueTopic in resulterMapTopic)
                 {
                     string topicName;
-                    if (keyValueTopic.Key.Length < 100)
-                    {
+                    //if (keyValueTopic.Key.Length < 100)
+                    //{
                         topicName = keyValueTopic.Key.Substring(0, keyValueTopic.Key.Length);
                         topicName = topicName.Trim();
                         topicName = topicName.Replace("\r", "");
@@ -251,14 +251,14 @@ namespace DocumentCreator
                         {
                             topicName = topicName.Substring(0, topicName.IndexOfAny(unacceptableChars));
                         }
-                    }
-                    else
-                    {
-                        topicName = keyValueTopic.Key.Substring(0, 96);
-                        topicName = topicName.Trim();
-                        topicName = topicName.Replace("\r", "");
-                        topicName = topicName.Replace("\a", "");
-                    }
+                    //}
+                    //else
+                    //{
+                    //    topicName = keyValueTopic.Key.Substring(0, 96);
+                    //    topicName = topicName.Trim();
+                    //    topicName = topicName.Replace("\r", "");
+                    //    topicName = topicName.Replace("\a", "");
+                    //}
                     discipline.Topics.Add(new Topic(topicName, GetLessonsByTopic(keyValueTopic)));
                 }
                 disciplines.Add(discipline);
@@ -325,11 +325,11 @@ namespace DocumentCreator
                         lessonInMaterialSupp = questionsOfLesson.Substring(0, questionsOfLesson.IndexOf("«"));
                         try
                         {
-                            themeOfLesson = questionsOfLesson.Substring(questionsOfLesson.IndexOf("«"), questionsOfLesson.IndexOf("»") - questionsOfLesson.IndexOf("«")-1);
+                            themeOfLesson = questionsOfLesson.Substring(questionsOfLesson.IndexOf("«"), questionsOfLesson.IndexOf("»") - questionsOfLesson.IndexOf("«")+1);
                         }
                         catch (Exception e)
                         {
-                            themeOfLesson = questionsOfLesson.Substring(questionsOfLesson.IndexOf("«"), questionsOfLesson.IndexOf(".") - questionsOfLesson.IndexOf("«")-1);
+                            themeOfLesson = questionsOfLesson.Substring(questionsOfLesson.IndexOf("«"), questionsOfLesson.IndexOf(".") - questionsOfLesson.IndexOf("«")+1);
                         }
                         questions = getQuestions(questionsOfLesson.Substring(questionsOfLesson.IndexOf("«")));
                     }
@@ -350,6 +350,66 @@ namespace DocumentCreator
                     }
                     Lesson lesson = new Lesson();
                     lesson.Type = kindOfLesson;
+                    if (kindOfLesson.Contains("1"))
+                    {
+                        lesson.NumberLessom = "з1";
+                    }
+                    else if (kindOfLesson.Contains("2"))
+                    {
+                        lesson.NumberLessom = "з2";
+                    }
+                    else if (kindOfLesson.Contains("3"))
+                    {
+                        lesson.NumberLessom = "з3";
+                    }
+                    else if (kindOfLesson.Contains("4"))
+                    {
+                        lesson.NumberLessom = "з4";
+                    }
+                    else if (kindOfLesson.Contains("5"))
+                    {
+                        lesson.NumberLessom = "з5";
+                    }
+                    else if (kindOfLesson.Contains("6"))
+                    {
+                        lesson.NumberLessom = "з6";
+                    }
+                    else if (kindOfLesson.Contains("7"))
+                    {
+                        lesson.NumberLessom = "з7";
+                    }
+                    else if (kindOfLesson.Contains("8"))
+                    {
+                        lesson.NumberLessom = "з8";
+                    }
+                    else if (kindOfLesson.Contains("9"))
+                    {
+                        lesson.NumberLessom = "з9";
+                    }
+                    else if (kindOfLesson.Contains("10"))
+                    {
+                        lesson.NumberLessom = "з10";
+                    }
+                    else if (kindOfLesson.Contains("11"))
+                    {
+                        lesson.NumberLessom = "з11";
+                    }
+                    else if (kindOfLesson.Contains("12"))
+                    {
+                        lesson.NumberLessom = "з12";
+                    }
+                    else if (kindOfLesson.Contains("13"))
+                    {
+                        lesson.NumberLessom = "з13";
+                    }
+                    else if (kindOfLesson.Contains("14"))
+                    {
+                        lesson.NumberLessom = "з14";
+                    }
+                    else
+                    {
+                        lesson.NumberLessom = "з15";
+                    }
                     lesson.Literature = literature;
                     lessonInMaterialSupp = lessonInMaterialSupp.Trim();
                     lessonInMaterialSupp = lessonInMaterialSupp.Replace("\r", "");
@@ -529,6 +589,7 @@ namespace DocumentCreator
                         disciplines[0].MethodicalInstructionsForLecture = content.Substring(0);
                         return disciplines;
                     }
+                    else
                     {
                         for (int i = 0; i < disciplines.Count - 1; i++)
                         {
@@ -550,11 +611,12 @@ namespace DocumentCreator
                             {
                                 disciplines[i].MethodicalInstructionsForLecture = content.Substring(0);
                             }
+                                
 
 
-
+                            }
+                            disciplines[disciplines.Count - 1].MethodicalInstructionsForLecture = content.Substring(content.IndexOf(disciplines[disciplines.Count - 1].Name) + disciplines[disciplines.Count - 1].Name.Length);
                         }
-                    }
                 }
             }
             }

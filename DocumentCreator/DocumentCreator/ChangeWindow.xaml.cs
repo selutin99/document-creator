@@ -58,7 +58,7 @@ namespace DocumentCreator
                 tempGoal = tempGoal.Trim();
                 placeOfEducations.Add(tempGoal);
             }
-            tableInDoc = docWithGoals.Tables[3];
+            tableInDoc = docWithGoals.Tables[4];
             foreach (Word.Cell cell in tableInDoc.Range.Cells)
             {
                 string tempGoal = cell.Range.Text.Replace("\v", " ");
@@ -159,7 +159,7 @@ namespace DocumentCreator
             }
 
             materialSupport.Text = lesson.MaterialSupport;
-            literature.Text = lesson.Literature.Trim().Replace("\r", "; ").Replace("  ","").Replace("   ", "");
+            literature.Text = lesson.Literature.Trim().Replace("  ","").Replace("   ", "").Replace("\r", ";").Replace(";","; ");
             for(int i=0;i< lesson.Questions.Count; i++)
             {
                 if (i == 0)
@@ -167,6 +167,7 @@ namespace DocumentCreator
                     questionName1.Text = lesson.Questions[i];
                     question1_text.IsEnabled = true;
                     question1_time.IsEnabled = true;
+                    additionalPhraze_1.IsEnabled = true;
 
                 }
                 else if(i ==1)
@@ -174,24 +175,28 @@ namespace DocumentCreator
                     questionName2.Text = lesson.Questions[i];
                     question2_text.IsEnabled = true;
                     question2_time.IsEnabled = true;
+                    additionalPhraze_2.IsEnabled = true;
                 }
                 else if (i == 2)
                 {
                     questionName3.Text = lesson.Questions[i];
                     question3_text.IsEnabled = true;
                     question3_time.IsEnabled = true;
+                    additionalPhraze_3.IsEnabled = true;
                 }
                 else if (i == 3)
                 {
                     questionName4.Text = lesson.Questions[i];
                     question4_text.IsEnabled = true;
                     question4_time.IsEnabled = true;
+                    additionalPhraze_4.IsEnabled = true;
                 }
                 else if (i == 4)
                 {
                     questionName5.Text = lesson.Questions[i];
                     question5_text.IsEnabled = true;
                     question5_time.IsEnabled = true;
+                    additionalPhraze_5.IsEnabled = true;
                 }
             }
             if (lesson.Type.StartsWith("Лекци"))
@@ -245,7 +250,57 @@ namespace DocumentCreator
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (literature.Text.Length==0||place.Text.Length==0||materialSupport.Text.Length==0||intro_time.Text.Length==0||question1_time.Text.Length==0)
+            if (question1_text.IsEnabled)
+            {
+                question1_text.SelectAll();
+                if (question1_text.Selection.Text.Length < 5)
+                {
+                    ErrorWindow error = new ErrorWindow();
+                    error.Show();
+                    return;
+                }
+            }
+            if (question2_text.IsEnabled)
+            {
+                question2_text.SelectAll();
+                if (question2_text.Selection.Text.Length < 5)
+                {
+                    ErrorWindow error = new ErrorWindow();
+                    error.Show();
+                    return;
+                }
+            }
+            if (question3_text.IsEnabled)
+            {
+                question3_text.SelectAll();
+                if (question3_text.Selection.Text.Length < 5)
+                {
+                    ErrorWindow error = new ErrorWindow();
+                    error.Show();
+                    return;
+                }
+            }
+            if (question4_text.IsEnabled)
+            {
+                question4_text.SelectAll();
+                if (question4_text.Selection.Text.Length < 5)
+                {
+                    ErrorWindow error = new ErrorWindow();
+                    error.Show();
+                    return;
+                }
+            }
+            if (question5_text.IsEnabled)
+            {
+                question5_text.SelectAll();
+                if (question5_text.Selection.Text.Length < 5)
+                {
+                    ErrorWindow error = new ErrorWindow();
+                    error.Show();
+                    return;
+                }
+            }
+            if (literature.Text.Length==0||place.Text.Length==0||materialSupport.Text.Length==0 || conclusion_time.Text.Length == 0 || intro_time.Text.Length==0||question1_time.Text.Length==0||(question2_time.IsEnabled&& question2_time.Text.Length==0) || (question3_time.IsEnabled && question3_time.Text.Length == 0) || (question4_time.IsEnabled && question4_time.Text.Length == 0) || (question5_time.IsEnabled && question5_time.Text.Length == 0))
             {
                 ErrorWindow error = new ErrorWindow();
                 error.Show();
@@ -265,26 +320,31 @@ namespace DocumentCreator
                 Dictionary<string, string> questions = new Dictionary<string, string>();
                 char separator = '$';
                 int sumOfMinInQuestionsOfLesson = 0;
-                questions.Add(questionName1.Text.Substring(0), question1_time.Text + " мин"+separator+ question1_text.Text);
+                question1_text.SelectAll();
+                questions.Add(questionName1.Text.Substring(0), question1_time.Text + " мин"+separator+ question1_text.Selection.Text);
                 sumOfMinInQuestionsOfLesson += Int32.Parse(question1_time.Text);
                 if (question2_text.IsEnabled)
                 {
-                    questions.Add(questionName2.Text.Substring(0), question2_time.Text + " мин" + separator + question2_text.Text);
+                    question2_text.SelectAll();
+                    questions.Add(questionName2.Text.Substring(0), question2_time.Text + " мин" + separator + question2_text.Selection.Text);
                     sumOfMinInQuestionsOfLesson += Int32.Parse(question2_time.Text);
                 }
                 if (question3_text.IsEnabled)
                 {
-                    questions.Add(questionName3.Text.Substring(0), question3_time.Text + " мин" + separator + question3_text.Text);
+                    question3_text.SelectAll();
+                    questions.Add(questionName3.Text.Substring(0), question3_time.Text + " мин" + separator + question3_text.Selection.Text);
                     sumOfMinInQuestionsOfLesson += Int32.Parse(question3_time.Text);
                 }
                 if (question4_text.IsEnabled)
                 {
-                    questions.Add(questionName4.Text.Substring(0), question4_time.Text + " мин" + separator + question4_text.Text);
+                    question4_text.SelectAll();
+                    questions.Add(questionName4.Text.Substring(0), question4_time.Text + " мин" + separator + question4_text.Selection.Text);
                     sumOfMinInQuestionsOfLesson += Int32.Parse(question4_time.Text);
                 }
                 if (question5_text.IsEnabled)
                 {
-                    questions.Add(questionName5.Text.Substring(0), question5_time.Text + " мин" + separator + question5_text.Text);
+                    question5_text.SelectAll();
+                    questions.Add(questionName5.Text.Substring(0), question5_time.Text + " мин" + separator + question5_text.Selection.Text);
                     sumOfMinInQuestionsOfLesson += Int32.Parse(question5_time.Text);
                 }
                 keyValuePairs["{id:name}"] = nameDiscipline.Text;
@@ -298,15 +358,17 @@ namespace DocumentCreator
                 keyValuePairs["{id:duration}"] = hours.Text;
                 keyValuePairs["{id:place}"] = place.Text;
                 keyValuePairs["{id:literature}"] = literature.Text;
-                keyValuePairs["{id:intro}"] = intro_time.Text+separator+intro_text.Text;
+                intro_text.SelectAll();
+                keyValuePairs["{id:intro}"] = intro_time.Text+separator+intro_text.Selection.Text;
                 keyValuePairs["{id:educationalQuestions}"] = sumOfMinInQuestionsOfLesson;
                 keyValuePairs["{id:questions}"] = questions;
-                keyValuePairs["{id:conclution}"] = conclusion_time.Text+separator+conclusion_text.Text;
+                conclusion_text.SelectAll();
+                keyValuePairs["{id:conclution}"] = conclusion_time.Text+separator+conclusion_text.Selection.Text;
                 keyValuePairs["{id:material}"] = materialSupport.Text;
                 keyValuePairs["{id:methodical}"] = methodical.Text;
                 keyValuePairs["{id:technicalMeans}"] = materialSupport.Text;
                 documentPath = documentPath.Replace("//", "");
-                documentPathPlan = documentPath.Replace("//", "");
+                documentPathPlan = documentPathPlan.Replace("//", "");
                 UpdateDoc update = new UpdateDoc(documentPath,documentPathPlan);
                 update.updateDoc(keyValuePairs);
                 Close();
@@ -367,77 +429,85 @@ namespace DocumentCreator
 
         private void Intro_combo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            intro_text.Text += intro_combo.SelectedItem + "; ";
+            intro_text.AppendText(intro_combo.SelectedItem + "; ");
+            //intro_text.Text += intro_combo.SelectedItem + "; ";
         }
 
         private void Conclusion_combo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            conclusion_text.Text += conclusion_combo.SelectedItem + "; ";
+
+            conclusion_text.AppendText(conclusion_combo.SelectedItem + "; ");
+            /*conclusion_text.Text += conclusion_combo.SelectedItem + "; ";*/
         }
 
         private void AdditionalPhraze_1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            question1_text.Text +="\n"+ additionalPhraze_1.SelectedItem+"\n";
+            question1_text.AppendText("\r\n"+additionalPhraze_1.SelectedItem + "\r\n");
+            //question1_text.Text +="\n"+ additionalPhraze_1.SelectedItem+"\n";
         }
 
         private void AdditionalPhraze_2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            question2_text.Text += "\n" + additionalPhraze_2.SelectedItem + "\n";
+            question2_text.AppendText("\r\n" + additionalPhraze_2.SelectedItem + "\r\n");
+            //question2_text.Text += "\n" + additionalPhraze_2.SelectedItem + "\n";
         }
 
         private void AdditionalPhraze_3_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            question3_text.Text += "\n" + additionalPhraze_3.SelectedItem + "\n";
+            question3_text.AppendText("\r\n" + additionalPhraze_3.SelectedItem + "\r\n");
+            //question3_text.Text += "\n" + additionalPhraze_3.SelectedItem + "\n";
         }
 
         private void AdditionalPhraze_4_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            question4_text.Text += "\n" + additionalPhraze_4.SelectedItem + "\n";
+            question4_text.AppendText("\r\n" + additionalPhraze_4.SelectedItem + "\r\n");
+            //question4_text.Text += "\n" + additionalPhraze_4.SelectedItem + "\n";
         }
 
         private void AdditionalPhraze_5_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            question5_text.Text += "\n" + additionalPhraze_5.SelectedItem + "\n";
+            question5_text.AppendText("\r\n" + additionalPhraze_5.SelectedItem + "\r\n");
+            //question5_text.Text += "\n" + additionalPhraze_5.SelectedItem + "\n";
         }
 
         private void Question1_text_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
-            {
-                question1_text.Text += "\n";
-            }
+            //if (e.Key == Key.Enter)
+            //{
+            //    question1_text.Text += "\n";
+            //}
         }
 
         private void Question2_text_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
-            {
-                question2_text.Text += "\n";
-            }
+            //if (e.Key == Key.Enter)
+            //{
+            //    question2_text.Text += "\n";
+            //}
         }
 
         private void Question3_text_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
-            {
-                question3_text.Text += "\n";
-            }
+            //if (e.Key == Key.Enter)
+            //{
+            //    question3_text.Text += "\n";
+            //}
         }
 
         private void Question4_text_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
-            {
-                question4_text.Text += "\n";
-            }
+            //if (e.Key == Key.Enter)
+            //{
+            //    question4_text.Text += "\n";
+            //}
         }
 
         private void Question5_text_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
-            {
-                question5_text.Text += "\n";
-            }
+            //if (e.Key == Key.Enter)
+            //{
+            //    question5_text.Text += "\n";
+            //}
         }
 
         private void goals_1_TextChanged(object sender, TextChangedEventArgs e)

@@ -13,6 +13,7 @@ namespace DocumentCreator
         string materialSupport;
         string lessonInMaterialSupp;
         string themeOfLesson;
+        string numberLeson;
         List<string> questions;
         string literature;
         public string Type { get => type; set => type = value; }
@@ -22,5 +23,6 @@ namespace DocumentCreator
         public string ThemeOfLesson { get => themeOfLesson; set => themeOfLesson = value; }
         public List<string> Questions { get => questions; set => questions = value; }
         public string Literature { get => literature; set => literature = value; }
+        public string NumberLessom { get => numberLeson; set => numberLeson = value; }
     }
 }

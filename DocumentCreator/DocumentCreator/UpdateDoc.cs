@@ -69,7 +69,28 @@ namespace DocumentCreator
                             break;
                         }
                         p.Range.InsertFile(Path.GetFullPath(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, @"../../../../../Resources/AdditionalDocs/Spravochnik.docx")));
-                        FindAndReplace(wordApp, "{id:questionName}", question.Key);
+                            int z = 0;
+                            for (int i = 0; i < question.Key.Length; i += 30)
+                            {
+                                if (i > 0)
+                                {
+                                    try
+                                    {
+                                        FindAndReplace(wordApp, "{id:questionName}", question.Key.Substring(i + 1, 30) + "{id:questionName}");
+                                    }
+                                    catch (Exception qq)
+                                    {
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    FindAndReplace(wordApp, "{id:questionName}", question.Key.Substring(i, 30) + "{id:questionName}");
+                                }
+                                z = i;
+                            }
+                            z += 30;
+                            FindAndReplace(wordApp, "{id:questionName}", question.Key.Substring(z + 1));
                         FindAndReplace(wordApp, "{id:countAjunct}", temp);
                         FindAndReplace(wordApp, "{id:questionDuration}", question.Value.Split(separator)[0]);
                     }
@@ -230,30 +251,38 @@ namespace DocumentCreator
                                 r += 30;
                                 FindAndReplace(wordApp, "{id:questionOfLesson}", questionFull.Substring(r) + "\r\n{id:contentOfQuestion}");
                                 int w = 0;
-                                string temp = question.Value.Split(separator)[1].Replace("\n", "\r\n");
-                                for (int z=0;z< temp.Length; z+=30)
-                                {
-                                    if (z > 0)
+                                string temp = question.Value.Split(separator)[1];
+                                    if (temp.Length > 30)
                                     {
-                                        try
+                                        for (int z = 0; z < temp.Length; z += 30)
                                         {
-                                            FindAndReplace(wordApp, "{id:contentOfQuestion}", temp.Substring(z, 30) + "{id:contentOfQuestion}");
-                                        }
-                                        catch (Exception q)
-                                        {
-                                            break;
-                                        }
+                                            if (z > 0)
+                                            {
+                                                try
+                                                {
+                                                    FindAndReplace(wordApp, "{id:contentOfQuestion}", temp.Substring(z, 30) + "{id:contentOfQuestion}");
+                                                }
+                                                catch (Exception q)
+                                                {
+                                                    break;
+                                                }
 
+                                            }
+                                            else
+                                            {
+                                                FindAndReplace(wordApp, "{id:contentOfQuestion}", temp.Substring(z, 30) + "{id:contentOfQuestion}");
+                                            }
+                                            w = z;
+                                        }
+                                        FindAndReplace(wordApp, "{id:contentOfQuestion}", temp.Substring(w) + "\r\n{id:questionOfLesson}\r\n");
+                                        temporary = newRow;
+                                        count++;
                                     }
                                     else
                                     {
-                                        FindAndReplace(wordApp, "{id:contentOfQuestion}", temp.Substring(z, 30) + "{id:contentOfQuestion}");
+                                        FindAndReplace(wordApp, "{id:contentOfQuestion}", temp.Substring(w) + "\r\n{id:questionOfLesson}\r\n");
+                                        count++;
                                     }
-                                    w = z;
-                                }
-                                FindAndReplace(wordApp, "{id:contentOfQuestion}", temp.Substring(w) + "\r\n{id:questionOfLesson}\r\n");
-                                temporary = newRow;
-                                count++;
                             }
                             Object missing = System.Reflection.Missing.Value;
                             Word.Row newRowENd = table.Rows.Add(ref missing);
@@ -291,15 +320,6 @@ namespace DocumentCreator
             }
             
         }
-
-
-
-
-
-
-
-
-
 
         private void updatePlan(Dictionary<string, Object> keyValuePairs)
         {

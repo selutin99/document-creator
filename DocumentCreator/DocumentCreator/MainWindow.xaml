@@ -16,7 +16,7 @@
         <Label x:Name="PathToFile" Content="" Margin="25,158,122,0" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="1" RenderTransformOrigin="0.484,1.621" Grid.ColumnSpan="2" Height="28" />
         <Label x:Name="ChooseFile" Content="Выберите темплан:" Margin="25,127,42,0" VerticalAlignment="Top" RenderTransformOrigin="0.429,2.233" Height="26"/>
         <Button x:Name="GenerateButton" Content="Начать работу" HorizontalAlignment="Right" Margin="0,265,197.4,0" VerticalAlignment="Top" Width="133" Click="GenerateButton_Click" Height="39" IsEnabled="False" Grid.ColumnSpan="2"/>
-        <Label x:Name="WelcomeLable_Copy" Content="Создать учебно-методическую разработоку" Height="35" Margin="83,87,47,0" VerticalAlignment="Top" FontSize="18" Grid.ColumnSpan="2" />
+        <Label x:Name="WelcomeLable_Copy" Content="Создать учебно-методическую разработку" Height="35" Margin="83,87,47,0" VerticalAlignment="Top" FontSize="18" Grid.ColumnSpan="2" />
         <Separator Margin="0,309,0,0" RenderTransformOrigin="0.507,-0.8" Grid.ColumnSpan="2" Height="17" VerticalAlignment="Top" />
         <Label x:Name="WelcomeLable_Copy1" Content="Изменить учебно-методические разработки" Margin="66,331,64,318" FontSize="18" Grid.ColumnSpan="2" />
         <Separator Margin="0,53,0,0" RenderTransformOrigin="0.507,-0.8" Grid.ColumnSpan="2" Height="22" VerticalAlignment="Top" />
